@@ -6,7 +6,10 @@ body {
     height: 100vh;
     margin: 0;
     text-align: center;
-    color: red;    
+    color: red; 
+    background-image: url('../assets/images/Background.png'); 
+    background-size: cover;            
+    background-position: center;   
 }
 
 h1 {
@@ -29,12 +32,6 @@ label {
 
 button {
   font-size: 20px;
-}
-
-body {
-    background-image: url('Background.png'); 
-    background-size: cover;            
-    background-position: center;   
 }
 
 .text-box {
