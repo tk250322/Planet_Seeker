@@ -14,9 +14,10 @@
 
     <label for="input_task">さあ、冒険の始まりだ！！！！</label><br>
     <button id="save_button">スタート</button>
+    <div>
 
     <!--　ゲーム画面 -->
-    <div id = "game-play-screen" class = "screen hidden">
+    <div id = "game_play_screen" class = "screen hidden">
     <canvas id = "gamecanvas"></canvas>
     </div>
     <!-- タイトル→ゲーム画面の移動　-->
@@ -27,8 +28,8 @@
         document.querySelector(".text-box").style.display = "none";
 
         // ゲーム画面を表示する
-        document.getElementById("game-play-screen").classList.remove("hidden");
-        document.body.style.backgroundImage = "url('../assets/images/game-play-background.png')";
+        document.getElementById("game_play_screen").classList.remove("hidden");
+        document.body.style.backgroundImage = "url('../assets/images/game_play_background.png')";
      });
    });
    </script>
