@@ -4,15 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planet Seeker</title>
-    <link rel="stylesheet" href="style/Title.css">
+    <link rel="stylesheet" href="style/title.css">
 </head>
 <body>
+    <!--　ゲームタイトル画面 -->
     <div class="text-box">
     <h1>Planet Seeker</h1>
     <p>次の移住先に移動せよ！！！！</p>
 
     <label for="input_task">さあ、冒険の始まりだ！！！！</label><br>
     <button id="save_button">スタート</button>
+
+    <!--　ゲーム画面 -->
+    <div id = "game-play-screen" class = "screen hidden">
+    <canvas id = "gamecanvas"></canvas>
     </div>
+    <!-- タイトル→ゲーム画面の移動　-->
+    <script >
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("save_button").addEventListener("click", function() {
+        // タイトル画面を非表示にする
+        document.querySelector(".text-box").style.display = "none";
+
+        // ゲーム画面を表示する
+        document.getElementById("game-play-screen").classList.remove("hidden");
+        document.body.style.backgroundImage = "url('../assets/images/game-play-background.png')";
+     });
+   });
+   </script>
 </body>
 </html>

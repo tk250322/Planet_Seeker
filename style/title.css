@@ -42,3 +42,12 @@ button {
   text-align: center;
 }
 
+.hidden {
+   display: none;
+}
+
+#game-play-screen {
+    background-image: url('../assets/images/game-play-background.png');
+    background-size: cover;
+    background-position: center;
+}
