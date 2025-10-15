@@ -47,7 +47,7 @@ button {
 }
 
 #game-play-screen {
-    background-image: url('../assets/images/game-play-background.png');
+    background-image: url('../assets/images/game_play_background.png');
     background-size: cover;
     background-position: center;
 }
