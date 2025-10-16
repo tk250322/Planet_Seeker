@@ -1,3 +1,4 @@
+/* 背景、文字などのサイズと配置調整 */
 body {
     display: flex;
     flex-direction: column;
@@ -10,30 +11,36 @@ body {
     background-image: url('../assets/images/Background.png'); 
     background-size: cover;            
     background-position: center;   
+    overflow: hidden;
 }
 
+/* タイトルサイズと色 */
 h1 {
   font-size: 60px;
   color: crimson;
   margin-bottom: 0px;
 }
 
+/* 文字サイズと色　*/
 p {
   font-size: 25px;
   color: crimson;
   margin-bottom: 100px;
 }
 
+/* 文字サイズと色 */
 label {
   font-size: 20px;
   color: crimson;
   margin-bottom: 20px;
 }
 
+/* スタートボタンサイズ */
 button {
   font-size: 20px;
 }
 
+/* タイトル文字エリア */
 .text-box {
   background-color: rgba(255, 255, 255, 0.6); 
   padding: 30px;
@@ -42,12 +49,47 @@ button {
   text-align: center;
 }
 
+/* ゲーム画面表示オフ */
 .hidden {
    display: none;
 }
 
-#game-play-screen {
-    background-image: url('../assets/images/game_play_background.png');
-    background-size: cover;
-    background-position: center;
+/* ゲーム画面の背景レイアウト */
+#game_play_screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent; 
+}
+
+#game_play_area {
+  position: absolute;
+  border: 4px solid white;  
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5); 
+  border-radius: 20px;
+  overflow: hidden;  
+}
+
+/* キャラ共通スタイル */
+.character {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+}
+
+/* 味方の初期位置 */
+.ally {
+  left: 35%;
+  bottom: 40px;
+}
+
+/* 敵の初期位置 */
+.enemy {
+  left: 35%;
+  top: 40px;
 }
