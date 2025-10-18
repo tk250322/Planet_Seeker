@@ -53,13 +53,13 @@ canvas {
   height: 160px;
 }
 
-/* 味方の初期位置（下） */
+/* 味方の初期位置 */
 .ally {
   left: 35%;
   bottom: 40px;
 }
 
-/* 敵の初期位置（上） */
+/* 敵の初期位置 */
 .enemy {
   left: 35%;
   top: 40px;
