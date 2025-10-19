@@ -45,22 +45,3 @@ body {
 canvas {
   border: 3px solid red;
 }
-
-/* キャラ共通スタイル */
-.character {
-  position: absolute;
-  width: 160px;
-  height: 160px;
-}
-
-/* 味方の初期位置 */
-.ally {
-  left: 35%;
-  bottom: 40px;
-}
-
-/* 敵の初期位置 */
-.enemy {
-  left: 35%;
-  top: 40px;
-}
