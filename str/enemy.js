@@ -43,15 +43,15 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
 
-    function keydown(){
-        document.addEventListener("keydown", function(e){
-        // console.log("キーが押されました。 e.key の値:", e.key);
-        if(e.code === "Space"){
-            console.log("spaseが押されました");
-            enemy_attack();
-        }
-    })
-    }
+    // function keydown(){
+    //     document.addEventListener("keydown", function(e){
+    //     // console.log("キーが押されました。 e.key の値:", e.key);
+    //     if(e.code === "Space"){
+    //         console.log("spaseが押されました");
+    //         enemy_attack();
+    //     }
+    // })
+    // }
 
     //攻撃の実装
     function enemy_attack(){
@@ -96,7 +96,12 @@ document.addEventListener("DOMContentLoaded",function(){
     let enemyRigth = false;
 
     enemydraw();
-    keydown();
+
+    //乱数生成
+    function randomNamber(){
+        const r = Math.floor(Math.random() * 3);
+        return r;
+    }
 
     //移動処理
     function randomMove(){
@@ -105,10 +110,23 @@ document.addEventListener("DOMContentLoaded",function(){
         enemyRigth = false;
 
         //乱数設定
-        const r = Math.floor(Math.random() * 3);
+        const r = randomNamber();
         enemyLeft = r === 1;
         enemyRigth = r === 2;
     }
+
     randomMove();
     setInterval(randomMove, 200);
+
+    //攻撃のランダム生成
+    function attack_schedule(){
+        const delay = (randomNamber() + 1.5)*400;
+        setTimeout(()=>{
+            enemy_attack();
+            attack_schedule();
+        }, delay);
+    }
+
+    //3秒後から攻撃開始
+    setTimeout(attack_schedule(), 3000);
 });
