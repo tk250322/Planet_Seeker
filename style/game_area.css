@@ -52,11 +52,11 @@ canvas {
 }
 
 /* キャラ共通スタイル */
-.character {
+/* .character {
   position: absolute;
   width: 160px;
   height: 160px;
-}
+} */
 
 /* 敵の初期位置 */
 .enemy {
