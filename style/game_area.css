@@ -45,3 +45,15 @@ body {
 canvas {
   border: 3px solid red;
 }
+
+/* .enemy_bullet {
+  width: 500px;
+  height: 500px;
+}
+
+.character.enemy{
+  margin-top: 100px;
+  margin-left: 250px;
+  width: 100px;
+  height: 100px;
+} */
