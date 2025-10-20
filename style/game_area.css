@@ -38,10 +38,22 @@ body {
 
 /* エネミーエリア */
 #enemycanvas {
-  margin-top: 100px; 
+  margin-top: 100;
 }
 
 /* canvasの枠 */
 canvas {
   border: 3px solid red;
+}
+
+.enemy_bullet {
+  width: 30px;
+  height: 30px;
+}
+
+/* キャラ共通スタイル */
+.enemy {
+  position: absolute;
+  width: 160px;
+  height: 160px;
 }
