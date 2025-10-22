@@ -125,41 +125,43 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keyup', keyupHandler);
     // アニメーション開始
     draw();
-let attack_timing = false;
-function player_attack(){
-    // 球の形
-    const attack = document.createElement("img");
+
+    let attack_timing = false;
     
-    //画像の取得
-    attack.src = "../assets/images/player_attack.png";
-    
-    attack.className = "enemy_bullet";
-    attack.style.position = "absolute";
+    function player_attack(){
+        // 球の形
+        const attack = document.createElement("img");
+        
+        //画像の取得
+        attack.src = "../assets/images/player_attack.png";
+        
+        attack.className = "enemy_bullet";
+        attack.style.position = "absolute";
 
-    
-    // 1. 画面に対する「キャンバス」の位置を取得
-    const canvasRect = canvas.getBoundingClientRect();
+        
+        // 1. 画面に対する「キャンバス」の位置を取得
+        const canvasRect = canvas.getBoundingClientRect();
 
-    const bulletWidthHalf = 15; 
+        const bulletWidthHalf = 15; 
 
-    // 3. 弾の位置を計算
-    //    (キャンバスの左 + キャンバス内のplayerX + playerの幅の半分 - 弾の幅の半分)
-    attack.style.left = `${canvasRect.left + X + (Width / 2) - bulletWidthHalf}px`;
-    //    (キャンバスの上 + キャンバス内のplayerY + playerの高さ)
-    attack.style.top = `${canvasRect.top + Y + 20}px`;
+        // 3. 弾の位置を計算
+        //    (キャンバスの左 + キャンバス内のplayerX + playerの幅の半分 - 弾の幅の半分)
+        attack.style.left = `${canvasRect.left + X + (Width / 2) - bulletWidthHalf}px`;
+        //    (キャンバスの上 + キャンバス内のplayerY + playerの高さ)
+        attack.style.top = `${canvasRect.top + Y + 20}px`;
 
-    document.body.appendChild(attack);
-    console.log("攻撃を発射");
-    
-    const speed = 4;
-    const move = setInterval(() => {
-        const currentTop = parseInt(attack.style.top);
-        attack.style.top = `${currentTop - speed}px`;
+        document.body.appendChild(attack);
+        console.log("攻撃を発射");
+        
+        const speed = 4;
+        const move = setInterval(() => {
+            const currentTop = parseInt(attack.style.top);
+            attack.style.top = `${currentTop - speed}px`;
 
-        if (currentTop < 60) {
-            clearInterval(move);
-            attack.remove();
-        }
-    }, 16);
-}
+            if (currentTop < 60) {
+                clearInterval(move);
+                attack.remove();
+            }
+        }, 16);
+    }
 });
