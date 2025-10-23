@@ -8,7 +8,7 @@ body {
   background-image: url('../assets/images/result.png');
   background-size: cover;
   background-position: center;
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'DotGothic16', sans-serif;
   color: #fff;
   text-align: center;
   overflow: hidden;
@@ -47,22 +47,22 @@ body {
 }
 
 .time-box h2 {
-  font-size: 16px;
+  font-size: 25px;
   margin-bottom: 10px;
   color: #00ffff;
 }
 
 /* タイム表示（仮） */
-#clear-time {
-  font-size: 18px;
+.time-box h3 {
+  font-size: 25px;
   color: #ffffff;
 }
 
 /* タイトルに戻るボタンのスタイル */
 #Title_button {
+  font-family: 'DotGothic16', sans-serif;
   margin-top: 30px;
   font-size: 18px;
-  font-family: 'Press Start 2P', monospace; 
   color: #fff;
   background-color: #004466;
   border: 2px solid #00ffff;
