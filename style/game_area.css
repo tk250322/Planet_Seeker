@@ -15,6 +15,21 @@ body {
   background-color: transparent;
 }
 
+/* タイム */
+#timer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  font-family: 'DotGothic16', monospace;
+  color: #00ffff;
+  text-shadow: 0 0 5px #00ffff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 8px 16px;
+  border-radius: 8px;
+  z-index: 10;
+}
+
 /* ゲームプレイ画面 */
 #game_play_area {
   position: absolute;

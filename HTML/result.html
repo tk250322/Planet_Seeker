@@ -8,17 +8,35 @@
   <link rel="stylesheet" href="../style/result.css">
 </head>
 <body>
+  <!-- リザルト画面 -->
   <div class="result-box">
     <h1>Congratulations</h1>
     <p>おめでとう！次の惑星に到達したぞ！！！</p>
     
+  <!-- タイム表示 -->
   <div class="time-box">
     <h2>クリアタイム</h2>
     <h3>00:45:32</h3>
   </div>
+
   <a href="Title.html">
   <button id="Title_button">タイトルに戻る</button>
   </a>
   </div>
 </body>
 </html>
+
+<!---
+<div id="clear-time">タイム: 読み込み中...</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search); // URLの ?time=... を解析
+  const time = params.get('time'); // time の値を取得
+
+  if (time) {
+    document.getElementById('clear_time').textContent = `タイム: ${time}`;
+  } else {
+    document.getElementById('clear_time').textContent = 'タイム: 不明';
+  }
+</script>
+-->
