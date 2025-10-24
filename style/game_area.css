@@ -1,8 +1,15 @@
+/* フォントの取得 */
+@font-face {
+  font-family: 'DotGothic16';
+  src: url('../assets/fonts/DotGothic16-Regular.ttf') format('truetype');
+}
+
 /* ゲーム画面の背景レイアウト */
 body {
   background-image: url('../assets/images/Background.png');
   background-size: cover;
   background-position: center;
+  font-family: 'DotGothic16', sans-serif;
   overflow: hidden;
   margin: 0;
 }

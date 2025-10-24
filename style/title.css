@@ -1,10 +1,7 @@
-/* 共通ピクセルフォント指定 */
-body,
-h1,
-p,
-label,
-button {
-  font-family: 'DotGothic16', sans-serif;
+/* フォントの取得 */
+@font-face {
+  font-family: 'DotGothic16';
+  src: url('../assets/fonts/DotGothic16-Regular.ttf') format('truetype');
 }
 
 /* 背景、文字などのサイズと配置調整 */
@@ -20,6 +17,7 @@ body {
   background-image: url('../assets/images/Background.png');
   background-size: cover;
   background-position: center;
+  font-family: 'DotGothic16', sans-serif; /* フォント適応 */
   overflow: hidden;
 }
 
