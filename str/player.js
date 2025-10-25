@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
         //画像の取得
         attack.src = "../assets/images/player_attack.png";
         
-        attack.className = "bullet";
+        attack.className = "player_bullet";
         attack.style.position = "absolute";
 
         const bulletWidthHalf = 15; 

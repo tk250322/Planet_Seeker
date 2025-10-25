@@ -64,7 +64,7 @@ function enemy_attack(){
     //画像の取得
     attack.src = "../assets/images/enemy_attack.png";
     
-    attack.className = "bullet";
+    attack.className = "enemy_bullet";
     attack.style.position = "absolute";
 
     

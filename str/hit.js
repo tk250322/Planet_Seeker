@@ -3,13 +3,14 @@ console.log("hit.js読み込み済み");
 
 //重なり判定の取得と攻撃の消去
 function overlap() {
-  const bullets = document.getElementsByClassName("bullet");
+  const enemy_bullets = document.getElementsByClassName("enemy_bullet");
+
   const player = document.getElementById("player-pos");
   const playerRect = player.getBoundingClientRect();
 
-  for (let i = 0; i < bullets.length; i++) {
-    const b = bullets[i];
-    const bulletRect = b.getBoundingClientRect();
+  for (let i = 0; i < enemy_bullets.length; i++) {
+    const e_b = enemy_bullets[i];
+    const bulletRect = e_b.getBoundingClientRect();
 
     //当たったらtrue
     const hit =
@@ -20,7 +21,7 @@ function overlap() {
 
     if (hit) {
       console.log("ダメージ");
-      b.remove();
+      e_b.remove();
     }
   }
 }

@@ -46,7 +46,12 @@ canvas {
   border: 3px solid red;
 }
 
-.bullet {
+.enemy_bullet {
+  width: 30px;
+  height: 30px;
+}
+
+.player_bullet {
   width: 30px;
   height: 30px;
 }
