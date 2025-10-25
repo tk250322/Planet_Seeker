@@ -1,0 +1,78 @@
+/* フォントの取得 */
+@font-face {
+  font-family: 'DotGothic16';
+  src: url('../assets/fonts/DotGothic16-Regular.ttf') format('truetype');
+}
+
+/* 背景と全体レイアウト */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-image: url('../assets/images/result.png');
+  background-size: cover;
+  background-position: center;
+  font-family: 'DotGothic16', sans-serif;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* リザルトボックス */
+.result-box {
+  background-color: #002244;
+  border: 4px solid #ffff00;
+  border-radius: 10px;
+  padding: 50px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+}
+
+/* タイトルと本文 */
+.result-box h1 {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: #ffff00;
+}
+
+.result-box p {
+  font-size: 20px;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+/* タイム表示エリア */
+.time-box {
+  margin-top: 50px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid #00ffff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.time-box h2 {
+  font-size: 25px;
+  margin-bottom: 10px;
+  color: #00ffff;
+}
+
+/* タイム表示（仮） */
+.time-box h3 {
+  font-size: 25px;
+  color: #ffffff;
+}
+
+/* タイトルに戻るボタンのスタイル */
+#Title_button {
+  font-family: 'DotGothic16', sans-serif;
+  margin-top: 30px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #004466;
+  border: 2px solid #00ffff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}

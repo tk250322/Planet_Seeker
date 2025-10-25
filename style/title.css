@@ -1,17 +1,24 @@
+/* フォントの取得 */
+@font-face {
+  font-family: 'DotGothic16';
+  src: url('../assets/fonts/DotGothic16-Regular.ttf') format('truetype');
+}
+
 /* 背景、文字などのサイズと配置調整 */
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    text-align: center;
-    color: red; 
-    background-image: url('../assets/images/Background.png'); 
-    background-size: cover;            
-    background-position: center;   
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  text-align: center;
+  color: red;
+  background-image: url('../assets/images/Background.png');
+  background-size: cover;
+  background-position: center;
+  font-family: 'DotGothic16', sans-serif; /* フォント適応 */
+  overflow: hidden;
 }
 
 /* タイトルサイズと色 */
@@ -21,30 +28,37 @@ h1 {
   margin-bottom: 0px;
 }
 
-/* 文字サイズと色　*/
+/* 文字サイズと色 */
 p {
   font-size: 25px;
-  color: crimson;
+  color: honeydew;
   margin-bottom: 100px;
 }
 
-/* 文字サイズと色 */
 label {
   font-size: 20px;
-  color: crimson;
+  color: honeydew;
   margin-bottom: 20px;
 }
 
 /* スタートボタンサイズ */
 button {
+  margin-top: 20px;
   font-size: 20px;
+  padding: 10px 20px;
+  border: 2px solid #00ffff;
+  background-color: #004466;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /* タイトル文字エリア */
 .text-box {
-  background-color: rgba(255, 255, 255, 0.6); 
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
-  text-align: center;
+  background-color: rgba(0, 0, 64, 0.6);
+  border: 4px solid #00ffff;
+  border-radius: 10px;
+  padding: 50px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
 }
