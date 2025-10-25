@@ -19,6 +19,7 @@ let enemyspeedX = 2;
 function enemydraw() {
     // キャンバスをクリアにする
     enemyctx.clearRect(0, 0, enemycanvas.width, enemycanvas.height);
+    
 
     // 描画位置を更新する
     update();
@@ -63,7 +64,7 @@ function enemy_attack(){
     //画像の取得
     attack.src = "../assets/images/enemy_attack.png";
     
-    attack.className = "enemy_bullet";
+    attack.className = "bullet";
     attack.style.position = "absolute";
 
     
@@ -76,7 +77,7 @@ function enemy_attack(){
     //    (キャンバスの左 + キャンバス内の敵X + 敵の幅の半分 - 弾の幅の半分)
     attack.style.left = `${canvasRect.left + enemyX + (enemyWidth / 2) - bulletWidthHalf}px`;
     //    (キャンバスの上 + キャンバス内の敵Y + 敵の高さ)
-    attack.style.top = `${canvasRect.top + enemyY + enemyHeight}px`;
+    attack.style.top = `${canvasRect.top + enemyY + (enemyHeight / 2)}px`;
 
     document.body.appendChild(attack);
     console.log("敵が攻撃を発射");
@@ -106,19 +107,19 @@ function randomNamber(){
 }
 
 // //移動処理
-// function randomMove(){
-//     //敵の移動を初期化
-//     enemyLeft = false;
-//     enemyRigth = false;
+function randomMove(){
+    //敵の移動を初期化
+    enemyLeft = false;
+    enemyRigth = false;
 
-//     //乱数設定
-//     const r = randomNamber();
-//     enemyLeft = r === 1;
-//     enemyRigth = r === 2;
-// }
+    //乱数設定
+    const r = randomNamber();
+    enemyLeft = r === 1;
+    enemyRigth = r === 2;
+}
 
-// randomMove();
-// setInterval(randomMove, 200);
+randomMove();
+setInterval(randomMove, 200);
 
 //攻撃のランダム生成
 function attack_schedule(){

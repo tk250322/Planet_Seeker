@@ -2,32 +2,28 @@ console.log("hit.js読み込み済み");
 
 
 //重なり判定の取得と攻撃の消去
-function overlap(){
+function overlap() {
+  const bullets = document.getElementsByClassName("bullet");
+  const player = document.getElementById("player-pos");
+  const playerRect = player.getBoundingClientRect();
 
-    //攻撃の位置を取得
-    const bullet = document.getElementsByClassName("bullet");
+  for (let i = 0; i < bullets.length; i++) {
+    const b = bullets[i];
+    const bulletRect = b.getBoundingClientRect();
 
-    //キャラの位置を取得
-    const character = document.getElementsByClassName("character");
+    //当たったらtrue
+    const hit =
+      bulletRect.left < playerRect.right &&
+      bulletRect.right > playerRect.left &&
+      bulletRect.top < playerRect.bottom &&
+      bulletRect.bottom > playerRect.top;
 
-    for(let i = 0; i < bullet.length; i++){
-        const b_rect = bullet[i].getBoundingClientRect();
-        for(let j = 0; j < character.length; j++){
-            const c_rect = character[j].getBoundingClientRect();
-            // console.log(b_rect);
-
-            //重なっているときに攻撃削除
-            if((b_rect.right > c_rect.left) &&
-            (b_rect.left < c_rect.right) &&
-            (b_rect.top < c_rect.bottom) &&
-            (b_rect.bottom > c_rect.top)){
-                console.log("ダメージ")
-                bullet[i].remove();
-            }
-        }
+    if (hit) {
+      console.log("ダメージ");
+      b.remove();
     }
+  }
 }
-
-setInterval(()=>overlap(), 1);
+setInterval(()=>overlap(), 16);
 
 setInterval(console.clear, 30000);
