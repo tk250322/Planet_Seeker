@@ -1,4 +1,6 @@
 console.log("enemy.js読み込み済み");
+
+const game_area  =document.getElementById("game_play_area")
 const enemycanvas = document.getElementById('enemycanvas');
 const enemyctx = enemycanvas.getContext('2d');
 
@@ -16,9 +18,24 @@ let enemyY = 0;
 // 敵の移動速度設定
 let enemyspeedX = 2;
 
+//enemy当たり判定
+
+const enemy_hit = document.createElement("div");
+enemy_hit.id = "enemy-pos";
+enemy_hit.style.position = "absolute";
+game_area.appendChild(enemy_hit);
+enemy_hit.style.height = "50px";
+enemy_hit.style.width = "50px";
+enemy_hit.style.left = `${enemyX + 55}px`;
+enemy_hit.style.top = `${enemyY + 55}px`;
+enemy_hit.style.border = "2px dashed lime";
+enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+
+
 function enemydraw() {
     // キャンバスをクリアにする
     enemyctx.clearRect(0, 0, enemycanvas.width, enemycanvas.height);
+    
 
     // 描画位置を更新する
     update();
@@ -39,6 +56,9 @@ function update() {
     if (enemyRigth && enemyX + enemyWidth < enemycanvas.width){
         enemyX += enemyspeedX;
     }
+    enemy_hit.style.left = `${enemyX + 52}px`;
+    enemy_hit.style.top = `${enemyY + 65}px`;
+
 }
 
 
@@ -76,7 +96,7 @@ function enemy_attack(){
     //    (キャンバスの左 + キャンバス内の敵X + 敵の幅の半分 - 弾の幅の半分)
     attack.style.left = `${canvasRect.left + enemyX + (enemyWidth / 2) - bulletWidthHalf}px`;
     //    (キャンバスの上 + キャンバス内の敵Y + 敵の高さ)
-    attack.style.top = `${canvasRect.top + enemyY + enemyHeight}px`;
+    attack.style.top = `${canvasRect.top + enemyY + (enemyHeight / 2)}px`;
 
     document.body.appendChild(attack);
     console.log("敵が攻撃を発射");
@@ -106,19 +126,19 @@ function randomNamber(){
 }
 
 // //移動処理
-// function randomMove(){
-//     //敵の移動を初期化
-//     enemyLeft = false;
-//     enemyRigth = false;
+function randomMove(){
+    //敵の移動を初期化
+    enemyLeft = false;
+    enemyRigth = false;
 
-//     //乱数設定
-//     const r = randomNamber();
-//     enemyLeft = r === 1;
-//     enemyRigth = r === 2;
-// }
+    //乱数設定
+    const r = randomNamber();
+    enemyLeft = r === 1;
+    enemyRigth = r === 2;
+}
 
-// randomMove();
-// setInterval(randomMove, 200);
+randomMove();
+setInterval(randomMove, 200);
 
 //攻撃のランダム生成
 function attack_schedule(){

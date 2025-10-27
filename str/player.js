@@ -77,6 +77,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (player_rigth && X + Width < canvas.width){
             X += speedX;
         }
+        player.style.left = `${X + 33}px`;
+        player.style.top = `${Y + 205}px`;
     }
 
     // canvasに描画してアニメーションする
@@ -98,6 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById('playercanvas');
     const ctx = canvas.getContext('2d');
     
+    //ゲームエリアの取得
+    const game_area = document.getElementById("game_play_area");
+
     //キャラのidを取得
     const playerImage = document.getElementById('player');
 
@@ -119,6 +124,19 @@ document.addEventListener('DOMContentLoaded', function() {
     let player_left = false;
     let player_rigth = false;
 
+    //playerの当たり判定
+    const player = document.createElement("div");
+    player.id = "player-pos";
+    player.style.position = "absolute";
+    game_area.appendChild(player);
+    player.style.height = "30px";
+    player.style.width = "30px";
+    player.style.left = `${X + 35}px`;
+    player.style.top = `${Y +  35}px`;    // player.style.display = "none";
+    player.style.border = "2px dashed lime";
+    player.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+    player.style.pointerEvents = "none"; // クリックなどを無効化
+
     // キーを押したときにtrueにする
     document.addEventListener('keydown', keydownHandler);
     // キーを離したときにfalseにする
@@ -135,22 +153,16 @@ document.addEventListener('DOMContentLoaded', function() {
         //画像の取得
         attack.src = "../assets/images/player_attack.png";
         
-        attack.className = "enemy_bullet";
+        attack.className = "player_bullet";
         attack.style.position = "absolute";
-
-        
-        // 1. 画面に対する「キャンバス」の位置を取得
-        const canvasRect = canvas.getBoundingClientRect();
-
-        const bulletWidthHalf = 15; 
 
         // 3. 弾の位置を計算
         //    (キャンバスの左 + キャンバス内のplayerX + playerの幅の半分 - 弾の幅の半分)
-        attack.style.left = `${canvasRect.left + X + (Width / 2) - bulletWidthHalf}px`;
-        //    (キャンバスの上 + キャンバス内のplayerY + playerの高さ)
-        attack.style.top = `${canvasRect.top + Y + 20}px`;
+        attack.style.left = `${X + 35}px`;
+           //    (キャンバスの上 + キャンバス内のplayerY + playerの高さ)
+        attack.style.top = `${Y + 200}px`;
 
-        document.body.appendChild(attack);
+        game_area.appendChild(attack);
         console.log("攻撃を発射");
         
         const speed = 4;
@@ -158,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const currentTop = parseInt(attack.style.top);
             attack.style.top = `${currentTop - speed}px`;
 
-            if (currentTop < 60) {
+            if (currentTop < 0) {
                 clearInterval(move);
                 attack.remove();
             }

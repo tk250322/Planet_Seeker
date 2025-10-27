@@ -73,6 +73,11 @@ canvas {
   height: 30px;
 }
 
+.player_bullet {
+  width: 30px;
+  height: 30px;
+}
+
 /* キャラ共通スタイル */
 .enemy {
   position: absolute;
