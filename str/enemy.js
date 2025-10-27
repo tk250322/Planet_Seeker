@@ -1,4 +1,6 @@
 console.log("enemy.js読み込み済み");
+
+const game_area  =document.getElementById("game_play_area")
 const enemycanvas = document.getElementById('enemycanvas');
 const enemyctx = enemycanvas.getContext('2d');
 
@@ -15,6 +17,20 @@ let enemyY = 0;
 
 // 敵の移動速度設定
 let enemyspeedX = 2;
+
+//enemy当たり判定
+
+const enemy_hit = document.createElement("div");
+enemy_hit.id = "enemy-pos";
+enemy_hit.style.position = "absolute";
+game_area.appendChild(enemy_hit);
+enemy_hit.style.height = "50px";
+enemy_hit.style.width = "50px";
+enemy_hit.style.left = `${enemyX + 55}px`;
+enemy_hit.style.top = `${enemyY + 55}px`;
+enemy_hit.style.border = "2px dashed lime";
+enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+
 
 function enemydraw() {
     // キャンバスをクリアにする
@@ -40,6 +56,9 @@ function update() {
     if (enemyRigth && enemyX + enemyWidth < enemycanvas.width){
         enemyX += enemyspeedX;
     }
+    enemy_hit.style.left = `${enemyX + 52}px`;
+    enemy_hit.style.top = `${enemyY + 65}px`;
+
 }
 
 

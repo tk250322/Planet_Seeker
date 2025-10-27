@@ -103,9 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
     //ゲームエリアの取得
     const game_area = document.getElementById("game_play_area");
 
-    // 1. 画面に対する「キャンバス」の位置を取得
-    const canvasRect = canvas.getBoundingClientRect();
-
     //キャラのidを取得
     const playerImage = document.getElementById('player');
 
@@ -159,15 +156,13 @@ document.addEventListener('DOMContentLoaded', function() {
         attack.className = "player_bullet";
         attack.style.position = "absolute";
 
-        const bulletWidthHalf = 15; 
-
         // 3. 弾の位置を計算
         //    (キャンバスの左 + キャンバス内のplayerX + playerの幅の半分 - 弾の幅の半分)
-        attack.style.left = `${canvasRect.left + X + (Width / 2) - bulletWidthHalf}px`;
-        //    (キャンバスの上 + キャンバス内のplayerY + playerの高さ)
-        attack.style.top = `${canvasRect.top + Y + 20}px`;
+        attack.style.left = `${X + 35}px`;
+           //    (キャンバスの上 + キャンバス内のplayerY + playerの高さ)
+        attack.style.top = `${Y + 200}px`;
 
-        document.body.appendChild(attack);
+        game_area.appendChild(attack);
         console.log("攻撃を発射");
         
         const speed = 4;
@@ -175,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const currentTop = parseInt(attack.style.top);
             attack.style.top = `${currentTop - speed}px`;
 
-            if (currentTop < 60) {
+            if (currentTop < 0) {
                 clearInterval(move);
                 attack.remove();
             }
