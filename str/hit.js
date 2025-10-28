@@ -1,5 +1,7 @@
 console.log("hit.js読み込み済み");
 
+//ヒットポイント
+let enemy_hp = 10;
 
 //重なり判定の取得と攻撃の消去
 function overlap() {
@@ -45,7 +47,13 @@ function overlap() {
     if (hit) {
       console.log("ヒット");
       p_b.remove();
+      enemy_hp--;
     }
+  }
+
+  if(enemy_hp == 0){
+    alert("勝利");
+
   }
 
 }

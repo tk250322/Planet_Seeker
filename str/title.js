@@ -10,6 +10,7 @@ bgm.volume = 0.5;
 // ページ読み込み後に再生
 window.addEventListener('load', () => {
   bgm.play().catch(err => {
+    console.error("BGM再生エラー:", err);
   });
 });
 
@@ -24,5 +25,4 @@ button.addEventListener('click', () => {
 decisionSound.play().catch(() => {});
 setTimeout(() => {
   window.location.href = 'game_area.html';
-}, 700);
-});
+}, 700);})
