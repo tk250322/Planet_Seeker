@@ -15,9 +15,9 @@ window.addEventListener('load', () => {
 });
 
 // ボタンを取得
-const button = document.getElementById('save_button');
+const result_button = document.getElementById('save_button');
 
-button.addEventListener('click', () => {
+result_button.addEventListener('click', () => {
   const decisionSound = new Audio('../assets/sounds/effects/button.mp3');
   decisionSound.volume = 1.0;
   decisionSound.currentTime = 0;
