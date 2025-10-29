@@ -52,10 +52,25 @@ function overlap() {
   }
 
   if(enemy_hp == 0){
-    alert("勝利");
-
+    Array.from(player_bullets).forEach(e => {
+      e.remove();
+    });
+    Array.from(enemy_bullets).forEach(e => {
+      e.remove();
+    });
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        if(confirm("勝利")){
+          go_reslt();
+        }
+      })
+    });
   }
 
+}
+
+function go_reslt(){
+  console.log("result");
 }
 setInterval(()=>overlap(), 16);
 
