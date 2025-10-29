@@ -2,12 +2,14 @@ let seconds = 0;
 let timer;
 
 // ページ読み込み時にタイマー開始
-window.onload = () => {
+// window.onload = () => {
+if(move){
   timer = setInterval(() => {
     seconds++;
     updateTimerDisplay();
   }, 1000);
-};
+}
+// };
 
 function updateTimerDisplay() {
   const hours = Math.floor(seconds / 3600);
