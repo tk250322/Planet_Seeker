@@ -10,6 +10,7 @@ bgm.volume = 0.5;
 // ページ読み込み後に再生
 window.addEventListener('load', () => {
   bgm.play().catch(err => {
+    console.error("BGM再生エラー:", err);
   });
 });
 
@@ -17,8 +18,14 @@ const debris_button = document.getElementById('debris_button');
 const UFO_button = document.getElementById('UFO_button');
 const boss_button = document.getElementById('save_button');
 // ボタンを取得
+<<<<<<< HEAD
 // debris ボタン
 debris_button.addEventListener('click', () => {
+=======
+const result_button = document.getElementById('save_button');
+
+result_button.addEventListener('click', () => {
+>>>>>>> feature/add_js
   const decisionSound = new Audio('../assets/sounds/effects/button.mp3');
   decisionSound.volume = 1.0;
   decisionSound.currentTime = 0;
@@ -28,6 +35,7 @@ debris_button.addEventListener('click', () => {
   }, 700);
 });
 
+<<<<<<< HEAD
 // UFO ボタン
 UFO_button.addEventListener('click', () => {
   const decisionSound = new Audio('../assets/sounds/effects/button.mp3');
@@ -49,3 +57,9 @@ boss_button.addEventListener('click', () => {
     window.location.href = 'game_area.html';
   }, 700);
 });
+=======
+decisionSound.play().catch(() => {});
+setTimeout(() => {
+  window.location.href = 'game_area.html';
+}, 700);})
+>>>>>>> feature/add_js

@@ -1,5 +1,8 @@
 // 読みこまれたら実行
 document.addEventListener('DOMContentLoaded', function() {
+    //描画処理
+    let move = false;
+    move = true;
     // 関数keydownHandlerの定義
     function keydownHandler(e) {
         // 押されたキーの値をチェック
@@ -131,18 +134,11 @@ document.addEventListener('DOMContentLoaded', function() {
     game_area.appendChild(player);
     player.style.height = "30px";
     player.style.width = "30px";
-    player.style.left = `${X + 35}px`;
-    player.style.top = `${Y +  35}px`;    // player.style.display = "none";
-    player.style.border = "2px dashed lime";
-    player.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+    player.style.left = `${X + 33}px`;
+    player.style.top = `${Y + 205}px`;
+    // player.style.border = "2px dashed lime";
+    // player.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
     player.style.pointerEvents = "none"; // クリックなどを無効化
-
-    // キーを押したときにtrueにする
-    document.addEventListener('keydown', keydownHandler);
-    // キーを離したときにfalseにする
-    document.addEventListener('keyup', keyupHandler);
-    // アニメーション開始
-    draw();
 
     let attack_timing = false;
     
@@ -175,5 +171,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 attack.remove();
             }
         }, 16);
+    }
+
+    // move = true;
+    if(move){
+        // キーを押したときにtrueにする
+        document.addEventListener('keydown', keydownHandler);
+        // キーを離したときにfalseにする
+        document.addEventListener('keyup', keyupHandler);
+        // アニメーション開始
+        draw();
     }
 });

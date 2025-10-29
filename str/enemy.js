@@ -1,3 +1,7 @@
+//描画処理
+let move = false;
+move = true;
+
 console.log("enemy.js読み込み済み");
 
 const game_area  =document.getElementById("game_play_area")
@@ -28,8 +32,8 @@ enemy_hit.style.height = "50px";
 enemy_hit.style.width = "50px";
 enemy_hit.style.left = `${enemyX + 55}px`;
 enemy_hit.style.top = `${enemyY + 55}px`;
-enemy_hit.style.border = "2px dashed lime";
-enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+// enemy_hit.style.border = "2px dashed lime";
+// enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
 
 
 function enemydraw() {
@@ -117,8 +121,6 @@ function enemy_attack(){
 let enemyLeft = false;
 let enemyRigth = false;
 
-enemydraw();
-
 //乱数生成
 function randomNamber(){
     const r = Math.floor(Math.random() * 3);
@@ -137,8 +139,6 @@ function randomMove(){
     enemyRigth = r === 2;
 }
 
-randomMove();
-setInterval(randomMove, 200);
 
 //攻撃のランダム生成
 function attack_schedule(){
@@ -149,8 +149,6 @@ function attack_schedule(){
     }, delay);
 }
 
-//3秒後から攻撃開始
-setTimeout(attack_schedule(), 3000);
 
 // keydown();
 
@@ -178,7 +176,17 @@ function keyupHandler(e) {
     }
 }
 
-// キーを押したときにtrueにする
-document.addEventListener('keydown', keydownHandler);
-// キーを離したときにfalseにする
-document.addEventListener('keyup', keyupHandler);
+if(move){
+    enemydraw();
+
+    randomMove();
+    setInterval(randomMove, 200);
+
+    //3秒後から攻撃開始
+    setTimeout(attack_schedule(), 3000);
+
+    // キーを押したときにtrueにする
+    document.addEventListener('keydown', keydownHandler);
+    // キーを離したときにfalseにする
+    document.addEventListener('keyup', keyupHandler);
+}

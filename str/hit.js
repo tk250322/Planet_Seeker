@@ -1,5 +1,7 @@
 console.log("hit.js読み込み済み");
 
+//ヒットポイント
+let enemy_hp = 10;
 
 //重なり判定の取得と攻撃の消去
 function overlap() {
@@ -45,9 +47,30 @@ function overlap() {
     if (hit) {
       console.log("ヒット");
       p_b.remove();
+      enemy_hp--;
     }
   }
 
+  if(enemy_hp == 0){
+    Array.from(player_bullets).forEach(e => {
+      e.remove();
+    });
+    Array.from(enemy_bullets).forEach(e => {
+      e.remove();
+    });
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        if(confirm("勝利")){
+          go_reslt();
+        }
+      })
+    });
+  }
+
+}
+
+function go_reslt(){
+  console.log("result");
 }
 setInterval(()=>overlap(), 16);
 
