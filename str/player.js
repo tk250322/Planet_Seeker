@@ -1,8 +1,5 @@
 // 読みこまれたら実行
 document.addEventListener('DOMContentLoaded', function() {
-    //描画処理
-    let move = false;
-    move = true;
     // 関数keydownHandlerの定義
     function keydownHandler(e) {
         // 押されたキーの値をチェック
@@ -173,8 +170,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 16);
     }
 
-    // move = true;
-    if(move){
+    //描画処理
+    window.player_start = function(){
         // キーを押したときにtrueにする
         document.addEventListener('keydown', keydownHandler);
         // キーを離したときにfalseにする

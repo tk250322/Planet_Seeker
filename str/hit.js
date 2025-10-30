@@ -1,77 +1,121 @@
-console.log("hit.js読み込み済み");
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("hit.js読み込み済み");
+  let first = true;
+  //ヒットポイント
+  let enemy_hp = 10;
+  let player_hp = 5;
 
-//ヒットポイント
-let enemy_hp = 10;
-
-//重なり判定の取得と攻撃の消去
-function overlap() {
-  const enemy_bullets = document.getElementsByClassName("enemy_bullet");
-
-  //playerの当たり判定取得
-  const player = document.getElementById("player-pos");
-  const playerRect = player.getBoundingClientRect();
-
-  for (let i = 0; i < enemy_bullets.length; i++) {
-    const e_b = enemy_bullets[i];
-    const bulletRect = e_b.getBoundingClientRect();
-
-    //当たったらtrue
-    const hit =
-      bulletRect.left < playerRect.right &&
-      bulletRect.right > playerRect.left &&
-      bulletRect.top < playerRect.bottom &&
-      bulletRect.bottom > playerRect.top;
-
-    if (hit) {
-      console.log("ダメージ");
-      e_b.remove();
-    }
-  }
-  const player_bullets = document.getElementsByClassName("player_bullet");
-
-  //enemyの当たり判定取得
-  const enemy = document.getElementById("enemy-pos");
-  const enemyRect = enemy.getBoundingClientRect();
-
-  for (let i = 0; i < player_bullets.length; i++) {
-    const p_b = player_bullets[i];
-    const bulletRect = p_b.getBoundingClientRect();
-
-    //当たったらtrue
-    const hit =
-      bulletRect.left < enemyRect.right &&
-      bulletRect.right > enemyRect.left &&
-      bulletRect.top < enemyRect.bottom &&
-      bulletRect.bottom > enemyRect.top;
-
-    if (hit) {
-      console.log("ヒット");
-      p_b.remove();
-      enemy_hp--;
-    }
+  //攻撃削除
+  function bullet_remove(){
+      const enemy_bullets = document.getElementsByClassName("enemy_bullet");
+      const player_bullets = document.getElementsByClassName("player_bullet");
+      Array.from(player_bullets).forEach(e => {
+        e.remove();
+      });
+      Array.from(enemy_bullets).forEach(e => {
+        e.remove();
+      });
   }
 
-  if(enemy_hp == 0){
-    Array.from(player_bullets).forEach(e => {
-      e.remove();
-    });
-    Array.from(enemy_bullets).forEach(e => {
-      e.remove();
-    });
-    requestAnimationFrame(()=>{
+  //重なり判定の取得と攻撃の消去
+  function overlap() {
+    //攻撃の取得
+    const enemy_bullets = document.getElementsByClassName("enemy_bullet");
+    const player_bullets = document.getElementsByClassName("player_bullet");
+
+    //playerの当たり判定取得
+    const player = document.getElementById("player-pos");
+    const playerRect = player.getBoundingClientRect();
+
+    //enemyの当たり判定取得
+    const enemy = document.getElementById("enemy-pos");
+    const enemyRect = enemy.getBoundingClientRect();
+
+    //ダメージ処理
+    for (let i = 0; i < enemy_bullets.length; i++) {
+      const e_b = enemy_bullets[i];
+      const bulletRect = e_b.getBoundingClientRect();
+
+      //当たったらtrue
+      const hit =
+        bulletRect.left < playerRect.right &&
+        bulletRect.right > playerRect.left &&
+        bulletRect.top < playerRect.bottom &&
+        bulletRect.bottom > playerRect.top;
+
+      if (hit) {
+        console.log("ダメージ");
+        e_b.remove();
+        player_hp--;
+      }
+    }
+
+    //ヒット処理
+    for (let i = 0; i < player_bullets.length; i++) {
+      const p_b = player_bullets[i];
+      const bulletRect = p_b.getBoundingClientRect();
+
+      //当たったらtrue
+      const hit =
+        bulletRect.left < enemyRect.right &&
+        bulletRect.right > enemyRect.left &&
+        bulletRect.top < enemyRect.bottom &&
+        bulletRect.bottom > enemyRect.top;
+
+      if (hit) {
+        console.log("ヒット");
+        p_b.remove();
+        enemy_hp--;
+      }
+    }
+
+    //勝利
+    if(enemy_hp == 0 && first){
+      //処理の重複防止
+      first = false;
+      
+      //攻撃削除
+      bullet_remove();
+
+      //リザルトへ移動
       requestAnimationFrame(()=>{
-        if(confirm("勝利")){
-          go_reslt();
-        }
-      })
-    });
+        requestAnimationFrame(()=>{
+          if(confirm("勝利")){
+            go_reslt();
+            window.location.href = "result.html"
+          }
+        })
+      });
+    }
+
+    //敗北
+    if(player_hp == 0 && first){
+      first = false;
+
+      bullet_remove();
+
+      requestAnimationFrame(()=>{
+        requestAnimationFrame(()=>{
+          if(confirm("敗北")){
+            go_reslt();
+            window.location.href = "result.html"
+          }
+        })
+      });
+
+    }
+
   }
 
-}
+  //リザルトへ移動
+  function go_reslt(){
+    console.log("result");
+  }
 
-function go_reslt(){
-  console.log("result");
-}
-setInterval(()=>overlap(), 16);
+  //描画処理
+  window.hit_start = function(){
+    setInterval(()=>overlap(), 16);
 
-setInterval(console.clear, 30000);
+    setInterval(console.clear, 30000);
+  }
+});
