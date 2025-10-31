@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Planet Seeker</title>
+  <link rel="stylesheet" href="./../style/game_area.css" />
+</head>
+<body>
+  <!-- ゲーム画面 -->
+  <div id="game_play_screen" class="screen">
+  <!-- ゲームプレイエリア -->
+  <div id="game_play_area">
+  <!-- タイム -->
+  <div id="timer">00:00:00</div>
+  <!-- エネミーエリア -->
+  <canvas id="enemycanvas" width="600" height="160"></canvas>
+  <!-- プレイヤーエリア -->
+  <canvas id="playercanvas" width="600" height="400"></canvas>
+  <!-- キャラクター画像 -->
+  <img src="../assets/images/spaceship.png" id="player" class="character" alt="プレイヤー"/>
+  <img src="../assets/images/enemy_ufo.png" id="enemy_ufo" class="character" alt="UFO" style="display: none;"/>
+  </div>
+  <!-- スクリプト"enemycanvas" -->
+  <script src="../str/enemy.js"></script>
+  <!-- スクリプト"playercanvas" -->
+  <script src="../str/player.js"></script>
+  <!-- スクリプト"timer" -->
+  <script src="../str/time.js"></script>
+  <script src="../str/hit.js"></script>
+</body>
+</html>
