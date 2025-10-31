@@ -89,8 +89,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // 描画位置を更新する
         update();
 
-        // 描画する
-        ctx.drawImage(playerImage, X, Y, Width, Height);
+        if(player_blinking){
+            // 描画する
+            ctx.drawImage(playerImage, X, Y, Width, Height);
+        }
 
         // 繰り返してアニメーションする
         requestAnimationFrame(draw);

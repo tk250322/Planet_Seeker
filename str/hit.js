@@ -5,6 +5,23 @@ document.addEventListener('DOMContentLoaded', function() {
   let enemy_hp = 10;
   let player_hp = 5;
 
+  // 無敵時間
+  let hit_pos = true;
+
+  // 点滅
+  window.player_blinking = true;
+
+  function player_display_change (){
+    const system = setInterval(() => {
+      window.player_blinking = !window.player_blinking;
+      console.log("変化");
+    }, 50);
+    setTimeout(() => {
+      clearInterval(system);
+      window.player_blinking = true;
+    }, 1000);
+  }
+
   //攻撃削除
   function bullet_remove(){
       const enemy_bullets = document.getElementsByClassName("enemy_bullet");
@@ -47,12 +64,20 @@ document.addEventListener('DOMContentLoaded', function() {
         bulletRect.top < playerRect.bottom &&
         bulletRect.bottom > playerRect.top;
 
-      if (hit) {
+      
+      
+      if (hit && hit_pos) {
         console.log("ダメージ");
+        hit_pos = false;
         e_b.remove();
         player_hp--;
         hp_height -= 30;
         hp_style.style.height = `${hp_height}px`;
+        player_display_change();
+        setTimeout(()=>{
+          hit_pos = true;
+        }, 1300);
+        player_blinking = true;
       }
     }
 
