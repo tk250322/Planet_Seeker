@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     //描画処理
     let move = false;
-    move = true;
     // 関数keydownHandlerの定義
     function keydownHandler(e) {
         // 押されたキーの値をチェック
@@ -173,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 16);
     }
 
-    // move = true;
+    move = true;
     if(move){
         // キーを押したときにtrueにする
         document.addEventListener('keydown', keydownHandler);
