@@ -84,3 +84,13 @@ canvas {
   width: 160px;
   height: 160px;
 }
+
+#HP{
+  position:absolute;
+  top: 400px;
+  right: 10px;
+  height: 150px;
+  width: 5px;
+  background-color: #00ff1a;
+  z-index: 1;
+}

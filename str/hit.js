@@ -27,6 +27,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const player = document.getElementById("player-pos");
     const playerRect = player.getBoundingClientRect();
 
+    //プレイヤーのHPスタイル取得
+    // const hp_style = doqument.getElementById("HP");
+    // let hp_height = parseInt(hp_style.style.height || "100", 10);
+
     //enemyの当たり判定取得
     const enemy = document.getElementById("enemy-pos");
     const enemyRect = enemy.getBoundingClientRect();
@@ -47,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("ダメージ");
         e_b.remove();
         player_hp--;
+        // hp_height -= 30;
+        // hp_style.style.height = `${hp_height}px`;
       }
     }
 
