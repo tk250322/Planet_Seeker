@@ -24,6 +24,7 @@ body {
 
 /* タイム */
 #timer {
+  display:none;
   position: absolute;
   top: 10px;
   right: 10px;
@@ -73,9 +74,26 @@ canvas {
   height: 30px;
 }
 
+.player_bullet {
+  width: 30px;
+  height: 30px;
+}
+
 /* キャラ共通スタイル */
 .enemy {
   position: absolute;
   width: 160px;
   height: 160px;
+}
+
+#HP{
+  display:none;
+  position:absolute;
+  bottom: 10px;
+  right: 10px;
+  height: 150px;
+  width: 5px;
+  background-color: #00ff1a;
+  z-index: 1;
+  transition: height 0.8s ease;
 }
