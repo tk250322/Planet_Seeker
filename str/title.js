@@ -14,22 +14,20 @@ window.addEventListener('load', () => {
   });
 });
 
-
 // ボタンを取得
-const button = document.getElementById('save_button');
-
-button.addEventListener('click', () => {
-  const decisionSound = new Audio('../assets/sounds/effects/button.mp3');
-  decisionSound.volume = 1.0;
-  decisionSound.currentTime = 0;
-
-  // 再生が成功したら遷移
-  decisionSound.play().then(() => {
+function setupButton(id, url) {
+  const btn = document.getElementById(id);
+  btn.addEventListener('click', () => {
+    const sound = new Audio('../assets/sounds/effects/button.mp3');
+    sound.volume = 1.0;
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
     setTimeout(() => {
-      window.location.href = 'game_area.html';
-    }, 700); 
-  }).catch(err => {
-    // 音が鳴らなくても遷移は続行
-    window.location.href = 'game_area.html';
+      window.location.href = url;
+    }, 700);
   });
-});
+}
+
+setupButton('debris_button', 'debris.html');
+setupButton('UFO_button', 'UFO.html');
+setupButton('save_button', 'game_area.html');
