@@ -140,6 +140,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let attack_timing = false;
     
     function player_attack(){
+        if(!attackloop)return;
+
         // 球の形
         const attack = document.createElement("img");
         
@@ -178,5 +180,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('keyup', keyupHandler);
         // アニメーション開始
         draw();
+        document.getElementById("HP").style.display = "block";
     }
 });

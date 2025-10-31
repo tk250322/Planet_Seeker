@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const playerRect = player.getBoundingClientRect();
 
     //プレイヤーのHPスタイル取得
-    // const hp_style = doqument.getElementById("HP");
-    // let hp_height = parseInt(hp_style.style.height || "100", 10);
+    const hp_style = document.getElementById("HP");
+    let hp_height = parseInt(hp_style.style.height || "150" , 10);
 
     //enemyの当たり判定取得
     const enemy = document.getElementById("enemy-pos");
@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("ダメージ");
         e_b.remove();
         player_hp--;
-        // hp_height -= 30;
-        // hp_style.style.height = `${hp_height}px`;
+        hp_height -= 30;
+        hp_style.style.height = `${hp_height}px`;
       }
     }
 
@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if(enemy_hp == 0 && first){
       //処理の重複防止
       first = false;
+      attackloop = false;
       
       //攻撃削除
       bullet_remove();
@@ -97,16 +98,17 @@ document.addEventListener('DOMContentLoaded', function() {
     //敗北
     if(player_hp == 0 && first){
       first = false;
-
+      attackloop = false;
+      
       bullet_remove();
 
       requestAnimationFrame(()=>{
-        requestAnimationFrame(()=>{
+        setTimeout(()=>{
           if(confirm("敗北")){
             go_reslt();
             window.location.href = "result.html"
           }
-        })
+        }, 800);
       });
 
     }

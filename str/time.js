@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
       seconds++;
       updateTimerDisplay();
     }, 1000);
+
+    document.getElementById("timer").style.display = "block";
   }
   // };
 

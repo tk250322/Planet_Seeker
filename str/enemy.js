@@ -78,6 +78,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //攻撃の実装
     function enemy_attack(){
+        //プレイヤーが死んだ後に攻撃を発射しない
+        if(!attackloop)return;
+
         // 球の形
         const attack = document.createElement("img");
         
