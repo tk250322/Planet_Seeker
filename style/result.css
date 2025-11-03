@@ -76,3 +76,96 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
+
+/* .result-boxと.creditをまとめる親 (これが画面中央に来る) */
+.container {
+  /* .creditを絶対配置するための「基準点」にする */
+  position: relative; 
+
+}
+
+.credit h3 {
+  text-align: center;
+  font-size: 25px;
+  left: 10px;
+  color: #ffff00;
+}
+
+/* クレジットボックスのスタイル (★ここが重要★) */
+.credit {
+  /* 1. 配置方法を「絶対配置」にする */
+  position: absolute;
+  
+  /* 2. 基準点(.container)からの位置を決める */
+  top: 0;       /* 上端を.containerの上端に合わせる */
+  left: 100%;   /* .containerの右端(100%)からスタートする */
+  
+  /* 3. 隙間をあける */
+  margin-left: 40px; /* .result-boxから40px離す */
+
+  /* 4. 見た目のスタイル (前回と同じ) */
+  background-color: #002244;
+  border: 4px solid #ffff00;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  width: 200px; /* 必要なら調整 */
+  height: 505px;
+  color: #ffffff;
+  
+  /* 5. 文字揃え (bodyの text-align: center を上書き) */
+  text-align: left; 
+}
+
+/* クレジット内のテキストスタイル */
+.credit .role {
+  font-weight: bold;
+  font-size: 18px; 
+  color: #ffff00;
+  margin-bottom: 5px;
+}
+
+.credit .name {
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+/* 1. 画像共通の配置 (左側に配置) */
+.character {
+  /* 1. 配置方法を「絶対配置」にする */
+  position: absolute;
+  
+  /* 2. 基準点(.container)からの位置を決める */
+  right: 100%;    /* .containerの左端(right 100%)からスタート */
+  
+  /* 3. 隙間をあける */
+  margin-right: 40px; /* .result-boxから40px離す */
+
+  /* 4. 画像の横幅を指定 (ご自身の画像サイズに合わせて調整してください) */
+  width: 200px; 
+  height: auto; /* 縦横比は自動 */
+}
+
+/* 2. 画像を個別に縦に並べる (IDで指定) */
+#player {
+  right: 540px;
+  top: 300px; /* 1枚目 (上端に合わせる) */
+}
+
+#enemy {
+  /* 例: 1枚目の画像の高さが150px + 隙間20px の場合 
+  */
+  right: 450px;
+  top: 100px; 
+}
+
+#enemy_ufo {
+  /* 例: 2枚目からの位置 + 2枚目の高さ150px + 隙間20px の場合
+  */
+  right: 620px;
+  top: 100px; 
+}
+
