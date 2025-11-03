@@ -3,13 +3,13 @@ window.attackloop = true;
 // 1. メッセージ配列
 const messages = [
   { speaker: "null", name: null, text: "とうとう惑星の目の前に到着した。" },
-  { speaker: "girl", name: "エクゾクォア", text: "よく来たな。遠き星に住む生物よ。我はエクゾクォア、「外宇宙の審問官」である。" },
-  { speaker: "girl", name: "エクゾクォア", text: "名乗るがいい、ここがお前の墓場となる。" },
-  { speaker: "boy",  name: "ルミナス：ノア", text: "俺の名は、ルミナス・ノア。星の命を、光で繋ぐ者、Planet Seekerだ。" },
-  { speaker: "girl", name: "エクゾクォア", text: "いい名だ。だが、お前たちの旅路はここで終わる。" },
-  { speaker: "boy",  name: "ルミナス：ノア", text: "お前、もしかして俺たちの星を攻撃してきたやつじゃないのか？" },
-  { speaker: "girl", name: "エクゾクォア", text: "よく気が付いたな。ここまで来ただけはある。だが、ここまでだ。" },
-  { speaker: "boy",  name: "ルミナス：ノア", text: "人類のかたき。絶対に倒す！！！" },
+  { speaker: "boss", name: "エクゾクォア", text: "よく来たな。遠き星に住む生物よ。我はエクゾクォア、「外宇宙の審問官」である。" },
+  { speaker: "boss", name: "エクゾクォア", text: "名乗るがいい、ここがお前の墓場となる。" },
+  { speaker: "main",  name: "ルミナス：ノア", text: "俺の名は、ルミナス・ノア。星の命を、光で繋ぐ者、Planet Seekerだ。" },
+  { speaker: "boss", name: "エクゾクォア", text: "いい名だ。だが、お前たちの旅路はここで終わる。" },
+  { speaker: "main",  name: "ルミナス：ノア", text: "お前、もしかして俺たちの星を攻撃してきたやつじゃないのか？" },
+  { speaker: "boss", name: "エクゾクォア", text: "よく気が付いたな。ここまで来ただけはある。だが、ここまでだ。" },
+  { speaker: "main",  name: "ルミナス：ノア", text: "人類のかたき。絶対に倒す！！！" },
 ];
 
 // 2. グローバル変数
@@ -24,9 +24,9 @@ const bgmGame = new Audio('../assets/sounds/BGM/boss.mp3');
 const seClick = new Audio('../assets/sounds/effects/text_se.mp3');
 
 // BGM/SEの初期設定 (音量調整)
-bgmNovel.volume = 0.3;
-bgmGame.volume = 0.4;
-seClick.volume = 0.7;
+bgmNovel.volume = 0.7;
+bgmGame.volume = 0.7;
+seClick.volume = 0.3;
 // ▼▼▼ メッセージ送りSEをループ再生に設定 ▼▼▼
 seClick.loop = true;
 
