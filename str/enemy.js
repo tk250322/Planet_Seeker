@@ -41,8 +41,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // 描画位置を更新する
         update();
 
-        // 描画する
-        enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);
+        if (enemy_blinking){
+            // 描画する
+            enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);            
+        }
+
 
         // 繰り返してアニメーションする
         requestAnimationFrame(enemydraw);

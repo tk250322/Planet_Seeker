@@ -5,11 +5,15 @@ document.addEventListener('DOMContentLoaded', function() {
   let enemy_hp = 10;
   let player_hp = 5;
 
-  // 無敵時間
-  let hit_pos = true;
+  // playerの無敵時間
+  let player_hit_pos = true;
+  // enemyの無敵時間
+  let enemy_hit_pos = true;
 
   // playerの点滅
   window.player_blinking = true;
+  // enemyの点滅
+  window.enemy_blinking = true;
 
   // playerの点滅処理
   function player_display_change (){
@@ -20,6 +24,17 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
       clearInterval(player_system);
       window.player_blinking = true;
+    }, 1000);
+  }
+
+  function enemy_display_change (){
+    const enemy_system = setInterval(() => {
+      window.enemy_blinking = !window.enemy_blinking;
+      console.log("enemy変化");
+    }, 50);
+    setTimeout(() => {
+      clearInterval(enemy_system);
+      window.enemy_blinking = true;
     }, 1000);
   }
 
@@ -67,16 +82,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
       
       
-      if (hit && hit_pos) {
+      if (hit && player_hit_pos) {
         console.log("ダメージ");
-        hit_pos = false;
+        player_hit_pos = false;
         e_b.remove();
         player_hp--;
         hp_height -= 30;
         hp_style.style.height = `${hp_height}px`;
         player_display_change();
         setTimeout(()=>{
-          hit_pos = true;
+          player_hit_pos = true;
         }, 1300);
         player_blinking = true;
       }
@@ -94,10 +109,16 @@ document.addEventListener('DOMContentLoaded', function() {
         bulletRect.top < enemyRect.bottom &&
         bulletRect.bottom > enemyRect.top;
 
-      if (hit) {
+      if (hit && enemy_hit_pos) {
         console.log("ヒット");
+        enemy_hit_pos = false;
         p_b.remove();
         enemy_hp--;
+        enemy_display_change();
+        setTimeout(() => {
+          enemy_hit_pos = true;
+        }, 1300);
+        player_blinking = true;
       }
     }
 
