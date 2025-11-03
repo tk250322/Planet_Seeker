@@ -2,9 +2,14 @@ window.attackloop = true;
 
 // 1. メッセージ配列
 const messages = [
-  { speaker: "girl", name: "女の子", text: "いい縁側ですね 気に入りました" },
-  { speaker: "boy",  name: "男の子", text: "そうだろう 僕のお気に入りなんだ" },
-  { speaker: "girl", name: "女の子", text: "ここでお茶でも飲みたいですね" },
+  { speaker: "null", name: null, text: "とうとう惑星の目の前に到着した。" },
+  { speaker: "girl", name: "エクゾクォア", text: "よく来たな。遠き星に住む生物よ。我はエクゾクォア、「外宇宙の審問官」である。" },
+  { speaker: "girl", name: "エクゾクォア", text: "名乗るがいい、ここがお前の墓場となる。" },
+  { speaker: "boy",  name: "ルミナス：ノア", text: "俺の名は、ルミナス・ノア。星の命を、光で繋ぐ者、Planet Seekerだ。" },
+  { speaker: "girl", name: "エクゾクォア", text: "いい名だ。だが、お前たちの旅路はここで終わる。" },
+  { speaker: "boy",  name: "ルミナス：ノア", text: "お前、もしかして俺たちの星を攻撃してきたやつじゃないのか？" },
+  { speaker: "girl", name: "エクゾクォア", text: "よく気が付いたな。ここまで来ただけはある。だが、ここまでだ。" },
+  { speaker: "boy",  name: "ルミナス：ノア", text: "人類のかたき。絶対に倒す！！！" },
 ];
 
 // 2. グローバル変数
@@ -12,7 +17,22 @@ let currentMessageIndex = 0;
 let isRevealing = false;
 let gameHasStarted = false; // ゲームの二重起動を防ぐフラグ
 
-// 3. アイコンを切り替える関数
+// ▼▼▼ オーディオ要素をAudioオブジェクトとして直接生成 ▼▼▼
+// ※パスはご自身の環境に合わせて修正してください
+const bgmNovel = new Audio('../assets/sounds/BGM/boss_textbgm.mp3');
+const bgmGame = new Audio('../assets/sounds/BGM/boss.mp3');
+const seClick = new Audio('../assets/sounds/effects/text_se.mp3');
+
+// BGM/SEの初期設定 (音量調整)
+bgmNovel.volume = 0.3;
+bgmGame.volume = 0.4;
+seClick.volume = 0.7;
+// ▼▼▼ メッセージ送りSEをループ再生に設定 ▼▼▼
+seClick.loop = true;
+
+let isNovelBgmPlaying = false; // 会話BGMの再生状態を管理するフラグ
+
+// 3. アイコンを切り替える関数 
 function updateCharacterIcon(speaker) {
   const allIcons = document.querySelectorAll("#textbox .character_icon");
   allIcons.forEach(icon => {
@@ -24,17 +44,14 @@ function updateCharacterIcon(speaker) {
   }
 }
 
-// 4. 名前ボックスを更新する関数
+// 4. 名前ボックスを更新する関数 
 function updateSpeakerName(name) {
   const nameBox = document.querySelector("#textbox #name-box");
   const nameP = document.querySelector("#textbox #speaker-name-p");
 
-  if (!nameBox || !nameP) {
-    if (!gameHasStarted) {
-        console.warn("警告: #name-box または #speaker-name-p が見つかりません。");
-    }
-    return;
-  }
+  if (!nameBox || !nameP) {
+    return;
+  }
 
   if (name) {
     nameP.textContent = name;
@@ -52,30 +69,37 @@ function initRevealTextMessage(message) {
 
   const text_message_p = document.querySelector("#textbox .text_message_p");
 
-  if (!text_message_p) {
-    console.error("エラー: #textbox .text_message_p が見つかりません。");
-    return;
-  }
+  if (!text_message_p) {
+    return;
+  }
 
   text_message_p.innerHTML = ""; 
 
   let chars = [];
-  if (message.text) {
-    message.text.split("").forEach((char) => {
-      let span = document.createElement("span");
-      span.textContent = char;
-      text_message_p.appendChild(span);
+  if (message.text) {
+    message.text.split("").forEach((char) => {
+      let span = document.createElement("span");
+      span.textContent = char;
+      text_message_p.appendChild(span);
 
-      chars.push({
-        span,
-        delayAfter: char === " " ? 0 : 60,
-      });
-    });
-  }
+      chars.push({
+        span,
+        delayAfter: char === " " ? 0 : 60,
+      });
+    });
+  }
 
   isRevealing = true;
+  
+  // ▼▼▼ [SE] テキスト表示完了時にSEを停止するコールバック ▼▼▼
   revealTextMessage(chars, () => {
     isRevealing = false;
+    
+    // テキスト表示が完了したらSEを停止
+    if (seClick) {
+      seClick.pause();
+      seClick.currentTime = 0; // 再生位置をリセット
+    }
   });
 }
 
@@ -99,53 +123,94 @@ function revealTextMessage(list, onComplete) {
 
 // 7. イベントリスナー
 
-// (DOMContentLoadedイベントは変更なし)
+// (DOMContentLoadedイベント)
 window.addEventListener("DOMContentLoaded", () => {
-  if (messages.length > 0) {
-    initRevealTextMessage(messages[currentMessageIndex]);
-  }
-});
 
-// ▼▼▼ ここを修正しました (処理の順番を変更) ▼▼▼
-window.addEventListener("click", () => {
-  // 表示中か、ゲームが始まっていたら何もしない
-  if (isRevealing || gameHasStarted) return;
-
-  currentMessageIndex++;
-
-  if (currentMessageIndex < messages.length) {
+  if (messages.length > 0) {
     initRevealTextMessage(messages[currentMessageIndex]);
   }
 
-  // 最後のメッセージが終わり、まだゲームが始まっていない場合
+  // ブラウザの自動再生ポリシーにより、ユーザーがページを操作（クリックなど）
+  // するまで音声は再生できません。
+  // 最初のクリックイベントでBGM再生を開始します。
+});
+
+
+window.addEventListener("click", () => {
+  // 表示中か、ゲームが始まっていたら何もしない
+  if (isRevealing || gameHasStarted) return;
+
+  // ▼▼▼ [BGM] 最初のクリックで会話BGMを開始 ▼▼▼
+  // (ブラウザの自動再生ポリシー対策)
+  if (!isNovelBgmPlaying && bgmNovel) {
+    // play()はPromiseを返すため、catchでエラー処理を行うことが推奨されます
+    bgmNovel.play().catch(e => {});
+    isNovelBgmPlaying = true;
+  }
+
+  currentMessageIndex++;
+
+  // -----------------------------------------------
+  // 1. 次のメッセージがある場合
+  // -----------------------------------------------
+  if (currentMessageIndex < messages.length) {
+    // ▼▼▼ [SE] メッセージ送り効果音 (ループ開始) ▼▼▼
+    if (seClick) {
+      seClick.currentTime = 0; // 毎回、SEを最初から再生
+      seClick.play().catch(e => {}); // ループ再生が開始される
+    }
+    // 次のメッセージを表示
+    initRevealTextMessage(messages[currentMessageIndex]);
+  }
+
+  // -----------------------------------------------
+  // 2. 最後のメッセージが終わり、ゲームがまだ始まっていない場合
+  // -----------------------------------------------
   if (currentMessageIndex === messages.length && !gameHasStarted) {
-    
-    // すぐにフラグを立てて二重起動を防ぐ
-    gameHasStarted = true;
+    
+    // ▼▼▼ [SE] (念のため) SEが停止していることを確認 ▼▼▼
+    if (seClick) {
+        seClick.pause();
+        seClick.currentTime = 0;
+    }
 
-    // (A) ★すぐに★ メッセージボックスやアイコンを消す
-    updateCharacterIcon(null);
-    updateSpeakerName(null);
-    const textbox = document.getElementById("textbox");
-    if (textbox) {
+    // すぐにフラグを立てて二重起動を防ぐ
+    gameHasStarted = true;
+
+    // ▼▼▼ [BGM] BGMの切り替え ▼▼▼
+    if (bgmNovel) {
+      bgmNovel.pause(); // 会話BGMを停止
+      bgmNovel.currentTime = 0; // 再生位置を最初に戻す
+    }
+    if (bgmGame) {
+      bgmGame.play().catch(e => {}); // ゲームBGMを開始
+    }
+
+    // (A) メッセージボックスやアイコンを消す
+    updateCharacterIcon(null);
+    updateSpeakerName(null);
+    const textbox = document.getElementById("textbox");
+    if (textbox) {
       textbox.style.display ="none";
-    }
+    }
 
-    // (B) ★すぐに★ 「スタート」のアニメーションを開始 (CSSで2秒に設定)
-    const startDisplay = document.getElementById("start-display");
-    if (startDisplay) {
-      startDisplay.classList.add("show");
-    }
+    // (B) 「スタート」のアニメーションを開始
+    const startDisplay = document.getElementById("start-display");
+    if (startDisplay) {
+      startDisplay.classList.add("show");
+    }
 
-    // (C) 1.5秒後 (アニメーションの終了と同時) にゲームを開始
+    // (C) 1.5秒後 (CSSのアニメーション時間と同期) にゲームを開始
     setTimeout(() => {
-      
-      // (D) ゲームを開始する
-        enemy_start();
-        player_start();
-        hit_start();
-        timer_start();
-        
-    }, 1500); // ← JSの待機時間 (CSSのアニメーションと同期)
+      
+      // (D) ゲームのメイン処理を開始する
+      
+      enemy_start();
+      player_start();
+      hit_start();
+      timer_start();
+        
+    }, 1500); 
   }
 });
+
