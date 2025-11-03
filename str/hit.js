@@ -8,16 +8,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // 無敵時間
   let hit_pos = true;
 
-  // 点滅
+  // playerの点滅
   window.player_blinking = true;
 
+  // playerの点滅処理
   function player_display_change (){
-    const system = setInterval(() => {
+    const player_system = setInterval(() => {
       window.player_blinking = !window.player_blinking;
       console.log("変化");
     }, 50);
     setTimeout(() => {
-      clearInterval(system);
+      clearInterval(player_system);
       window.player_blinking = true;
     }, 1000);
   }
