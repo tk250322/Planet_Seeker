@@ -1,21 +1,24 @@
 /* --- グローバル変数 --- */
-window.attackloop = true; // (未使用ですが残します)
-let isGamePaused = false;
-let currentMessageIndex = 0;
-let isRevealing = false;
-let gameHasStarted = false;
-let isNovelBgmPlaying = false;
+window.attackloop = true; 
+let isGamePaused = false; // ゲームが一時停止中か
+let currentMessageIndex = 0; // 現在のメッセージ番号
+let isRevealing = false; // テキスト表示中か
+let gameHasStarted = false; // ゲーム本編が開始したか
+let isNovelBgmPlaying = false; // 会話BGMが再生中か
+let ismenuling = false; // (未使用のフラグ)
 
 /* --- オーディオ要素 --- */
 const bgmNovel = new Audio('../assets/sounds/BGM/boss_textbgm.mp3');
 const bgmGame = new Audio('../assets/sounds/BGM/boss.mp3');
 const seClick = new Audio('../assets/sounds/effects/text_se.mp3');
+const menuClick = new Audio('../assets/sounds/effects/menu.mp3');
 
 // BGM/SEの初期設定
 bgmNovel.volume = 0.7;
 bgmGame.volume = 0.7;
 seClick.volume = 0.3;
-seClick.loop = true; // テキスト表示中のSEとしてループ設定
+menuClick.volume = 0.5; // 音量を0.5に設定
+seClick.loop = true; // 会話中はループ再生
 
 /* --- メッセージ配列 --- */
 const messages = [
@@ -29,7 +32,7 @@ const messages = [
   { speaker: "main",  name: "ルミナス：ノア", text: "人類のかたき。絶対に倒す！！！" },
 ];
 
-/* --- 関数 (変更なし) --- */
+/* --- 関数: アイコンを更新 --- */
 function updateCharacterIcon(speaker) {
   const allIcons = document.querySelectorAll("#textbox .character_icon");
   allIcons.forEach(icon => {
@@ -40,6 +43,7 @@ function updateCharacterIcon(speaker) {
     activeIcon.classList.add("active");
   }
 }
+/* --- 関数: 話者名を更新 --- */
 function updateSpeakerName(name) {
   const nameBox = document.querySelector("#textbox #name-box");
   const nameP = document.querySelector("#textbox #speaker-name-p");
@@ -52,6 +56,7 @@ function updateSpeakerName(name) {
     nameBox.style.display = "none";
   }
 }
+/* --- 関数: メッセージ表示を開始 --- */
 function initRevealTextMessage(message) { 
   updateCharacterIcon(message.speaker);
   updateSpeakerName(message.name);
@@ -73,156 +78,173 @@ function initRevealTextMessage(message) {
   isRevealing = true;
   revealTextMessage(chars, () => {
     isRevealing = false;
+    // 表示完了したら会話SEを停止
     if (seClick) {
       seClick.pause();
       seClick.currentTime = 0;
     }
   });
 }
+/* --- 関数: 1文字ずつ表示 (再帰) --- */
 function revealTextMessage(list, onComplete) {
   const next = list.splice(0, 1)[0];
   if (!next) { 
-    onComplete();
+    onComplete(); // リストが空になったら完了コールバックを呼ぶ
     return;
   }
   next.span.classList.add("revealed");
+
   if (list.length > 0) {
     setTimeout(() => {
       revealTextMessage(list, onComplete);
     }, next.delayAfter);
   } else {
-    onComplete();
+    onComplete(); // 最後の文字を表示したら完了
   }
 }
 
 /* * ===============================================
- * イベントリスナー (DOM読み込み完了時)
- * ★★★ 2つあったDOMContentLoadedを1つに統合 ★★★
- * ===============================================
- */
+ * イベントリスナー (DOM読み込み完了時)
+ * ===============================================
+ */
 window.addEventListener('DOMContentLoaded', () => {
 
-  // 1. メニュー関連の要素を取得
-  const menuButton = document.getElementById('menu_button');
-  const menuScreen = document.getElementById('menu_screen');
-  const continueButton = document.getElementById('continue_button');
-  const returnButton = document.getElementById('return_button');
+  // 1. メニュー関連のHTML要素を取得
+  const menuButton = document.getElementById('menu_button');
+  const menuScreen = document.getElementById('menu_screen');
+  const continueButton = document.getElementById('continue_button');
+  const returnButton = document.getElementById('return_button');
 
-  // 2. 「メニュー」ボタンの処理
-  if (menuButton) {
-    menuButton.addEventListener('click', (event) => {
-      // ★★★ 修正点1: イベントの伝播を停止 ★★★
-      // (これが無いと、後ろのwindow.clickも発動してしまう)
-      event.stopPropagation(); 
-      
-      menuScreen.style.display = 'block';
-      isGamePaused = true;
-    });
-  }
+  // 2. 「メニュー」ボタンの処理
+  if (menuButton) {
+    menuButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // window.clickへの伝播を停止
+      
+      // メニュー効果音を再生
+      menuClick.currentTime = 0;
+      menuClick.play().catch(e => {});
 
-  // 3. 「続ける」ボタンの処理
-  if (continueButton) {
-    continueButton.addEventListener('click', (event) => {
-      // ★★★ 修正点1: イベントの伝播を停止 ★★★
-      event.stopPropagation(); 
-      
-      menuScreen.style.display = 'none';
-      isGamePaused = false;
-    });
-  }
+      menuScreen.style.display = 'block'; // メニューを表示
+      isGamePaused = true; // ゲームを一時停止
+    });
+  }
 
-  // 4. 「タイトルへ」ボタンの処理
-  if (returnButton) {
-    returnButton.addEventListener('click', (event) => {
-      // ★★★ 修正点1: イベントの伝播を停止 ★★★
-      event.stopPropagation(); 
-      
-      window.location.href = 'Title.html'; 
-    });
-  }
-  
-  // 5. メニュー画面の「背景」クリック処理
-  // (メニューのボタン以外の部分をクリックしても伝播を止める)
-  if (menuScreen) {
-      menuScreen.addEventListener('click', (event) => {
-          event.stopPropagation();
-      });
-  }
+  // 3. 「続ける」ボタンの処理
+  if (continueButton) {
+    continueButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // window.clickへの伝播を停止
+      
+      // メニュー効果音を再生
+      menuClick.currentTime = 0;
+      menuClick.play().catch(e => {});
 
-  // 6. (統合) 最初のメッセージを表示
-  if (messages.length > 0) {
-    initRevealTextMessage(messages[currentMessageIndex]);
-  }
-});
+      menuScreen.style.display = 'none'; // メニューを非表示
+      isGamePaused = false; // ゲームを再開
+    }); 
+  }
+
+  // 4. 「タイトルへ」ボタンの処理
+  if (returnButton) {
+    returnButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // window.clickへの伝播を停止
+      
+      // ★修正★
+      // 1. 効果音が鳴り終わったら画面遷移する、というイベントを登録
+      menuClick.addEventListener('ended', () => {
+        window.location.href = 'Title.html';
+      }, { once: true }); // 一回だけ実行する
+
+      // 2. 効果音を再生 (2回再生していたのを1回に修正)
+      menuClick.currentTime = 0;
+      menuClick.play().catch(e => {});
+    }); 
+  }
+  
+  // 5. メニュー画面の「背景」クリック処理 (ボタン以外)
+  if (menuScreen) {
+      menuScreen.addEventListener('click', (event) => {
+          // メニュー画面の背景クリックがwindow.clickに伝播しないようにする
+          event.stopPropagation();
+      }); 
+  }
+
+  // 6. 最初のメッセージを表示
+  if (messages.length > 0) {
+    initRevealTextMessage(messages[currentMessageIndex]);
+  }
+}); // DOMContentLoaded の閉じタグ
 
 
 /* * ===============================================
- * 会話送り・ゲームスタート用
- * (window.clickイベントリスナー)
- * ===============================================
- */
+ * 会話送り・ゲームスタート用
+ * (window.clickイベントリスナー)
+ * ===============================================
+ */
 window.addEventListener("click", () => {
 
-  // ★★★ 修正点2: 一時停止中は何もしない ★★★
-  if (isRevealing || gameHasStarted || isGamePaused) {
-    return;
-  }
+  // テキスト表示中、ゲーム本編中、メニュー表示中(Pause中)は処理しない
+  if (isRevealing || gameHasStarted || isGamePaused) {
+    return;
+  }
 
-  // (BGM自動再生ポリシー対策)
-  if (!isNovelBgmPlaying && bgmNovel) {
-    bgmNovel.play().catch(e => {});
-    isNovelBgmPlaying = true;
-  }
+  // ブラウザの自動再生ポリシー対策 (最初のクリックでBGM開始)
+  if (!isNovelBgmPlaying && bgmNovel) {
+    bgmNovel.play().catch(e => {});
+    isNovelBgmPlaying = true;
+  }
 
-  currentMessageIndex++;
+  currentMessageIndex++; // 次のメッセージへ
 
-  // 1. 次のメッセージがある場合
-  if (currentMessageIndex < messages.length) {
-    if (seClick) {
-      seClick.currentTime = 0;
-      seClick.play().catch(e => {});
-    }
-    initRevealTextMessage(messages[currentMessageIndex]);
-  }
+  // 1. 次のメッセージがある場合
+  if (currentMessageIndex < messages.length) {
+    // 会話送りSEを再生
+    if (seClick) {
+      seClick.currentTime = 0;
+      seClick.play().catch(e => {});
+    }
+    // 次のメッセージを表示
+    initRevealTextMessage(messages[currentMessageIndex]);
+  }
 
-  // 2. 最後のメッセージが終わった場合
-  if (currentMessageIndex === messages.length && !gameHasStarted) {
-    
-    if (seClick) {
-      seClick.pause();
-      seClick.currentTime = 0;
-    }
-    gameHasStarted = true;
+  // 2. 最後のメッセージが終わった場合 (ゲーム本編の開始)
+  if (currentMessageIndex === messages.length && !gameHasStarted) {
+    
+    // (念のため) 会話送りSEを停止
+    if (seClick) {
+      seClick.pause();
+      seClick.currentTime = 0;
+    }
+    gameHasStarted = true; // ゲーム開始フラグを立てる
 
-    // BGM切り替え
-    if (bgmNovel) {
-      bgmNovel.pause();
-      bgmNovel.currentTime = 0;
-    }
-    if (bgmGame) {
-      bgmGame.play().catch(e => {});
-    }
+    // BGM切り替え
+    if (bgmNovel) {
+      bgmNovel.pause();
+      bgmNovel.currentTime = 0;
+    }
+    if (bgmGame) {
+      bgmGame.play().catch(e => {});
+    }
 
-    // UI非表示
-    updateCharacterIcon(null);
-    updateSpeakerName(null);
-    const textbox = document.getElementById("textbox");
-    if (textbox) {
-      textbox.style.display ="none";
-    }
+    // UI非表示 (メッセージボックスなど)
+    updateCharacterIcon(null);
+    updateSpeakerName(null);
+    const textbox = document.getElementById("textbox");
+    if (textbox) {
+      textbox.style.display ="none";
+    }
 
-    // スタートアニメーション
-    const startDisplay = document.getElementById("start-display");
-    if (startDisplay) {
-      startDisplay.classList.add("show");
-    }
+    // 「スタート」アニメーション表示
+    const startDisplay = document.getElementById("start-display");
+    if (startDisplay) {
+      startDisplay.classList.add("show");
+    }
 
-    // ゲームロジックの開始
-    setTimeout(() => {
-      enemy_start();
-      player_start();
-      hit_start();
-      timer_start();
-    }, 1500); // 1.5秒後
-  }
+    // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
+    setTimeout(() => {
+      enemy_start();
+      player_start();
+      hit_start();
+      timer_start();
+    }, 1500); 
+  }
 });
