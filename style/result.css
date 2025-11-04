@@ -144,7 +144,6 @@ body {
   /* 3. 隙間をあける */
   margin-right: 40px; /* .result-boxから40px離す */
 
-  /* 4. 画像の横幅を指定 (ご自身の画像サイズに合わせて調整してください) */
   width: 200px; 
   height: auto; /* 縦横比は自動 */
 }
@@ -152,19 +151,15 @@ body {
 /* 2. 画像を個別に縦に並べる (IDで指定) */
 #player {
   right: 540px;
-  top: 300px; /* 1枚目 (上端に合わせる) */
+  top: 300px; 
 }
 
 #enemy {
-  /* 例: 1枚目の画像の高さが150px + 隙間20px の場合 
-  */
   right: 450px;
   top: 100px; 
 }
 
 #enemy_ufo {
-  /* 例: 2枚目からの位置 + 2枚目の高さ150px + 隙間20px の場合
-  */
   right: 620px;
   top: 100px; 
 }
