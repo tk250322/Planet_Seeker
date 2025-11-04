@@ -1,6 +1,23 @@
-window.attackloop = true;
+/* --- グローバル変数 --- */
+window.attackloop = true; // (未使用ですが残します)
+let isGamePaused = false;
+let currentMessageIndex = 0;
+let isRevealing = false;
+let gameHasStarted = false;
+let isNovelBgmPlaying = false;
 
-// 1. メッセージ配列
+/* --- オーディオ要素 --- */
+const bgmNovel = new Audio('../assets/sounds/BGM/boss_textbgm.mp3');
+const bgmGame = new Audio('../assets/sounds/BGM/boss.mp3');
+const seClick = new Audio('../assets/sounds/effects/text_se.mp3');
+
+// BGM/SEの初期設定
+bgmNovel.volume = 0.7;
+bgmGame.volume = 0.7;
+seClick.volume = 0.3;
+seClick.loop = true; // テキスト表示中のSEとしてループ設定
+
+/* --- メッセージ配列 --- */
 const messages = [
   { speaker: "null", name: null, text: "とうとう惑星の目の前に到着した。" },
   { speaker: "boss", name: "エクゾクォア", text: "よく来たな。遠き星に住む生物よ。我はエクゾクォア、「外宇宙の審問官」である。" },
@@ -12,27 +29,7 @@ const messages = [
   { speaker: "main",  name: "ルミナス：ノア", text: "人類のかたき。絶対に倒す！！！" },
 ];
 
-// 2. グローバル変数
-let currentMessageIndex = 0;
-let isRevealing = false;
-let gameHasStarted = false; // ゲームの二重起動を防ぐフラグ
-
-// ▼▼▼ オーディオ要素をAudioオブジェクトとして直接生成 ▼▼▼
-// ※パスはご自身の環境に合わせて修正してください
-const bgmNovel = new Audio('../assets/sounds/BGM/boss_textbgm.mp3');
-const bgmGame = new Audio('../assets/sounds/BGM/boss.mp3');
-const seClick = new Audio('../assets/sounds/effects/text_se.mp3');
-
-// BGM/SEの初期設定 (音量調整)
-bgmNovel.volume = 0.7;
-bgmGame.volume = 0.7;
-seClick.volume = 0.3;
-// ▼▼▼ メッセージ送りSEをループ再生に設定 ▼▼▼
-seClick.loop = true;
-
-let isNovelBgmPlaying = false; // 会話BGMの再生状態を管理するフラグ
-
-// 3. アイコンを切り替える関数 
+/* --- 関数 (変更なし) --- */
 function updateCharacterIcon(speaker) {
   const allIcons = document.querySelectorAll("#textbox .character_icon");
   allIcons.forEach(icon => {
@@ -43,16 +40,10 @@ function updateCharacterIcon(speaker) {
     activeIcon.classList.add("active");
   }
 }
-
-// 4. 名前ボックスを更新する関数 
 function updateSpeakerName(name) {
   const nameBox = document.querySelector("#textbox #name-box");
   const nameP = document.querySelector("#textbox #speaker-name-p");
-
-  if (!nameBox || !nameP) {
-    return;
-  }
-
+  if (!nameBox || !nameP) return;
   if (name) {
     nameP.textContent = name;
     nameBox.style.display = "block";
@@ -61,49 +52,33 @@ function updateSpeakerName(name) {
     nameBox.style.display = "none";
   }
 }
-
-// 5. テキスト表示を開始するメイン関数
 function initRevealTextMessage(message) { 
   updateCharacterIcon(message.speaker);
   updateSpeakerName(message.name);
-
   const text_message_p = document.querySelector("#textbox .text_message_p");
-
-  if (!text_message_p) {
-    return;
-  }
-
+  if (!text_message_p) return;
   text_message_p.innerHTML = ""; 
-
   let chars = [];
   if (message.text) {
     message.text.split("").forEach((char) => {
       let span = document.createElement("span");
       span.textContent = char;
       text_message_p.appendChild(span);
-
       chars.push({
         span,
         delayAfter: char === " " ? 0 : 60,
       });
     });
   }
-
   isRevealing = true;
-  
-  // ▼▼▼ [SE] テキスト表示完了時にSEを停止するコールバック ▼▼▼
   revealTextMessage(chars, () => {
     isRevealing = false;
-    
-    // テキスト表示が完了したらSEを停止
-    if (seClick) {
-      seClick.pause();
-      seClick.currentTime = 0; // 再生位置をリセット
-    }
+    if (seClick) {
+      seClick.pause();
+      seClick.currentTime = 0;
+    }
   });
 }
-
-// 6. 1文字ずつ表示する関数 (変更なし)
 function revealTextMessage(list, onComplete) {
   const next = list.splice(0, 1)[0];
   if (!next) { 
@@ -111,7 +86,6 @@ function revealTextMessage(list, onComplete) {
     return;
   }
   next.span.classList.add("revealed");
-
   if (list.length > 0) {
     setTimeout(() => {
       revealTextMessage(list, onComplete);
@@ -121,96 +95,134 @@ function revealTextMessage(list, onComplete) {
   }
 }
 
-// 7. イベントリスナー
+/* * ===============================================
+ * イベントリスナー (DOM読み込み完了時)
+ * ★★★ 2つあったDOMContentLoadedを1つに統合 ★★★
+ * ===============================================
+ */
+window.addEventListener('DOMContentLoaded', () => {
 
-// (DOMContentLoadedイベント)
-window.addEventListener("DOMContentLoaded", () => {
+  // 1. メニュー関連の要素を取得
+  const menuButton = document.getElementById('menu_button');
+  const menuScreen = document.getElementById('menu_screen');
+  const continueButton = document.getElementById('continue_button');
+  const returnButton = document.getElementById('return_button');
 
-  if (messages.length > 0) {
-    initRevealTextMessage(messages[currentMessageIndex]);
-  }
+  // 2. 「メニュー」ボタンの処理
+  if (menuButton) {
+    menuButton.addEventListener('click', (event) => {
+      // ★★★ 修正点1: イベントの伝播を停止 ★★★
+      // (これが無いと、後ろのwindow.clickも発動してしまう)
+      event.stopPropagation(); 
+      
+      menuScreen.style.display = 'block';
+      isGamePaused = true;
+    });
+  }
 
-  // ブラウザの自動再生ポリシーにより、ユーザーがページを操作（クリックなど）
-  // するまで音声は再生できません。
-  // 最初のクリックイベントでBGM再生を開始します。
+  // 3. 「続ける」ボタンの処理
+  if (continueButton) {
+    continueButton.addEventListener('click', (event) => {
+      // ★★★ 修正点1: イベントの伝播を停止 ★★★
+      event.stopPropagation(); 
+      
+      menuScreen.style.display = 'none';
+      isGamePaused = false;
+    });
+  }
+
+  // 4. 「タイトルへ」ボタンの処理
+  if (returnButton) {
+    returnButton.addEventListener('click', (event) => {
+      // ★★★ 修正点1: イベントの伝播を停止 ★★★
+      event.stopPropagation(); 
+      
+      window.location.href = 'Title.html'; 
+    });
+  }
+  
+  // 5. メニュー画面の「背景」クリック処理
+  // (メニューのボタン以外の部分をクリックしても伝播を止める)
+  if (menuScreen) {
+      menuScreen.addEventListener('click', (event) => {
+          event.stopPropagation();
+      });
+  }
+
+  // 6. (統合) 最初のメッセージを表示
+  if (messages.length > 0) {
+    initRevealTextMessage(messages[currentMessageIndex]);
+  }
 });
 
 
+/* * ===============================================
+ * 会話送り・ゲームスタート用
+ * (window.clickイベントリスナー)
+ * ===============================================
+ */
 window.addEventListener("click", () => {
-  // 表示中か、ゲームが始まっていたら何もしない
-  if (isRevealing || gameHasStarted) return;
 
-  // ▼▼▼ [BGM] 最初のクリックで会話BGMを開始 ▼▼▼
-  // (ブラウザの自動再生ポリシー対策)
+  // ★★★ 修正点2: 一時停止中は何もしない ★★★
+  if (isRevealing || gameHasStarted || isGamePaused) {
+    return;
+  }
+
+  // (BGM自動再生ポリシー対策)
   if (!isNovelBgmPlaying && bgmNovel) {
-    // play()はPromiseを返すため、catchでエラー処理を行うことが推奨されます
     bgmNovel.play().catch(e => {});
     isNovelBgmPlaying = true;
   }
 
-  currentMessageIndex++;
+  currentMessageIndex++;
 
-  // -----------------------------------------------
-  // 1. 次のメッセージがある場合
-  // -----------------------------------------------
-  if (currentMessageIndex < messages.length) {
-    // ▼▼▼ [SE] メッセージ送り効果音 (ループ開始) ▼▼▼
+  // 1. 次のメッセージがある場合
+  if (currentMessageIndex < messages.length) {
     if (seClick) {
-      seClick.currentTime = 0; // 毎回、SEを最初から再生
-      seClick.play().catch(e => {}); // ループ再生が開始される
+      seClick.currentTime = 0;
+      seClick.play().catch(e => {});
     }
-    // 次のメッセージを表示
-    initRevealTextMessage(messages[currentMessageIndex]);
-  }
+    initRevealTextMessage(messages[currentMessageIndex]);
+  }
 
-  // -----------------------------------------------
-  // 2. 最後のメッセージが終わり、ゲームがまだ始まっていない場合
-  // -----------------------------------------------
-  if (currentMessageIndex === messages.length && !gameHasStarted) {
-    
-    // ▼▼▼ [SE] (念のため) SEが停止していることを確認 ▼▼▼
+  // 2. 最後のメッセージが終わった場合
+  if (currentMessageIndex === messages.length && !gameHasStarted) {
+    
     if (seClick) {
-        seClick.pause();
-        seClick.currentTime = 0;
+      seClick.pause();
+      seClick.currentTime = 0;
     }
+    gameHasStarted = true;
 
-    // すぐにフラグを立てて二重起動を防ぐ
-    gameHasStarted = true;
-
-    // ▼▼▼ [BGM] BGMの切り替え ▼▼▼
+    // BGM切り替え
     if (bgmNovel) {
-      bgmNovel.pause(); // 会話BGMを停止
-      bgmNovel.currentTime = 0; // 再生位置を最初に戻す
+      bgmNovel.pause();
+      bgmNovel.currentTime = 0;
     }
     if (bgmGame) {
-      bgmGame.play().catch(e => {}); // ゲームBGMを開始
+      bgmGame.play().catch(e => {});
     }
 
-    // (A) メッセージボックスやアイコンを消す
-    updateCharacterIcon(null);
-    updateSpeakerName(null);
-    const textbox = document.getElementById("textbox");
-    if (textbox) {
-      textbox.style.display ="none";
-    }
+    // UI非表示
+    updateCharacterIcon(null);
+    updateSpeakerName(null);
+    const textbox = document.getElementById("textbox");
+    if (textbox) {
+      textbox.style.display ="none";
+    }
 
-    // (B) 「スタート」のアニメーションを開始
-    const startDisplay = document.getElementById("start-display");
-    if (startDisplay) {
-      startDisplay.classList.add("show");
-    }
+    // スタートアニメーション
+    const startDisplay = document.getElementById("start-display");
+    if (startDisplay) {
+      startDisplay.classList.add("show");
+    }
 
-    // (C) 1.5秒後 (CSSのアニメーション時間と同期) にゲームを開始
-    setTimeout(() => {
-      
-      // (D) ゲームのメイン処理を開始する
-      
-      enemy_start();
-      player_start();
-      hit_start();
-      timer_start();
-        
-    }, 1500); 
-  }
+    // ゲームロジックの開始
+    setTimeout(() => {
+      enemy_start();
+      player_start();
+      hit_start();
+      timer_start();
+    }, 1500); // 1.5秒後
+  }
 });
-

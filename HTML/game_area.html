@@ -25,8 +25,6 @@
     <img src="../assets/images/enemy_attack.png" id="enemy_effect" class="effect enemy" alt="エネミー攻撃エフェクト" style="display: none;"/>
     <!-- スタート -->
     <div id="start-display">スタート</div>
-    <!-- リザルトボタン -->
-    <button id="result_button" style = "display: none">リザルトへ</button>
     <!-- タイム -->
     <div id="timer">00:00:00</div>
     <!-- メッセージボックス -->
@@ -39,10 +37,19 @@
     <img id="icon_boss" class="character_icon" src="../assets/icons/boss2.png" alt="エクゾクォア">
     <img id="icon_main" class="character_icon" src="../assets/icons/main1.png" alt="ルミナス・ノア">
     </div>
+    <!-- シナリオテキスト -->
     <div class="text_message">
     <p class="text_message_p"></p>
     </div>
     </div>
+    <!-- メニュー -->
+    <button id="menu_button" >メニュー</button>
+    <div id="menu_screen" style="display: none;">
+    <h1>メニュー</h1>
+    <div class="menu_content">
+    <button id="return_button">タイトルへ</button>
+    <button id="continue_button">続けるへ</button>
+    </div></div>
     <!-- ヒットポイント -->
     <div id="HP"></div>
     </div>
