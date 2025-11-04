@@ -125,7 +125,6 @@
     animation: fade-out-start 2s ease-out forwards;
 }
 
-/* (変更なし) */
 @keyframes fade-out-start {
     0% {
         opacity: 1;
@@ -186,7 +185,7 @@
   padding: 30px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   
-  z-index: 99; /* menu_button よりは奥 */
+  z-index: 9999; /* menu_button よりは奥 */
 }
 
 h1 {
