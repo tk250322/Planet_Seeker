@@ -34,6 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function enemydraw() {
+        //メインループの停止
+        if (window.isGamePaused) {
+            requestAnimationFrame(enemydraw); // ループの再開に備えて要求だけは続ける
+             return; // 描画も更新もせずに終了
+        }
         // キャンバスをクリアにする
         enemyctx.clearRect(0, 0, enemycanvas.width, enemycanvas.height);
         
@@ -107,6 +112,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const speed = 4;
         const move = setInterval(() => {
+            if (window.isGamePaused) {
+                return; // 一時停止中なら弾を動かさない
+            }
             const currentTop = parseInt(attack.style.top);
             attack.style.top = `${currentTop + speed}px`;
 
@@ -129,6 +137,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // //移動処理
     function randomMove(){
+        //弾の移動を停止
+        if (window.isGamePaused) {
+            return; // 一時停止中なら移動方向を変えない
+        }
         //敵の移動を初期化
         enemyLeft = false;
         enemyRigth = false;
@@ -144,7 +156,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function attack_schedule(){
         const delay = (randomNamber() + 1.5)*400;
         setTimeout(()=>{
+            // 一時停止中でない場合のみ、攻撃する
+            if (!window.isGamePaused) {
             enemy_attack();
+            }
             attack_schedule();
         }, delay);
     }

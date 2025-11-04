@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // window.onload = () => {
   window.timer_start = function(){
     timer = setInterval(() => {
+      if (isGamePaused) {
+        return; // 一時停止中なら、秒数を加算しないで終了
+      }
       seconds++;
       updateTimerDisplay();
     }, 1000);
