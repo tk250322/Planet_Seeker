@@ -8,8 +8,8 @@ let isNovelBgmPlaying = false; // 会話BGMが再生中か
 let ismenuling = false; // (未使用のフラグ)
 
 /* --- オーディオ要素 --- */
-const bgmNovel = new Audio('../assets/sounds/BGM/boss_textbgm.mp3');
-const bgmGame = new Audio('../assets/sounds/BGM/boss.mp3');
+const bgmNovel = new Audio('../assets/sounds/BGM/boss_scenario.mp3');
+const bgmGame = new Audio('../assets/sounds/BGM/boss_bgm.mp3');
 const seClick = new Audio('../assets/sounds/effects/text_se.mp3');
 const menuClick = new Audio('../assets/sounds/effects/menu.mp3');
 
@@ -19,6 +19,8 @@ bgmGame.volume = 0.7;
 seClick.volume = 0.3;
 menuClick.volume = 0.5; // 音量を0.5に設定
 seClick.loop = true; // 会話中はループ再生
+bgmNovel.loop = true;
+bgmGame.loop = true;
 
 /* --- メッセージ配列 --- */
 const messages = [
