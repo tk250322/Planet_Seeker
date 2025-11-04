@@ -7,8 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // window.onload = () => {
   window.timer_start = function(){
     timer = setInterval(() => {
-      seconds++;
-      updateTimerDisplay();
+      if(move){
+        seconds++;
+        updateTimerDisplay();
+      }
     }, 1000);
 
     document.getElementById("timer").style.display = "block";

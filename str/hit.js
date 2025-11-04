@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 50);
     setTimeout(() => {
       clearInterval(system);
-      window.player_blinking = true;
+      player_hp != 0 ? window.player_blinking = true : window.player_blinking = false;
     }, 1000);
   }
 
@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(()=>{
           hit_pos = true;
         }, 1300);
-        player_blinking = true;
       }
     }
 
@@ -111,12 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       //リザルトへ移動
       requestAnimationFrame(()=>{
-        requestAnimationFrame(()=>{
-          if(confirm("勝利")){
-            go_reslt();
-            window.location.href = "result.html"
-          }
-        })
+            go_result();
       });
     }
 
@@ -129,20 +123,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
       requestAnimationFrame(()=>{
         setTimeout(()=>{
-          if(confirm("敗北")){
-            go_reslt();
-            window.location.href = "result.html"
-          }
+          gameover();
         }, 800);
       });
 
     }
 
-  }
-
-  //リザルトへ移動
-  function go_reslt(){
-    console.log("result");
   }
 
   //描画処理

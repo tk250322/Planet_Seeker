@@ -23,8 +23,16 @@
   <img src="../assets/images/spaceship.png" id="player" class="character" alt="プレイヤー"/>
   <img src="../assets/images/enemy_boss.png" id="enemy" class="character" alt="敵"/>
   </div></div>
-  <!-- リザルトボタン -->
-  <button id ="result_button" class = "screen hidden">リザルトへ</button>
+  <!-- 負け -->
+  <div id ="gameover-screen" class="finish" style="display: none;">
+    <h1>あなたは<span style="font-size: 30px;">敗北</span>しました。お疲れ様です。</h1>
+    <button>タイトルへ戻る</button>
+  </div>
+  <!-- 勝ち -->
+  <div id="win-screen" class="finish" style="display: none;">
+    <h1>勝ちです</h1>
+    <button>リザルト</button>
+  </div>
   <!-- スクリプト"enemycanvas" -->
   <script src="../str/enemy.js"></script>
   <!-- スクリプト"playercanvas" -->
@@ -35,5 +43,7 @@
   <script src="../str/time.js"></script>
   <!-- 描画処理 -->
   <script src="../str/move.js"></script>
+  <!-- Resultへ移動 -->
+  <script src="../str/finish.js"></script>
 </body>
 </html>

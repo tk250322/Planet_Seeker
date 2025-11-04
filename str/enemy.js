@@ -133,10 +133,12 @@ document.addEventListener('DOMContentLoaded', function() {
         enemyLeft = false;
         enemyRigth = false;
 
-        //乱数設定
-        const r = randomNamber();
-        enemyLeft = r === 1;
-        enemyRigth = r === 2;
+        if(move){
+            //乱数設定
+            const r = randomNamber();
+            enemyLeft = r === 1;
+            enemyRigth = r === 2;
+        }
     }
 
 
@@ -179,16 +181,17 @@ document.addEventListener('DOMContentLoaded', function() {
     //描画処理
     window.enemy_start = function (){
         enemydraw();
+        
         randomMove();
         setInterval(randomMove, 200);
 
         //3秒後から攻撃開始
         setTimeout(attack_schedule(), 3000);
 
-        // キーを押したときにtrueにする
-        document.addEventListener('keydown', keydownHandler);
-        // キーを離したときにfalseにする
-        document.addEventListener('keyup', keyupHandler);
+        // // キーを押したときにtrueにする
+        // document.addEventListener('keydown', keydownHandler);
+        // // キーを離したときにfalseにする
+        // document.addEventListener('keyup', keyupHandler);
 
     }
 });

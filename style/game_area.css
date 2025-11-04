@@ -116,3 +116,11 @@ canvas {
   z-index: 1;
   transition: height 0.8s ease;
 }
+
+.finish {
+  position: absolute;
+  background-color: rgba(13, 117, 176, 0.8);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
