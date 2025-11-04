@@ -26,7 +26,7 @@ bgmGame.loop = true;
 const messages = [
   { speaker: "null", name: null, text: "地球を脱出した主人公はリーダーになり旅を続ける。" },
   { speaker: "main", name: "ルミナス・ノア", text: "地球を離れて大分経ったな。ん、なに？？？住めそうな惑星を発見しただって！！！" },
-  { speaker: "soldier", name: "仲間", text: "リーダー、あの惑星の近くにいるUFOに近い感じがしまして…" },
+  { speaker: "soldier", name: "仲間", text: "リーダー、あの惑星の近くにいるUFO見覚えがありまして…" },
   { speaker: "main", name: "ルミナス・ノア", text: "なに？" },
   { speaker: "enemy_soldier", name: "宇宙人", text: "…" },
   { speaker: "main", name: "全員", text: "うわっっ。" },
