@@ -29,3 +29,18 @@ function setupButton(id, url) {
 }
 
 setupButton('Title_button', 'Title.html');
+
+/*
+<div id="clear-time">タイム: 読み込み中...</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search); // URLの ?time=... を解析
+  const time = params.get('time'); // time の値を取得
+
+  if (time) {
+    document.getElementById('clear_time').textContent = `タイム: ${time}`;
+  } else {
+    document.getElementById('clear_time').textContent = 'タイム: 不明';
+  }
+</script>
+*/
