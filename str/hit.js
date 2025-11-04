@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
   }
 
+  // enemyの点滅処理
   function enemy_display_change (){
     const enemy_system = setInterval(() => {
       window.enemy_blinking = !window.enemy_blinking;
