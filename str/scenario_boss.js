@@ -1,6 +1,6 @@
 /* --- グローバル変数 --- */
 window.attackloop = true; 
-let isGamePaused = false; // ゲームが一時停止中か
+window.isGamePaused = false; // ゲームが一時停止中か
 let currentMessageIndex = 0; // 現在のメッセージ番号
 let isRevealing = false; // テキスト表示中か
 let gameHasStarted = false; // ゲーム本編が開始したか
@@ -125,7 +125,7 @@ window.addEventListener('DOMContentLoaded', () => {
       menuClick.play().catch(e => {});
 
       menuScreen.style.display = 'block'; // メニューを表示
-      isGamePaused = true; // ゲームを一時停止
+      window.isGamePaused = true; // ゲームを一時停止
     });
   }
 
@@ -139,7 +139,7 @@ window.addEventListener('DOMContentLoaded', () => {
       menuClick.play().catch(e => {});
 
       menuScreen.style.display = 'none'; // メニューを非表示
-      isGamePaused = false; // ゲームを再開
+      window.isGamePaused = false; // ゲームを再開
     }); 
   }
 
@@ -148,7 +148,7 @@ window.addEventListener('DOMContentLoaded', () => {
     returnButton.addEventListener('click', (event) => {
       event.stopPropagation(); // window.clickへの伝播を停止
       
-      // ★修正★
+      
       // 1. 効果音が鳴り終わったら画面遷移する、というイベントを登録
       menuClick.addEventListener('ended', () => {
         window.location.href = 'Title.html';
