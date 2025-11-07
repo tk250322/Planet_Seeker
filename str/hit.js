@@ -49,9 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let hp_height = parseInt(hp_style.style.height || "150" , 10);
 
     //enemyの当たり判定取得
-    const enemy = document.getElementById("enemy-pos");
-    const enemyRect = enemy.getBoundingClientRect();
-
+    let enemy;
+    let enemyRect;
+    if(typeof enemy_start === "function"){
+      enemy = document.getElementById("enemy-pos");
+      enemyRect = enemy.getBoundingClientRect();
+    }
     //ダメージ処理
     for (let i = 0; i < enemy_bullets.length; i++) {
       const e_b = enemy_bullets[i];
@@ -81,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     //ヒット処理
-    for (let i = 0; i < player_bullets.length; i++) {
+    if(typeof enemy_start === "function")for (let i = 0; i < player_bullets.length; i++) {
       const p_b = player_bullets[i];
       const bulletRect = p_b.getBoundingClientRect();
 

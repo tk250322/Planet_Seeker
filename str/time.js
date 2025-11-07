@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-  let seconds = 0;
-  let timer;
-
   // ページ読み込み時にタイマー開始
-  // window.onload = () => {
+  window.onload = () => {
+    let seconds = 0;
+    let timer;
+  
   window.timer_start = function(){
     timer = setInterval(() => {
       if(move){
@@ -42,4 +42,4 @@ document.addEventListener('DOMContentLoaded', function() {
   */
 
 
-});
+}});

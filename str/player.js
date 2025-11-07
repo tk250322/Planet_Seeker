@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 描画位置を更新する
         update();
 
-        if(player_blinking){
+        if(typeof player_blinking !== "undefined")if(player_blinking){
             // 描画する
             ctx.drawImage(playerImage, X, Y, Width, Height);
         }
@@ -135,8 +135,8 @@ document.addEventListener('DOMContentLoaded', function() {
     player.style.width = "30px";
     player.style.left = `${X + 33}px`;
     player.style.top = `${Y + 205}px`;
-    // player.style.border = "2px dashed lime";
-    // player.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+    player.style.border = "2px dashed lime";
+    player.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
     player.style.pointerEvents = "none"; // クリックなどを無効化
 
     let attack_timing = false;

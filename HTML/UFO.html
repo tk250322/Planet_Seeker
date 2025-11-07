@@ -13,20 +13,37 @@
   <div id="game_play_area">
   <!-- タイム -->
   <div id="timer">00:00:00</div>
+  <!-- ヒットポイント -->
+  <div id="HP"></div>
   <!-- エネミーエリア -->
   <canvas id="enemycanvas" width="600" height="160"></canvas>
   <!-- プレイヤーエリア -->
   <canvas id="playercanvas" width="600" height="400"></canvas>
   <!-- キャラクター画像 -->
   <img src="../assets/images/spaceship.png" id="player" class="character" alt="プレイヤー"/>
-  <img src="../assets/images/enemy_ufo.png" id="enemy_ufo" class="character" alt="UFO" style="display: none;"/>
+  <img src="../assets/images/enemy_ufo.png" id="enemy" class="character" alt="敵"/>
+  </div></div>
+  <!-- 負け -->
+  <div id ="gameover-screen" class="finish" style="display: none;">
+    <h1>あなたは敗北しました。お疲れ様です。</h1>
+    <button>タイトルへ戻る</button>
+  </div>
+  <!-- 勝ち -->
+  <div id="win-screen" class="finish" style="display: none;">
+    <h1>勝ちです</h1>
+    <button>リザルト</button>
   </div>
   <!-- スクリプト"enemycanvas" -->
   <script src="../str/enemy.js"></script>
   <!-- スクリプト"playercanvas" -->
   <script src="../str/player.js"></script>
+  <!-- 当たり判定 -->
+  <script src="../str/hit.js"></script>
   <!-- スクリプト"timer" -->
   <script src="../str/time.js"></script>
-  <script src="../str/hit.js"></script>
+  <!-- 描画処理 -->
+  <script src="../str/move.js"></script>
+  <!-- Resultへ移動 -->
+  <script src="../str/finish.js"></script>
 </body>
 </html>
