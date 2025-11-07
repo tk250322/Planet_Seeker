@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log("変化");
     }, 50);
     setTimeout(() => {
-      clearInterval(system);
-      player_hp != 0 ? window.player_blinking = true : window.player_blinking = false;
+      clearInterval(player_system);
+      window.player_blinking = true;
     }, 1000);
   }
 
