@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
     enemy_hit.style.width = "50px";
     enemy_hit.style.left = `${enemyX + 55}px`;
     enemy_hit.style.top = `${enemyY + 55}px`;
-    // enemy_hit.style.border = "2px dashed lime";
-    // enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+    enemy_hit.style.border = "2px dashed lime";
+    enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
 
 
     function enemydraw() {
@@ -103,11 +103,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 3. 弾の位置を計算
         //    (キャンバスの左 + キャンバス内の敵X + 敵の幅の半分 - 弾の幅の半分)
-        attack.style.left = `${canvasRect.left + enemyX + (enemyWidth / 2) - bulletWidthHalf}px`;
+        attack.style.left = `${enemyX + (enemyWidth / 2) - bulletWidthHalf}px`;
         //    (キャンバスの上 + キャンバス内の敵Y + 敵の高さ)
-        attack.style.top = `${canvasRect.top + enemyY + (enemyHeight / 2)}px`;
+        attack.style.top = `${enemyY + (enemyHeight / 2)}px`;
 
-        document.body.appendChild(attack);
+        game_area.appendChild(attack);
         console.log("敵が攻撃を発射");
         
         const speed = 4;
