@@ -29,11 +29,16 @@ document.addEventListener('DOMContentLoaded', function() {
     enemy_hit.style.width = "50px";
     enemy_hit.style.left = `${enemyX + 55}px`;
     enemy_hit.style.top = `${enemyY + 55}px`;
-    // enemy_hit.style.border = "2px dashed lime";
-    // enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+    enemy_hit.style.border = "2px dashed lime";
+    enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
 
 
     function enemydraw() {
+        //メインループの停止
+        if (window.isGamePaused) {
+            requestAnimationFrame(enemydraw); // ループの再開に備えて要求だけは続ける
+             return; // 描画も更新もせずに終了
+        }
         // キャンバスをクリアにする
         enemyctx.clearRect(0, 0, enemycanvas.width, enemycanvas.height);
         
@@ -41,8 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // 描画位置を更新する
         update();
 
-        // 描画する
-        enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);
+        if (enemy_blinking){
+            // 描画する
+            enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);            
+        }
+
 
         // 繰り返してアニメーションする
         requestAnimationFrame(enemydraw);
@@ -63,18 +71,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    function keydown(){
-        document.addEventListener("keydown", function(e){
-        console.log("キーが押されました。 e.key の値:", e.key);
-        if(e.code === "Digit1"){
-            console.log("igit1が押されました");
-        }
-        if(e.code === "Space"){
-            console.log("敵が攻撃を発射");
-            player_attack();
-        }
-    })
-    }
+    // function keydown(){
+    //     document.addEventListener("keydown", function(e){
+    //     console.log("キーが押されました。 e.key の値:", e.key);
+    //     if(e.code === "Digit1"){
+    //         console.log("igit1が押されました");
+    //     }
+    //     if(e.code === "Space"){
+    //         console.log("敵が攻撃を発射");
+    //         player_attack();
+    //     }
+    // })
+    // }
 
     //攻撃の実装
     function enemy_attack(){
@@ -98,15 +106,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 3. 弾の位置を計算
         //    (キャンバスの左 + キャンバス内の敵X + 敵の幅の半分 - 弾の幅の半分)
-        attack.style.left = `${canvasRect.left + enemyX + (enemyWidth / 2) - bulletWidthHalf}px`;
+        attack.style.left = `${enemyX + (enemyWidth / 2) - bulletWidthHalf}px`;
         //    (キャンバスの上 + キャンバス内の敵Y + 敵の高さ)
-        attack.style.top = `${canvasRect.top + enemyY + (enemyHeight / 2)}px`;
+        attack.style.top = `${enemyY + (enemyHeight / 2)}px`;
 
-        document.body.appendChild(attack);
+        game_area.appendChild(attack);
         console.log("敵が攻撃を発射");
         
         const speed = 4;
         const move = setInterval(() => {
+            if (window.isGamePaused) {
+                return; // 一時停止中なら弾を動かさない
+            }
             const currentTop = parseInt(attack.style.top);
             attack.style.top = `${currentTop + speed}px`;
 
@@ -129,14 +140,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // //移動処理
     function randomMove(){
+        //弾の移動を停止
+        if (window.isGamePaused) {
+            return; // 一時停止中なら移動方向を変えない
+        }
         //敵の移動を初期化
         enemyLeft = false;
         enemyRigth = false;
 
-        //乱数設定
-        const r = randomNamber();
-        enemyLeft = r === 1;
-        enemyRigth = r === 2;
+        if(move){
+            //乱数設定
+            const r = randomNamber();
+            enemyLeft = r === 1;
+            enemyRigth = r === 2;
+        }
     }
 
 
@@ -144,7 +161,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function attack_schedule(){
         const delay = (randomNamber() + 1.5)*400;
         setTimeout(()=>{
+            // 一時停止中でない場合のみ、攻撃する
+            if (!window.isGamePaused) {
             enemy_attack();
+            }
             attack_schedule();
         }, delay);
     }
@@ -179,16 +199,17 @@ document.addEventListener('DOMContentLoaded', function() {
     //描画処理
     window.enemy_start = function (){
         enemydraw();
+
         randomMove();
         setInterval(randomMove, 200);
 
         //3秒後から攻撃開始
         setTimeout(attack_schedule(), 3000);
 
-        // キーを押したときにtrueにする
-        document.addEventListener('keydown', keydownHandler);
-        // キーを離したときにfalseにする
-        document.addEventListener('keyup', keyupHandler);
+        // // キーを押したときにtrueにする
+        // document.addEventListener('keydown', keydownHandler);
+        // // キーを離したときにfalseにする
+        // document.addEventListener('keyup', keyupHandler);
 
     }
 });

@@ -2,6 +2,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     // 関数keydownHandlerの定義
     function keydownHandler(e) {
+        // キー入力を停止
+        if (window.isGamePaused) {
+            return; // 一時停止中はキー入力を受け付けない
+        }
         // 押されたキーの値をチェック
         // ↑キーが押されたとき
         if (e.key == 'ArrowUp'){
@@ -83,13 +87,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // canvasに描画してアニメーションする
     function draw() {
+        // メインループの停止
+        if (window.isGamePaused) {
+            requestAnimationFrame(draw); // ループの再開に備えて要求だけは続ける
+            return; // 描画も更新もせずに終了
+        }
         // キャンバスをクリアにする
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // 描画位置を更新する
         update();
 
-        if(player_blinking){
+        if(typeof player_blinking !== "undefined")if(player_blinking){
             // 描画する
             ctx.drawImage(playerImage, X, Y, Width, Height);
         }
@@ -135,8 +144,8 @@ document.addEventListener('DOMContentLoaded', function() {
     player.style.width = "30px";
     player.style.left = `${X + 33}px`;
     player.style.top = `${Y + 205}px`;
-    // player.style.border = "2px dashed lime";
-    // player.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+    player.style.border = "2px dashed lime";
+    player.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
     player.style.pointerEvents = "none"; // クリックなどを無効化
 
     let attack_timing = false;
@@ -164,6 +173,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const speed = 4;
         const move = setInterval(() => {
+            // 弾の移動を停止 
+            if (window.isGamePaused) {
+                return; // 一時停止中なら弾を動かさない
+            }
             const currentTop = parseInt(attack.style.top);
             attack.style.top = `${currentTop - speed}px`;
 

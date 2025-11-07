@@ -38,24 +38,9 @@ body {
   z-index: 10;
 }
 
-button {
-  position: absolute;
-  bottom: 60px;
-  margin-top: 20px;
-  font-size: 20px;
-  padding: 10px 20px;
-  border: 2px solid #00ffff;
-  background-color: #004466;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  overflow: hidden;
-}
-
 .hidden {
   display: none;
 }
-
 
 /* ゲームプレイ画面 */
 #game_play_area {
@@ -101,8 +86,8 @@ canvas {
 /* キャラ共通スタイル */
 .enemy {
   position: absolute;
-  width: 160px;
-  height: 160px;
+  width: 300px;
+  height: 300px;
 }
 
 #HP{
@@ -115,4 +100,26 @@ canvas {
   background-color: #00ff1a;
   z-index: 1;
   transition: height 0.8s ease;
+}
+
+.finish {
+  position: absolute;
+  border: 2px solid #00ffff;
+  background-color: #004466;
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.finish button{
+  border: 2px solid #00ffff;
+  background-color: #004466;
+  color: #fff;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 25px;
 }

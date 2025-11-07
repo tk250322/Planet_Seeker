@@ -45,13 +45,12 @@
 
 /*
  * 名前ボックス
- * #textbox の左上に配置されます。
 */
 #name-box {
     display: none;
     position: absolute;
     top: 0;
-    left: 20px;
+    left: 0px;
     transform: translateY(-100%);
     background-color: #f0f0f0;
     color: #333;
@@ -85,7 +84,7 @@
     display: none;
     
     /* 大きさの調整 */
-    width: 90px;  /* 例: 少し大きめに変更 */
+    width: 90px; 
     height: auto; /* 縦横比を維持 */
     /* object-fit: cover; /* 画像を切り取って枠に合わせる場合 */
 
@@ -126,7 +125,6 @@
     animation: fade-out-start 2s ease-out forwards;
 }
 
-/* (変更なし) */
 @keyframes fade-out-start {
     0% {
         opacity: 1;
@@ -136,4 +134,85 @@
         opacity: 0;
         transform: translate(-50%, -50%) scale(1.1);
     }
+}
+
+/* 1. ゲームエリア (これが基準点) */
+.game_play_area {
+  width: 600px;
+  height: 600px;
+  
+  /* 基準点にするための設定 */
+  position: relative; 
+  
+  /* (テスト用) エリアを可視化 */
+  background-color: #222;
+  border: 1px solid #fff;
+}
+/* 2. メニューボタン (左上) */
+#menu_button {
+  position: absolute; /* game-areaを基準に配置 */
+  top: 0px;
+  left: 15px;
+  z-index: 100; /* メニュー画面より手前に表示 */
+  
+  /* (オプション) 見た目 */
+  padding: 5px 5px;
+  font-size: 15px;
+  width: auto;  /* 中身の文字幅に合わせる */
+  height: 40px; /* 中身の文字高に合わせる */
+  border: 2px solid #00ffff;
+  background-color: #fff;
+}
+
+
+/* 3. メニュー画面 (中央) */
+#menu_screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 150px;
+  width: 300px;
+  transform: translate(-50%, -50%);
+  
+  /* (オプション) 見た目 */
+  background-color: rgba(0, 0, 50, 0.9);
+  border: 3px solid #00ffff;
+  
+  /* (オプション) 見た目 */
+  background-color: rgba(0, 0, 50, 0.9); /* 少し透ける紺色 */
+  border: 3px solid #00ffff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  
+  z-index: 9999; /* menu_button よりは奥 */
+}
+
+h1 {
+  text-align: center;
+  font-size: 40px;
+  color: #fff;
+  margin-top: 0px;
+}
+
+/* 4. メニューの中身 (ボタンを縦に並べる) */
+.menu_content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* メニュー画面内のボタン */
+.menu_content button {     
+  font-size: 12px;
+  width: 125px;
+  height: 40px;
+  padding: 10px 30px;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 2px solid #00ffff;
+  background-color: #004466;
+  color: #fff;
 }

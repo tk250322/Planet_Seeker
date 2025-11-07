@@ -1,5 +1,5 @@
 // BGMファイルを読み込む
-const bgm = new Audio('../assets/sounds/BGM/title.mp3');
+const bgm = new Audio('../assets/sounds/BGM/result.mp3');
 
 // ループ再生を有効にする
 bgm.loop = true;
@@ -19,7 +19,7 @@ function setupButton(id, url) {
   const btn = document.getElementById(id);
   btn.addEventListener('click', () => {
     const sound = new Audio('../assets/sounds/effects/button.mp3');
-    sound.volume = 0.5;
+    sound.volume = 1.0;
     sound.currentTime = 0;
     sound.play().catch(() => {});
     setTimeout(() => {
@@ -28,6 +28,19 @@ function setupButton(id, url) {
   });
 }
 
-setupButton('debris_button', 'debris.html');
-setupButton('UFO_button', 'UFO.html');
-setupButton('save_button', 'game_area.html');
+setupButton('Title_button', 'Title.html');
+
+/*
+<div id="clear-time">タイム: 読み込み中...</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search); // URLの ?time=... を解析
+  const time = params.get('time'); // time の値を取得
+
+  if (time) {
+    document.getElementById('clear_time').textContent = `タイム: ${time}`;
+  } else {
+    document.getElementById('clear_time').textContent = 'タイム: 不明';
+  }
+</script>
+*/

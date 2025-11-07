@@ -42,7 +42,7 @@ label {
 }
 
 /* スタートボタンサイズ */
-button {
+.title_button {
   margin-top: 20px;
   font-size: 20px;
   padding: 10px 20px;
