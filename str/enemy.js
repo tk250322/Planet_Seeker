@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
     enemy_hit.style.width = "50px";
     enemy_hit.style.left = `${enemyX + 55}px`;
     enemy_hit.style.top = `${enemyY + 55}px`;
-    // enemy_hit.style.border = "2px dashed lime";
-    // enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+    enemy_hit.style.border = "2px dashed lime";
+    enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
 
 
     function enemydraw() {
@@ -66,18 +66,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    function keydown(){
-        document.addEventListener("keydown", function(e){
-        console.log("キーが押されました。 e.key の値:", e.key);
-        if(e.code === "Digit1"){
-            console.log("igit1が押されました");
-        }
-        if(e.code === "Space"){
-            console.log("敵が攻撃を発射");
-            player_attack();
-        }
-    })
-    }
+    // function keydown(){
+    //     document.addEventListener("keydown", function(e){
+    //     console.log("キーが押されました。 e.key の値:", e.key);
+    //     if(e.code === "Digit1"){
+    //         console.log("igit1が押されました");
+    //     }
+    //     if(e.code === "Space"){
+    //         console.log("敵が攻撃を発射");
+    //         player_attack();
+    //     }
+    // })
+    // }
 
     //攻撃の実装
     function enemy_attack(){
@@ -136,10 +136,12 @@ document.addEventListener('DOMContentLoaded', function() {
         enemyLeft = false;
         enemyRigth = false;
 
-        //乱数設定
-        const r = randomNamber();
-        enemyLeft = r === 1;
-        enemyRigth = r === 2;
+        if(move){
+            //乱数設定
+            const r = randomNamber();
+            enemyLeft = r === 1;
+            enemyRigth = r === 2;
+        }
     }
 
 
@@ -182,16 +184,17 @@ document.addEventListener('DOMContentLoaded', function() {
     //描画処理
     window.enemy_start = function (){
         enemydraw();
+
         randomMove();
         setInterval(randomMove, 200);
 
         //3秒後から攻撃開始
         setTimeout(attack_schedule(), 3000);
 
-        // キーを押したときにtrueにする
-        document.addEventListener('keydown', keydownHandler);
-        // キーを離したときにfalseにする
-        document.addEventListener('keyup', keyupHandler);
+        // // キーを押したときにtrueにする
+        // document.addEventListener('keydown', keydownHandler);
+        // // キーを離したときにfalseにする
+        // document.addEventListener('keyup', keyupHandler);
 
     }
 });

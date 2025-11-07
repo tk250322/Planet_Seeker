@@ -1,14 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-  let seconds = 0;
-  let timer;
-
   // ページ読み込み時にタイマー開始
-  // window.onload = () => {
+  window.onload = () => {
+    let seconds = 0;
+    let timer;
+  
   window.timer_start = function(){
     timer = setInterval(() => {
-      seconds++;
-      updateTimerDisplay();
+      if(move){
+        seconds++;
+        updateTimerDisplay();
+      }
     }, 1000);
 
     document.getElementById("timer").style.display = "block";
@@ -40,4 +42,4 @@ document.addEventListener('DOMContentLoaded', function() {
   */
 
 
-});
+}});

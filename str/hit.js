@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log("変化");
     }, 50);
     setTimeout(() => {
-      clearInterval(player_system);
-      window.player_blinking = true;
+      clearInterval(system);
+      player_hp != 0 ? window.player_blinking = true : window.player_blinking = false;
     }, 1000);
   }
 
@@ -65,9 +65,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let hp_height = parseInt(hp_style.style.height || "150" , 10);
 
     //enemyの当たり判定取得
-    const enemy = document.getElementById("enemy-pos");
-    const enemyRect = enemy.getBoundingClientRect();
-
+    let enemy;
+    let enemyRect;
+    if(typeof enemy_start === "function"){
+      enemy = document.getElementById("enemy-pos");
+      enemyRect = enemy.getBoundingClientRect();
+    }
     //ダメージ処理
     for (let i = 0; i < enemy_bullets.length; i++) {
       const e_b = enemy_bullets[i];
@@ -93,12 +96,11 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(()=>{
           player_hit_pos = true;
         }, 1300);
-        player_blinking = true;
       }
     }
 
     //ヒット処理
-    for (let i = 0; i < player_bullets.length; i++) {
+    if(typeof enemy_start === "function")for (let i = 0; i < player_bullets.length; i++) {
       const p_b = player_bullets[i];
       const bulletRect = p_b.getBoundingClientRect();
 
@@ -133,12 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       //リザルトへ移動
       requestAnimationFrame(()=>{
-        requestAnimationFrame(()=>{
-          if(confirm("勝利")){
-            go_reslt();
-            window.location.href = "result.html"
-          }
-        })
+            go_result();
       });
     }
 
@@ -151,20 +148,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
       requestAnimationFrame(()=>{
         setTimeout(()=>{
-          if(confirm("敗北")){
-            go_reslt();
-            window.location.href = "result.html"
-          }
+          gameover();
         }, 800);
       });
 
     }
 
-  }
-
-  //リザルトへ移動
-  function go_reslt(){
-    console.log("result");
   }
 
   //描画処理
