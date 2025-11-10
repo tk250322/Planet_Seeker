@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // 弾の移動を停止 
             if (window.isGamePaused) {
                 return; // 一時停止中なら弾を動かさない
-            }
+            }
             const currentTop = parseInt(attack.style.top);
             attack.style.top = `${currentTop - speed}px`;
 

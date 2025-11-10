@@ -5,6 +5,16 @@ document.addEventListener('DOMContentLoaded', function() {
   let enemy_hp = 10;
   let player_hp = 5;
 
+  //プレイヤーのHPスタイル取得
+  const hp_style = document.getElementById("HP");
+  const hp_child = hp_style.children;
+
+  for(let i = 0; i < hp_child.length; i++){
+    hp_child[i].style.left = `${10 + 15 * i}px`
+    hp_child[i].style.bottom = "10px";
+  }
+
+
   // playerの無敵時間
   let player_hit_pos = true;
   // enemyの無敵時間
@@ -62,8 +72,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const playerRect = player.getBoundingClientRect();
 
     //プレイヤーのHPスタイル取得
-    const hp_style = document.getElementById("HP");
-    let hp_height = parseInt(hp_style.style.height || "150" , 10);
+    // const hp_style = document.getElementById("HP");
+    // let hp_height = parseInt(hp_style.style.height || "150" , 10);
 
     //enemyの当たり判定取得
     let enemy;
@@ -91,8 +101,8 @@ document.addEventListener('DOMContentLoaded', function() {
         player_hit_pos = false;
         e_b.remove();
         player_hp--;
-        hp_height -= 30;
-        hp_style.style.height = `${hp_height}px`;
+        // hp_height -= 30;
+        // hp_style.style.height = `${hp_height}px`;
         player_display_change();
         setTimeout(()=>{
           player_hit_pos = true;
