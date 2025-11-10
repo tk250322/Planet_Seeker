@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // キー入力を停止
         if (window.isGamePaused) {
             return; // 一時停止中はキー入力を受け付けない
-        }
+       }
         // 押されたキーの値をチェック
         // ↑キーが押されたとき
         if (e.key == 'ArrowUp'){

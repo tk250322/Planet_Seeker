@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const hp_child = hp_style.children;
 
   for(let i = 0; i < hp_child.length; i++){
-    hp_child[i].style.left = `${10 + 15 * i}px`
+    hp_child[i].src = "../assets/images/player_life.png"
+    hp_child[i].style.left = `${10 + 22 * i}px`
     hp_child[i].style.bottom = "10px";
   }
 
@@ -103,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         player_hp--;
         // hp_height -= 30;
         // hp_style.style.height = `${hp_height}px`;
+        hp_child[player_hp].remove();
         player_display_change();
         setTimeout(()=>{
           player_hit_pos = true;
