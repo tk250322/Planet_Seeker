@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // 描画位置を更新する
-        update();
+        if(move)update();
 
         if(typeof player_blinking !== "undefined")if(player_blinking){
             // 描画する

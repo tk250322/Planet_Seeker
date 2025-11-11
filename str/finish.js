@@ -1,5 +1,6 @@
 window.go_result = function(){
     console.log("勝ったんだ？すごいじゃん！！");
+    move = false;
     const screen = document.getElementById("win-screen");
     screen.style.display = "block";
     screen.addEventListener("click",()=>{

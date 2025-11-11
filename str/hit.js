@@ -35,6 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
       clearInterval(player_system);
       window.player_blinking = true;
+      if(!move)player_blinking = false;
+
     }, 1000);
   }
 
@@ -155,8 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //敗北
     if(player_hp == 0 && first){
       first = false;
-      attackloop = false;
-      
+      attackloop = false;      
       bullet_remove();
 
       requestAnimationFrame(()=>{
