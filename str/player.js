@@ -193,8 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('keydown', keydownHandler);
         // キーを離したときにfalseにする
         document.addEventListener('keyup', keyupHandler);
-        // アニメーション開始
-        draw();
-        document.getElementById("HP").style.display = "block";
     }
+    // アニメーション開始
+        draw();
 });

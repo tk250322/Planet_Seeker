@@ -242,10 +242,7 @@ window.addEventListener("click", () => {
 
     // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
     setTimeout(() => {
-      enemy_start();
-      player_start();
-      hit_start();
-      timer_start();
+        start = true;
     }, 1500); 
   }
 });

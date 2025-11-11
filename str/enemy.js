@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 描画位置を更新する
         update();
 
-        if (enemy_blinking){
+        if(typeof enemy_blinking !== "undefined")if (enemy_blinking){
             // 描画する
             enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);            
         }
@@ -98,10 +98,6 @@ document.addEventListener('DOMContentLoaded', function() {
         attack.className = "enemy_bullet";
         attack.style.position = "absolute";
 
-        
-        // 1. 画面に対する「キャンバス」の位置を取得
-        const canvasRect = enemycanvas.getBoundingClientRect();
-
         const bulletWidthHalf = 15; 
 
         // 3. 弾の位置を計算
@@ -112,8 +108,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
         game_area.appendChild(attack);
         console.log("敵が攻撃を発射");
-        
+
         const speed = 4;
+
+        //ufo独自の攻撃
+        let attack1,attack2; 
+        if(typeof ufo != "undefined"){
+            //attackをコピー
+            attack1 = attack.cloneNode(true);
+            attack2 = attack.cloneNode(true);
+
+            game_area.appendChild(attack1);
+            game_area.appendChild(attack2);
+            console.log("ufo攻撃発射");
+
+            //斜め攻撃
+            const  diagonal_move= setInterval(() => {
+            if (window.isGamePaused) {
+                return; // 一時停止中なら弾を動かさない
+            }
+            //位置を数値に変更
+            const top1 = parseInt(attack1.style.top);
+            const left1 = parseInt(attack1.style.left);
+            const top2 = parseInt(attack2.style.top);
+            const left2 = parseInt(attack2.style.left);
+
+            attack1.style.top = `${top1 + speed}px`;
+            attack2.style.top = `${top2 + speed * 2}px`;
+
+            if (top1 > 636 || top2 > 636) {
+                clearInterval(diagonal_move);
+                attack1.remove();
+                attack2.remove()
+            }
+        }, 16);
+
+        }
+        
         const move = setInterval(() => {
             if (window.isGamePaused) {
                 return; // 一時停止中なら弾を動かさない
@@ -198,8 +229,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //描画処理
     window.enemy_start = function (){
-        enemydraw();
-
         randomMove();
         setInterval(randomMove, 200);
 
@@ -212,4 +241,5 @@ document.addEventListener('DOMContentLoaded', function() {
         // document.addEventListener('keyup', keyupHandler);
 
     }
+    enemydraw();
 });
