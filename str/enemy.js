@@ -109,14 +109,17 @@ document.addEventListener('DOMContentLoaded', function() {
         game_area.appendChild(attack);
         console.log("敵が攻撃を発射");
 
-        const speed = 4;
+        const speed = 5;
 
         //ufo独自の攻撃
-        let attack1,attack2; 
         if(typeof ufo != "undefined"){
+            //跳ね返り判定 
+            let check_attack1 = true;
+            let check_attack2 = true;
+
             //attackをコピー
-            attack1 = attack.cloneNode(true);
-            attack2 = attack.cloneNode(true);
+            const attack1 = attack.cloneNode(true);
+            const attack2 = attack.cloneNode(true);
 
             game_area.appendChild(attack1);
             game_area.appendChild(attack2);
@@ -132,10 +135,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const left1 = parseInt(attack1.style.left);
             const top2 = parseInt(attack2.style.top);
             const left2 = parseInt(attack2.style.left);
-
-            attack1.style.top = `${top1 + speed}px`;
-            attack2.style.top = `${top2 + speed * 2}px`;
-
+            attack1.style.top = `${top1 + speed - 1}px`;
+            attack2.style.top = `${top2 + speed -1}px`;
+                        
+            if(check_attack1){
+                attack1.style.left = `${left1 - speed + 2}px`;
+                check_attack1 = left1 >= 0? true : false;
+            }
+            else attack1.style.left = `${left1 + speed - 2}px`;
+            if(check_attack2){
+                attack2.style.left = `${left2 + speed - 2}px`;
+                check_attack2 = left2 <= 570? true : false;
+            }
+            else attack2.style.left = `${left2 - speed + 2}px`;
             if (top1 > 636 || top2 > 636) {
                 clearInterval(diagonal_move);
                 attack1.remove();
