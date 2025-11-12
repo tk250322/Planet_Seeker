@@ -1,7 +1,11 @@
 window.go_result = function(){
     if(typeof ufo != "undefined"){
-        console.log("勝ったんだ？すごいじゃん！！");
         sessionStorage.setItem("ufo_time", seconds);
+    }
+    if(typeof ufo == "undefined" && typeof debris == "undefined"){
+        console.log("勝ったんだ？すごいじゃん！！");
+        sessionStorage.setItem("boss_time", seconds);
+       
     }
     move = false;
     const screen = document.getElementById("win-screen");
