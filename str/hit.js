@@ -15,6 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const enemyHitSound = new Audio('../assets/sounds/effects/enemy_damage.mp3');
   enemyHitSound.preload = 'auto';
 
+  //勝利効果音
+  const bgmWin = new Audio('../assets/sounds/effects/victory.mp3'); 
+  bgmWin.preload = 'auto';
+  bgmWin.loop = true; // ループ再生
+
   for(let i = 0; i < hp_child.length; i++){
     hp_child[i].src = "../assets/images/player_life.png"
     hp_child[i].style.left = `${10 + 22 * i}px`
@@ -159,6 +164,15 @@ document.addEventListener('DOMContentLoaded', function() {
       
       //攻撃削除
       bullet_remove();
+
+      // 現在のゲームBGMを停止 (scenario.jsのbgmGameがwindow.bgmGameである前提)
+      if (window.bgmGame) {
+        window.bgmGame.pause();
+        window.bgmGame.currentTime = 0;
+      }
+
+      // 勝利BGMを再生
+      bgmWin.play().catch(e => {});
 
       //リザルトへ移動
       requestAnimationFrame(()=>{

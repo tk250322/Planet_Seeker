@@ -9,7 +9,7 @@ let ismenuling = false; // (未使用のフラグ)
 
 /* --- オーディオ要素 --- */
 const bgmNovel = new Audio('../assets/sounds/BGM/ufo_scenario.mp3');
-const bgmGame = new Audio('../assets/sounds/BGM/ufo_bgm.mp3');
+window.bgmGame = new Audio('../assets/sounds/BGM/ufo_bgm.mp3');
 const seClick = new Audio('../assets/sounds/effects/text_se.mp3');
 const menuClick = new Audio('../assets/sounds/effects/menu.mp3');
 
