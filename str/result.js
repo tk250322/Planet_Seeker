@@ -14,6 +14,27 @@ window.addEventListener('load', () => {
   });
 });
 
+//timeの設定
+//クリアタイムの取得
+window.ufo_time = parseInt(sessionStorage.getItem("ufo_time"));
+window.debris_time = parseInt(sessionStorage.getItem("debris_time"));
+window.boss_time = parseInt(sessionStorage.getItem("boss_time"));
+
+const a = isNaN(ufo_time) ? 0 : ufo_time;
+const b = isNaN(debris_time) ? 0 : debris_time;
+const c = isNaN(boss_time)? 0 : boss_time;
+const total = a + b + c;
+let houres = Math.floor(total / 360);
+let minutes = Math.floor((total % 360) / 60);
+let secs = total % 60;
+houres = houres < 10 ? `0${houres}` : `${houres}`;
+minutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+secs = secs < 10 ? `0${secs}` : `${secs}`;
+
+//textboxを取得、上書き
+const time_text = document.getElementById("crear_time");
+time_text.textContent = `${houres}:${minutes}:${secs}`;
+
 // ボタンを取得
 function setupButton(id, url) {
   const btn = document.getElementById(id);

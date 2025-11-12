@@ -1,5 +1,8 @@
 window.go_result = function(){
-    console.log("勝ったんだ？すごいじゃん！！");
+    if(typeof ufo != "undefined"){
+        console.log("勝ったんだ？すごいじゃん！！");
+        sessionStorage.setItem("ufo_time", seconds);
+    }
     move = false;
     const screen = document.getElementById("win-screen");
     screen.style.display = "block";
@@ -7,6 +10,7 @@ window.go_result = function(){
         window.location.href = "result.html";
     })
 }
+
 window.gameover = function(){
     console.log("負けたねー😊");
     move = false;
