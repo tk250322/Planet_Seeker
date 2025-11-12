@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const enemycanvas = document.getElementById('enemycanvas');
     const enemyctx = enemycanvas.getContext('2d');
 
+     // 敵の攻撃サウンド
+    const enemyAttackSound = new Audio('../assets/sounds/effects/enemy_attack.mp3'); 
+    enemyAttackSound.preload = 'auto';
+
     //敵のidを取得
     const enemy = document.getElementById("enemy");
 
@@ -88,6 +92,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function enemy_attack(){
         //プレイヤーが死んだ後に攻撃を発射しない
         if(!attackloop)return;
+
+        // 敵のサウンドを再生する
+        enemyAttackSound.currentTime = 0; // 連射できるように再生位置をリセット
+        enemyAttackSound.play();
 
         // 球の形
         const attack = document.createElement("img");

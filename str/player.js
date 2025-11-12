@@ -1,3 +1,8 @@
+// 攻撃のサウンド（効果音）を読み込む
+// ※パスはご自身の環境に合わせて修正してください
+const attackSound = new Audio('../assets/sounds/effects/player_attack.mp3');
+attackSound.preload = 'auto'; // 事前に読み込んでおく
+
 // 読みこまれたら実行
 document.addEventListener('DOMContentLoaded', function() {
     // 関数keydownHandlerの定義
@@ -152,6 +157,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function player_attack(){
         if(!attackloop)return;
+
+    // サウンドを再生する
+        attackSound.currentTime = 0; // 連射できるように再生位置をリセット
+        attackSound.play();
 
         // 球の形
         const attack = document.createElement("img");

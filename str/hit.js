@@ -9,6 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const hp_style = document.getElementById("HP");
   const hp_child = hp_style.children;
 
+  //プレイヤー、エネミーの被弾効果音
+  const playerDamageSound = new Audio('../assets/sounds/effects/player_damage.mp3');
+  playerDamageSound.preload = 'auto';
+  const enemyHitSound = new Audio('../assets/sounds/effects/enemy_damage.mp3');
+  enemyHitSound.preload = 'auto';
+
   for(let i = 0; i < hp_child.length; i++){
     hp_child[i].src = "../assets/images/player_life.png"
     hp_child[i].style.left = `${10 + 22 * i}px`
@@ -101,6 +107,9 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (hit && player_hit_pos) {
         console.log("ダメージ");
+        // プレイヤー被弾サウンドを再生
+        playerDamageSound.currentTime = 0;
+        playerDamageSound.play();
         player_hit_pos = false;
         e_b.remove();
         player_hp--;
@@ -128,6 +137,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (hit && enemy_hit_pos) {
         console.log("ヒット");
+        // 敵被弾サウンドを再生
+        enemyHitSound.currentTime = 0;
+        enemyHitSound.play();
         enemy_hit_pos = false;
         p_b.remove();
         enemy_hp--;
