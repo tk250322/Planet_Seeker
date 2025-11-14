@@ -90,16 +90,14 @@ canvas {
   height: 300px;
 }
 
-#HP{
-  display:none;
+.HP_style{
+  display:block;
   position:absolute;
-  bottom: 10px;
-  right: 10px;
-  height: 150px;
-  width: 5px;
-  background-color: #00ff1a;
-  z-index: 1;
-  transition: height 0.8s ease;
+  height: 20px;
+  width: 20px;
+  /* background-color: #00ff1a; */
+  z-index: -1;
+  /* transition: height 0.8s ease; */
 }
 
 .finish {

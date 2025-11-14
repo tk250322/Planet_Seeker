@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const enemycanvas = document.getElementById('enemycanvas');
     const enemyctx = enemycanvas.getContext('2d');
 
+     // 敵の攻撃サウンド
+    const enemyAttackSound = new Audio('../assets/sounds/effects/enemy_attack.mp3'); 
+    enemyAttackSound.preload = 'auto';
+
     //敵のidを取得
     const enemy = document.getElementById("enemy");
 
@@ -46,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 描画位置を更新する
         update();
 
-        if (enemy_blinking){
+        if(typeof enemy_blinking !== "undefined")if (enemy_blinking){
             // 描画する
             enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);            
         }
@@ -89,6 +93,10 @@ document.addEventListener('DOMContentLoaded', function() {
         //プレイヤーが死んだ後に攻撃を発射しない
         if(!attackloop)return;
 
+        // 敵のサウンドを再生する
+        enemyAttackSound.currentTime = 0; // 連射できるように再生位置をリセット
+        enemyAttackSound.play();
+
         // 球の形
         const attack = document.createElement("img");
         
@@ -97,10 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         attack.className = "enemy_bullet";
         attack.style.position = "absolute";
-
-        
-        // 1. 画面に対する「キャンバス」の位置を取得
-        const canvasRect = enemycanvas.getBoundingClientRect();
 
         const bulletWidthHalf = 15; 
 
@@ -112,8 +116,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
         game_area.appendChild(attack);
         console.log("敵が攻撃を発射");
+
+        const speed = 5;
+
+        //ufo独自の攻撃
+        if(typeof ufo != "undefined"){
+            //跳ね返り判定 
+            let check_attack1 = true;
+            let check_attack2 = true;
+
+            //attackをコピー
+            const attack1 = attack.cloneNode(true);
+            const attack2 = attack.cloneNode(true);
+
+            game_area.appendChild(attack1);
+            game_area.appendChild(attack2);
+            console.log("ufo攻撃発射");
+
+            //斜め攻撃
+            const  diagonal_move= setInterval(() => {
+            if (window.isGamePaused) {
+                return; // 一時停止中なら弾を動かさない
+            }
+            //位置を数値に変更
+            const top1 = parseInt(attack1.style.top);
+            const left1 = parseInt(attack1.style.left);
+            const top2 = parseInt(attack2.style.top);
+            const left2 = parseInt(attack2.style.left);
+            attack1.style.top = `${top1 + speed - 1}px`;
+            attack2.style.top = `${top2 + speed -1}px`;
+                        
+            if(check_attack1){
+                attack1.style.left = `${left1 - speed + 2}px`;
+                check_attack1 = left1 >= 0? true : false;
+            }
+            else attack1.style.left = `${left1 + speed - 2}px`;
+            if(check_attack2){
+                attack2.style.left = `${left2 + speed - 2}px`;
+                check_attack2 = left2 <= 570? true : false;
+            }
+            else attack2.style.left = `${left2 - speed + 2}px`;
+            if (top1 > 636 || top2 > 636) {
+                clearInterval(diagonal_move);
+                attack1.remove();
+                attack2.remove()
+            }
+        }, 16);
+
+        }
         
-        const speed = 4;
         const move = setInterval(() => {
             if (window.isGamePaused) {
                 return; // 一時停止中なら弾を動かさない
@@ -198,8 +249,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //描画処理
     window.enemy_start = function (){
-        enemydraw();
-
         randomMove();
         setInterval(randomMove, 200);
 
@@ -212,4 +261,5 @@ document.addEventListener('DOMContentLoaded', function() {
         // document.addEventListener('keyup', keyupHandler);
 
     }
+    enemydraw();
 });

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ページ読み込み時にタイマー開始
   window.onload = () => {
-    let seconds = 0;
+    window.seconds = 0;
     let timer;
   
   window.timer_start = function(){
