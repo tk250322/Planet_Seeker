@@ -5,6 +5,28 @@ document.addEventListener('DOMContentLoaded', function() {
   let enemy_hp = 10;
   let player_hp = 5;
 
+  //プレイヤーのHPスタイル取得
+  const hp_style = document.getElementById("HP");
+  const hp_child = hp_style.children;
+
+  //プレイヤー、エネミーの被弾効果音
+  const playerDamageSound = new Audio('../assets/sounds/effects/player_damage.mp3');
+  playerDamageSound.preload = 'auto';
+  const enemyHitSound = new Audio('../assets/sounds/effects/enemy_damage.mp3');
+  enemyHitSound.preload = 'auto';
+
+  //勝利効果音
+  const bgmWin = new Audio('../assets/sounds/effects/victory.mp3'); 
+  bgmWin.preload = 'auto';
+  bgmWin.loop = true; // ループ再生
+
+  for(let i = 0; i < hp_child.length; i++){
+    hp_child[i].src = "../assets/images/player_life.png"
+    hp_child[i].style.left = `${10 + 22 * i}px`
+    hp_child[i].style.bottom = "10px";
+  }
+
+
   // playerの無敵時間
   let player_hit_pos = true;
   // enemyの無敵時間
@@ -24,6 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
       clearInterval(player_system);
       window.player_blinking = true;
+      if(!move)player_blinking = false;
+
     }, 1000);
   }
 
@@ -62,8 +86,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const playerRect = player.getBoundingClientRect();
 
     //プレイヤーのHPスタイル取得
-    const hp_style = document.getElementById("HP");
-    let hp_height = parseInt(hp_style.style.height || "150" , 10);
+    // const hp_style = document.getElementById("HP");
+    // let hp_height = parseInt(hp_style.style.height || "150" , 10);
 
     //enemyの当たり判定取得
     let enemy;
@@ -88,11 +112,15 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (hit && player_hit_pos) {
         console.log("ダメージ");
+        // プレイヤー被弾サウンドを再生
+        playerDamageSound.currentTime = 0;
+        playerDamageSound.play();
         player_hit_pos = false;
         e_b.remove();
         player_hp--;
-        hp_height -= 30;
-        hp_style.style.height = `${hp_height}px`;
+        // hp_height -= 30;
+        // hp_style.style.height = `${hp_height}px`;
+        hp_child[player_hp].remove();
         player_display_change();
         setTimeout(()=>{
           player_hit_pos = true;
@@ -114,6 +142,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (hit && enemy_hit_pos) {
         console.log("ヒット");
+        // 敵被弾サウンドを再生
+        enemyHitSound.currentTime = 0;
+        enemyHitSound.play();
         enemy_hit_pos = false;
         p_b.remove();
         enemy_hp--;
@@ -142,6 +173,15 @@ document.addEventListener('DOMContentLoaded', function() {
       //攻撃削除
       bullet_remove();
 
+      // 現在のゲームBGMを停止 (scenario.jsのbgmGameがwindow.bgmGameである前提)
+      if (window.bgmGame) {
+        window.bgmGame.pause();
+        window.bgmGame.currentTime = 0;
+      }
+
+      // 勝利BGMを再生
+      bgmWin.play().catch(e => {});
+
       //リザルトへ移動
       requestAnimationFrame(()=>{
             go_result();
@@ -151,8 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //敗北
     if(player_hp == 0 && first){
       first = false;
-      attackloop = false;
-      
+      attackloop = false;      
       bullet_remove();
 
       requestAnimationFrame(()=>{

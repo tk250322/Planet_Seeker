@@ -19,7 +19,7 @@ function setupButton(id, url) {
   const btn = document.getElementById(id);
   btn.addEventListener('click', () => {
     const sound = new Audio('../assets/sounds/effects/button.mp3');
-    sound.volume = 1.0;
+    sound.volume = 0.5;
     sound.currentTime = 0;
     sound.play().catch(() => {});
     setTimeout(() => {

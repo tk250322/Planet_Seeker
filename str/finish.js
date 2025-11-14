@@ -1,11 +1,20 @@
 window.go_result = function(){
-    console.log("勝ったんだ？すごいじゃん！！");
+    if(typeof ufo != "undefined"){
+        sessionStorage.setItem("ufo_time", seconds);
+    }
+    if(typeof ufo == "undefined" && typeof debris == "undefined"){
+        console.log("勝ったんだ？すごいじゃん！！");
+        sessionStorage.setItem("boss_time", seconds);
+       
+    }
+    move = false;
     const screen = document.getElementById("win-screen");
     screen.style.display = "block";
     screen.addEventListener("click",()=>{
         window.location.href = "result.html";
     })
 }
+
 window.gameover = function(){
     console.log("負けたねー😊");
     move = false;

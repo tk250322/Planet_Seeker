@@ -1,7 +1,16 @@
+// 攻撃のサウンド（効果音）を読み込む
+// ※パスはご自身の環境に合わせて修正してください
+const attackSound = new Audio('../assets/sounds/effects/player_attack.mp3');
+attackSound.preload = 'auto'; // 事前に読み込んでおく
+
 // 読みこまれたら実行
 document.addEventListener('DOMContentLoaded', function() {
     // 関数keydownHandlerの定義
     function keydownHandler(e) {
+        // キー入力を停止
+        if (window.isGamePaused) {
+            return; // 一時停止中はキー入力を受け付けない
+       }
         // 押されたキーの値をチェック
         // ↑キーが押されたとき
         if (e.key == 'ArrowUp'){
@@ -83,11 +92,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // canvasに描画してアニメーションする
     function draw() {
+        // メインループの停止
+        if (window.isGamePaused) {
+            requestAnimationFrame(draw); // ループの再開に備えて要求だけは続ける
+            return; // 描画も更新もせずに終了
+        }
         // キャンバスをクリアにする
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // 描画位置を更新する
-        update();
+        if(move)update();
 
         if(typeof player_blinking !== "undefined")if(player_blinking){
             // 描画する
@@ -144,6 +158,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function player_attack(){
         if(!attackloop)return;
 
+    // サウンドを再生する
+        attackSound.currentTime = 0; // 連射できるように再生位置をリセット
+        attackSound.play();
+
         // 球の形
         const attack = document.createElement("img");
         
@@ -164,6 +182,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const speed = 4;
         const move = setInterval(() => {
+            // 弾の移動を停止 
+            if (window.isGamePaused) {
+                return; // 一時停止中なら弾を動かさない
+            }
             const currentTop = parseInt(attack.style.top);
             attack.style.top = `${currentTop - speed}px`;
 
@@ -180,8 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('keydown', keydownHandler);
         // キーを離したときにfalseにする
         document.addEventListener('keyup', keyupHandler);
-        // アニメーション開始
-        draw();
-        document.getElementById("HP").style.display = "block";
     }
+    // アニメーション開始
+        draw();
 });
