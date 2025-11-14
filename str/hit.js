@@ -130,6 +130,14 @@ document.addEventListener('DOMContentLoaded', function() {
       //処理の重複防止
       first = false;
       attackloop = false;
+
+    // id取得
+    const destroy_image = document.getElementById("Destroy");
+
+      // 撃破画像に変更
+      window.enemy_Image.style.display = "none";
+      destroy_image.style.display = "block";
+
       
       //攻撃削除
       bullet_remove();

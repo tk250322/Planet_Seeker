@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const enemyctx = enemycanvas.getContext('2d');
 
     //敵のidを取得
-    const enemy = document.getElementById("enemy");
+    window.enemy_Image = document.getElementById("enemy");
 
     // 敵の幅と高さ
     const enemyWidth = 160;

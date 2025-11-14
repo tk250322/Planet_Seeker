@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const game_area = document.getElementById("game_play_area");
 
     //キャラのidを取得
-    const playerImage = document.getElementById('player');
+    window.playerImage = document.getElementById('player');
 
     // キャラの幅と高さ
     const Width = 100;
