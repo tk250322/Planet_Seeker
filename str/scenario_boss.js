@@ -24,226 +24,253 @@ bgmGame.loop = true;
 
 /* --- メッセージ配列 --- */
 const messages = [
-  { speaker: "null", name: null, text: "とうとう惑星の目の前に到着した。" },
-  { speaker: "boss", name: "エクゾクォア", text: "よく来たな。遠き星に住む生物よ。我はエクゾクォア、「外宇宙の審問官」である。" },
-  { speaker: "boss", name: "エクゾクォア", text: "名乗るがいい、ここがお前の墓場となる。" },
-  { speaker: "main",  name: "ルミナス・ノア", text: "俺の名は、ルミナス・ノア。星の命を、光で繋ぐ者、Planet Seekerだ。" },
-  { speaker: "boss", name: "エクゾクォア", text: "いい名だ。だが、お前たちの旅路はここで終わる。" },
-  { speaker: "main",  name: "ルミナス・ノア", text: "お前、もしかして俺たちの星を攻撃してきたやつじゃないのか？" },
-  { speaker: "boss2", name: "エクゾクォア", text: "よく気が付いたな。ここまで来ただけはある。だが、ここまでだ。" },
-  { speaker: "main2",  name: "ルミナス・ノア", text: "人類のかたき。絶対に倒す！！！" },
+  { speaker: "null", name: null, text: "とうとう惑星の目の前に到着した。" },
+  { speaker: "boss", name: "エクゾクォア", text: "よく来たな。遠き星に住む生物よ。我はエクゾクォア、「外宇宙の審問官」である。" },
+  { speaker: "boss", name: "エクゾクォア", text: "名乗るがいい、ここがお前の墓場となる。" },
+  { speaker: "main",  name: "ルミナス・ノア", text: "俺の名は、ルミナス・ノア。星の命を、光で繋ぐ者、Planet Seekerだ。" },
+  { speaker: "boss", name: "エクゾクォア", text: "いい名だ。だが、お前たちの旅路はここで終わる。" },
+  { speaker: "main",  name: "ルミナス・ノア", text: "お前、もしかして俺たちの星を攻撃してきたやつじゃないのか？" },
+  { speaker: "boss2", name: "エクゾクォア", text: "よく気が付いたな。ここまで来ただけはある。だが、ここまでだ。" },
+  { speaker: "main2",  name: "ルミナス・ノア", text: "人類のかたき。絶対に倒す！！！" },
 ];
 
 /* --- 関数: アイコンを更新 --- */
 function updateCharacterIcon(speaker) {
-  const allIcons = document.querySelectorAll("#textbox .character_icon");
-  allIcons.forEach(icon => {
-    icon.classList.remove("active");
-  });
-  const activeIcon = document.querySelector("#textbox #icon_" + speaker);
-  if (activeIcon) {
-    activeIcon.classList.add("active");
-  }
+  const allIcons = document.querySelectorAll("#textbox .character_icon");
+  allIcons.forEach(icon => {
+    icon.classList.remove("active");
+  });
+  const activeIcon = document.querySelector("#textbox #icon_" + speaker);
+  if (activeIcon) {
+    activeIcon.classList.add("active");
+  }
 }
 /* --- 関数: 話者名を更新 --- */
 function updateSpeakerName(name) {
-  const nameBox = document.querySelector("#textbox #name-box");
-  const nameP = document.querySelector("#textbox #speaker-name-p");
-  if (!nameBox || !nameP) return;
-  if (name) {
-    nameP.textContent = name;
-    nameBox.style.display = "block";
-  } else {
-    nameP.textContent = "";
-    nameBox.style.display = "none";
-  }
+  const nameBox = document.querySelector("#textbox #name-box");
+  const nameP = document.querySelector("#textbox #speaker-name-p");
+  if (!nameBox || !nameP) return;
+  if (name) {
+    nameP.textContent = name;
+    nameBox.style.display = "block";
+  } else {
+    nameP.textContent = "";
+    nameBox.style.display = "none";
+  }
 }
 /* --- 関数: メッセージ表示を開始 --- */
 function initRevealTextMessage(message) { 
-  updateCharacterIcon(message.speaker);
-  updateSpeakerName(message.name);
-  const text_message_p = document.querySelector("#textbox .text_message_p");
-  if (!text_message_p) return;
-  text_message_p.innerHTML = ""; 
-  let chars = [];
-  if (message.text) {
-    message.text.split("").forEach((char) => {
-      let span = document.createElement("span");
-      span.textContent = char;
-      text_message_p.appendChild(span);
-      chars.push({
-        span,
-        delayAfter: char === " " ? 0 : 60,
-      });
-    });
-  }
-  isRevealing = true;
-  revealTextMessage(chars, () => {
-    isRevealing = false;
-    // 表示完了したら会話SEを停止
-    if (seClick) {
-      seClick.pause();
-      seClick.currentTime = 0;
-    }
-  });
+  updateCharacterIcon(message.speaker);
+  updateSpeakerName(message.name);
+  const text_message_p = document.querySelector("#textbox .text_message_p");
+  if (!text_message_p) return;
+  text_message_p.innerHTML = ""; 
+  let chars = [];
+  if (message.text) {
+    message.text.split("").forEach((char) => {
+      let span = document.createElement("span");
+      span.textContent = char;
+      text_message_p.appendChild(span);
+      chars.push({
+        span,
+        delayAfter: char === " " ? 0 : 60,
+      });
+    });
+  }
+  isRevealing = true;
+  revealTextMessage(chars, () => {
+    isRevealing = false;
+    // 表示完了したら会話SEを停止
+    if (seClick) {
+      seClick.pause();
+      seClick.currentTime = 0;
+    }
+  });
 }
 /* --- 関数: 1文字ずつ表示 (再帰) --- */
 function revealTextMessage(list, onComplete) {
-  const next = list.splice(0, 1)[0];
-  if (!next) { 
-    onComplete(); // リストが空になったら完了コールバックを呼ぶ
-    return;
-  }
-  next.span.classList.add("revealed");
+  const next = list.splice(0, 1)[0];
+  if (!next) { 
+    onComplete(); // リストが空になったら完了コールバックを呼ぶ
+    return;
+  }
+  next.span.classList.add("revealed");
 
-  if (list.length > 0) {
-    setTimeout(() => {
-      revealTextMessage(list, onComplete);
-    }, next.delayAfter);
-  } else {
-    onComplete(); // 最後の文字を表示したら完了
-  }
+  if (list.length > 0) {
+    setTimeout(() => {
+      revealTextMessage(list, onComplete);
+    }, next.delayAfter);
+  } else {
+    onComplete(); // 最後の文字を表示したら完了
+  }
 }
 
 /* * ===============================================
- * イベントリスナー (DOM読み込み完了時)
- * ===============================================
- */
+ * イベントリスナー (DOM読み込み完了時)
+ * ===============================================
+ */
 window.addEventListener('DOMContentLoaded', () => {
 
-  // 1. メニュー関連のHTML要素を取得
-  const menuButton = document.getElementById('menu_button');
-  const menuScreen = document.getElementById('menu_screen');
-  const continueButton = document.getElementById('continue_button');
-  const returnButton = document.getElementById('return_button');
+  // 1. メニュー関連のHTML要素を取得
+  const menuButton = document.getElementById('menu_button');
+  const menuScreen = document.getElementById('menu_screen');
+  const continueButton = document.getElementById('continue_button');
+  const returnButton = document.getElementById('return_button');
 
-  // 2. 「メニュー」ボタンの処理
-  if (menuButton) {
-    menuButton.addEventListener('click', (event) => {
-      event.stopPropagation(); // window.clickへの伝播を停止
-      
-      // メニュー効果音を再生
-      menuClick.currentTime = 0;
-      menuClick.play().catch(e => {});
+  // 2. 「メニュー」ボタンの処理
+  if (menuButton) {
+    menuButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // window.clickへの伝播を停止
+      
+      // メニュー効果音を再生
+      menuClick.currentTime = 0;
+      menuClick.play().catch(e => {});
 
-      menuScreen.style.display = 'block'; // メニューを表示
-      window.isGamePaused = true; // ゲームを一時停止
-    });
-  }
+      menuScreen.style.display = 'block'; // メニューを表示
+      window.isGamePaused = true; // ゲームを一時停止
+    });
+  }
 
-  // 3. 「続ける」ボタンの処理
-  if (continueButton) {
-    continueButton.addEventListener('click', (event) => {
-      event.stopPropagation(); // window.clickへの伝播を停止
-      
-      // メニュー効果音を再生
-      menuClick.currentTime = 0;
-      menuClick.play().catch(e => {});
+  // 3. 「続ける」ボタンの処理
+  if (continueButton) {
+    continueButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // window.clickへの伝播を停止
+      
+      // メニュー効果音を再生
+      menuClick.currentTime = 0;
+      menuClick.play().catch(e => {});
 
-      menuScreen.style.display = 'none'; // メニューを非表示
-      window.isGamePaused = false; // ゲームを再開
-    }); 
-  }
+      menuScreen.style.display = 'none'; // メニューを非表示
+      window.isGamePaused = false; // ゲームを再開
+    }); 
+  }
 
-  // 4. 「タイトルへ」ボタンの処理
-  if (returnButton) {
-    returnButton.addEventListener('click', (event) => {
-      event.stopPropagation(); // window.clickへの伝播を停止
-      
-      
-      // 1. 効果音が鳴り終わったら画面遷移する、というイベントを登録
-      menuClick.addEventListener('ended', () => {
-        window.location.href = 'Title.html';
-      }, { once: true }); // 一回だけ実行する
+  // 4. 「タイトルへ」ボタンの処理
+  if (returnButton) {
+    returnButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // window.clickへの伝播を停止
+      
+      
+      // 1. 効果音が鳴り終わったら画面遷移する、というイベントを登録
+      menuClick.addEventListener('ended', () => {
+        window.location.href = 'Title.html';
+      }, { once: true }); // 一回だけ実行する
 
-      // 2. 効果音を再生 (2回再生していたのを1回に修正)
-      menuClick.currentTime = 0;
-      menuClick.play().catch(e => {});
-    }); 
-  }
-  
-  // 5. メニュー画面の「背景」クリック処理 (ボタン以外)
-  if (menuScreen) {
-      menuScreen.addEventListener('click', (event) => {
-          // メニュー画面の背景クリックがwindow.clickに伝播しないようにする
-          event.stopPropagation();
-      }); 
-  }
+      // 2. 効果音を再生 (2回再生していたのを1回に修正)
+      menuClick.currentTime = 0;
+      menuClick.play().catch(e => {});
+    }); 
+  }
+  
+  // 5. メニュー画面の「背景」クリック処理 (ボタン以外)
+  if (menuScreen) {
+      menuScreen.addEventListener('click', (event) => {
+          // メニュー画面の背景クリックがwindow.clickに伝播しないようにする
+          event.stopPropagation();
+      }); 
+  }
 
-  // 6. 最初のメッセージを表示
-  if (messages.length > 0) {
-    initRevealTextMessage(messages[currentMessageIndex]);
-  }
+  // 6. 最初のメッセージを表示
+  if (messages.length > 0) {
+    initRevealTextMessage(messages[currentMessageIndex]);
+  }
 }); // DOMContentLoaded の閉じタグ
 
 
 /* * ===============================================
- * 会話送り・ゲームスタート用
- * (window.clickイベントリスナー)
- * ===============================================
- */
-window.addEventListener("click", () => {
+ * 【変更】会話送り・ゲームスタート処理 (共通関数)
+ * ※クリックとスペースキーで共通化するため関数として切り出し
+ * ===============================================
+ */
+function proceedConversation() {
+  
+  // テキスト表示中、ゲーム本編中、メニュー表示中(Pause中)は処理しない
+  if (isRevealing || gameHasStarted || isGamePaused) {
+    return;
+  }
 
-  // テキスト表示中、ゲーム本編中、メニュー表示中(Pause中)は処理しない
-  if (isRevealing || gameHasStarted || isGamePaused) {
-    return;
-  }
+  // ブラウザの自動再生ポリシー対策 (最初のクリックでBGM開始)
+  if (!isNovelBgmPlaying && bgmNovel) {
+    bgmNovel.play().catch(e => {});
+    isNovelBgmPlaying = true;
+  }
 
-  // ブラウザの自動再生ポリシー対策 (最初のクリックでBGM開始)
-  if (!isNovelBgmPlaying && bgmNovel) {
-    bgmNovel.play().catch(e => {});
-    isNovelBgmPlaying = true;
-  }
+  currentMessageIndex++; // 次のメッセージへ
 
-  currentMessageIndex++; // 次のメッセージへ
+  // 1. 次のメッセージがある場合
+  if (currentMessageIndex < messages.length) {
+    // 会話送りSEを再生
+    if (seClick) {
+      seClick.currentTime = 0;
+      seClick.play().catch(e => {});
+    }
+    // 次のメッセージを表示
+    initRevealTextMessage(messages[currentMessageIndex]);
+  }
 
-  // 1. 次のメッセージがある場合
-  if (currentMessageIndex < messages.length) {
-    // 会話送りSEを再生
-    if (seClick) {
-      seClick.currentTime = 0;
-      seClick.play().catch(e => {});
-    }
-    // 次のメッセージを表示
-    initRevealTextMessage(messages[currentMessageIndex]);
-  }
+  // 2. 最後のメッセージが終わった場合 (ゲーム本編の開始)
+  if (currentMessageIndex === messages.length && !gameHasStarted) {
+    
+    // (念のため) 会話送りSEを停止
+    if (seClick) {
+      seClick.pause();
+      seClick.currentTime = 0;
+    }
+    gameHasStarted = true; // ゲーム開始フラグを立てる
 
-  // 2. 最後のメッセージが終わった場合 (ゲーム本編の開始)
-  if (currentMessageIndex === messages.length && !gameHasStarted) {
-    
-    // (念のため) 会話送りSEを停止
-    if (seClick) {
-      seClick.pause();
-      seClick.currentTime = 0;
-    }
-    gameHasStarted = true; // ゲーム開始フラグを立てる
+    // BGM切り替え
+    if (bgmNovel) {
+      bgmNovel.pause();
+      bgmNovel.currentTime = 0;
+    }
+    if (bgmGame) {
+      bgmGame.play().catch(e => {});
+    }
 
-    // BGM切り替え
-    if (bgmNovel) {
-      bgmNovel.pause();
-      bgmNovel.currentTime = 0;
-    }
-    if (bgmGame) {
-      bgmGame.play().catch(e => {});
-    }
+    // UI非表示 (メッセージボックスなど)
+    updateCharacterIcon(null);
+    updateSpeakerName(null);
+    const textbox = document.getElementById("textbox");
+    if (textbox) {
+      textbox.style.display ="none";
+    }
 
-    // UI非表示 (メッセージボックスなど)
-    updateCharacterIcon(null);
-    updateSpeakerName(null);
-    const textbox = document.getElementById("textbox");
-    if (textbox) {
-      textbox.style.display ="none";
-    }
+    // 「スタート」アニメーション表示
+    const startDisplay = document.getElementById("start-display");
+    if (startDisplay) {
+      startDisplay.classList.add("show");
+    }
 
-    // 「スタート」アニメーション表示
-    const startDisplay = document.getElementById("start-display");
-    if (startDisplay) {
-      startDisplay.classList.add("show");
-    }
-
-    // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
-    setTimeout(() => {
+    // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
+    setTimeout(() => {
         start = true;
-    }, 1500); 
-  }
+    }, 1500);  
+  }
+}
+
+
+/* * ===============================================
+ * 会話送り・ゲームスタート用
+ * (window.clickイベントリスナー)
+ * ===============================================
+ */
+// 【変更】共通関数を呼び出すように修正
+window.addEventListener("click", proceedConversation);
+
+
+/* * ===============================================
+ * 【追加】スペースキーによる会話送り
+ * (window.keydownイベントリスナー)
+ * ===============================================
+ */
+window.addEventListener("keydown", (event) => {
+  // 押されたキーがスペースキーかどうかを判定
+  if (event.key === " " || event.code === "Space") {
+    
+    // スペースキーのデフォルト動作（スクロールなど）を停止
+    event.preventDefault(); 
+    
+    // クリック時と同じ共通処理を実行
+    proceedConversation();
+  }
 });
