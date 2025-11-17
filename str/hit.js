@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
   //勝利効果音
   const bgmWin = new Audio('../assets/sounds/effects/victory.mp3'); 
   bgmWin.preload = 'auto';
-  bgmWin.loop = true; // ループ再生
+  bgmWin.loop = false; // ループ再生
 
   for(let i = 0; i < hp_child.length; i++){
     hp_child[i].src = "../assets/images/player_life.png"
