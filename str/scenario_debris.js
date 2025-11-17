@@ -169,6 +169,22 @@ window.addEventListener('DOMContentLoaded', () => {
       }); 
   }
 
+    // 5-2. 「スキップ」ボタンの処理
+    const skipButton = document.getElementById('skip_button');
+    if (skipButton) {
+        skipButton.addEventListener('click', (event) => {
+            // ページ全体のクリックイベント(会話送り)に伝播しないようにする
+            event.stopPropagation();
+            
+            // メニュー効果音を鳴らす (任意)
+            menuClick.currentTime = 0;
+            menuClick.play().catch(e => {});
+
+            // 上で定義したスキップ専用関数を呼び出す
+            skipConversation(); 
+        });
+    }
+
   // 6. 最初のメッセージを表示
   if (messages.length > 0) {
     initRevealTextMessage(messages[currentMessageIndex]);
@@ -234,6 +250,11 @@ function proceedConversation() {
       textbox.style.display ="none";
     }
 
+        const skipButton = document.getElementById('skip_button');
+    if (skipButton) {
+        skipButton.style.display = 'none';
+    }
+
     // 「スタート」アニメーション表示
     const startDisplay = document.getElementById("start-display");
     if (startDisplay) {
@@ -273,3 +294,106 @@ window.addEventListener("keydown", (event) => {
     proceedConversation();
   }
 });
+
+/* * ===============================================
+ * スキップボタン専用の処理
+ * ===============================================
+ */
+function skipConversation() {
+    // 既にゲームが始まっているか、メニュー表示中(Pause中)は処理しない
+    if (gameHasStarted || window.isGamePaused) {
+        return;
+    }
+
+    // (念のため) 会話送りSEを停止
+    if (seClick) {
+        seClick.pause();
+        seClick.currentTime = 0;
+    }
+    
+    // (もしテキスト表示中だったら) 強制的に停止
+    isRevealing = false; 
+
+    gameHasStarted = true; // ゲーム開始フラグを立てる
+
+    // BGM切り替え
+    if (isNovelBgmPlaying) {
+        bgmNovel.pause();
+        bgmNovel.currentTime = 0;
+    } else {
+        bgmNovel.play().catch(e => {});
+        bgmNovel.pause();
+        bgmNovel.currentTime = 0;
+    }
+    
+    if (bgmGame) {
+        bgmGame.play().catch(e => {});
+    }
+
+    // UI非表示 (メッセージボックスなど)
+    updateCharacterIcon(null);
+    updateSpeakerName(null);
+    const textbox = document.getElementById("textbox");
+    if (textbox) {
+        textbox.style.display ="none";
+    }
+
+    // ★ スキップボタン自体も非表示にする
+    const skipButton = document.getElementById('skip_button');
+    if (skipButton) {
+        skipButton.style.display = 'none';
+    }
+
+    // 「スタート」アニメーション表示
+    const startDisplay = document.getElementById("start-display");
+    if (startDisplay) {
+        startDisplay.classList.add("show");
+    }
+
+    // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
+    setTimeout(() => {
+        start = true;
+    }, 1500);  
+}
+
+/* * ===============================================
+ * 【追加】画面リサイズ対応
+ * ゲームエリアをアスペクト比を維持して中央に配置
+ * ===============================================
+ */
+
+// 実行する関数
+function resizeGameArea() {
+    const gameArea = document.getElementById('game_play_area');
+    if (!gameArea) return; // ゲームエリアがなければ何もしない
+
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    // ゲームエリアの基準サイズ (CSSの width/height と合わせる)
+    const baseWidth = 600;
+    const baseHeight = 600;
+
+    // 画面下部にメッセージボックス用のスペースを確保（約150pxと仮定）
+    // (テキストボックスの高さ 100px + CSSのpadding 20px + 余白)
+    const availableHeight = viewportHeight - 150; 
+
+    // 1. 「幅」を基準にした場合の拡大・縮小率
+    const scaleX = viewportWidth / baseWidth;
+    
+    // 2. 「高さ」を基準にした場合の拡大・縮小率
+    const scaleY = availableHeight / baseHeight;
+
+    // 3. 幅と高さ、小さい方のスケールを採用 (アスペクト比を維持)
+    const scale = Math.min(scaleX, scaleY);
+
+    // 4. CSSの transform を更新
+    //    (中央配置の translate(-50%, -50%) と拡大・縮小の scale を両方指定)
+    gameArea.style.transform = `translate(-50%, -50%) scale(${scale})`;
+}
+
+// 1. ページの読み込み完了時に、一度サイズ調整を実行
+window.addEventListener('DOMContentLoaded', resizeGameArea);
+
+// 2. ブラウザのウィンドウサイズが変わるたびに、サイズ調整を実行
+window.addEventListener('resize', resizeGameArea);
