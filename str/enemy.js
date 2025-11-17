@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     enemyAttackSound.preload = 'auto';
 
     //敵のidを取得
-    window.enemy_Image = document.getElementById("enemy");
+    const enemy = document.getElementById("enemy");
+    const destroy = document.getElementById("Destroy");
 
     // 敵の幅と高さ
     const enemyWidth = 160;
@@ -36,29 +37,32 @@ document.addEventListener('DOMContentLoaded', function() {
     enemy_hit.style.border = "2px dashed lime";
     enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
 
+        function enemydraw() {
+            //メインループの停止
+            if (window.isGamePaused) {
+                requestAnimationFrame(enemydraw); // ループの再開に備えて要求だけは続ける
+                return; // 描画も更新もせずに終了
+            }
+            // キャンバスをクリアにする
+            enemyctx.clearRect(0, 0, enemycanvas.width, enemycanvas.height);
+            
 
-    function enemydraw() {
-        //メインループの停止
-        if (window.isGamePaused) {
-            requestAnimationFrame(enemydraw); // ループの再開に備えて要求だけは続ける
-             return; // 描画も更新もせずに終了
+            // 描画位置を更新する
+            update();
+
+            if(typeof window.win_player !== "undefined")if(window.win_player){
+                if(typeof enemy_blinking !== "undefined")if (enemy_blinking){
+                    // 描画する
+                    enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);            
+                }
+            }
+            else if(typeof window.win_player !== "undefined")if(!window.win_player){
+                enemyctx.drawImage(destroy, enemyX, enemyY, enemyWidth, enemyHeight);
+            }
+
+            // 繰り返してアニメーションする
+            requestAnimationFrame(enemydraw);
         }
-        // キャンバスをクリアにする
-        enemyctx.clearRect(0, 0, enemycanvas.width, enemycanvas.height);
-        
-
-        // 描画位置を更新する
-        update();
-
-        if(typeof enemy_blinking !== "undefined")if (enemy_blinking){
-            // 描画する
-            enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);            
-        }
-
-
-        // 繰り返してアニメーションする
-        requestAnimationFrame(enemydraw);
-    }
 
     function update() {
         // 左へ動かす条件

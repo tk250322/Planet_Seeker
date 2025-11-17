@@ -37,6 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // enemyの点滅
   window.enemy_blinking = true;
 
+  // 勝利、敗北判定
+  window.win_player = true;
+  window.lose_player = true;
+
   // playerの点滅処理
   function player_display_change (){
     const player_system = setInterval(() => {
@@ -162,13 +166,11 @@ document.addEventListener('DOMContentLoaded', function() {
       first = false;
       attackloop = false;
 
-    // id取得
-    const destroy_image = document.getElementById("Destroy");
+      // id取得
+      // const destroy_image = document.getElementById("Destroy");
 
       // 撃破画像に変更
-      window.enemy_Image.style.display = "none";
-      destroy_image.style.display = "block";
-
+      window.win_player = false;
       
       //攻撃削除
       bullet_remove();
@@ -182,16 +184,20 @@ document.addEventListener('DOMContentLoaded', function() {
       // 勝利BGMを再生
       bgmWin.play().catch(e => {});
 
-      //リザルトへ移動
-      requestAnimationFrame(()=>{
-            go_result();
-      });
+      setTimeout(() => {
+        //リザルトへ移動
+        requestAnimationFrame(()=>{
+          go_result();
+        });
+      }, 500);
+
     }
 
     //敗北
     if(player_hp == 0 && first){
       first = false;
-      attackloop = false;      
+      attackloop = false;  
+      window.lose_player = false;    
       bullet_remove();
 
       requestAnimationFrame(()=>{
