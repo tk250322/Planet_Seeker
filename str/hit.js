@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log("hit.js読み込み済み");
   let first = true;
   //ヒットポイント
-  let enemy_hp = 10;
+  let enemy_hp = 1;
   let player_hp = 5;
 
   //プレイヤーのHPスタイル取得
