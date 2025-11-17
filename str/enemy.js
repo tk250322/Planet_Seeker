@@ -40,10 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let isEnemyAttacking = false;
 
     function enemydraw() {
-        //メインループの停止
+    //メインループの停止
         if (window.isGamePaused) {
             requestAnimationFrame(enemydraw); // ループの再開に備えて要求だけは続ける
-             return; // 描画も更新もせずに終了
+            return; // 描画も更新もせずに終了
         }
         // キャンバスをクリアにする
         enemyctx.clearRect(0, 0, enemycanvas.width, enemycanvas.height);
@@ -51,17 +51,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // 描画位置を更新する
         update();
 
-        // もし攻撃中なら、攻撃スプライトを描画
-        if (isEnemyAttacking && enemyAttackSprite) {
-            enemyctx.drawImage(enemyAttackSprite, enemyX, enemyY, enemyWidth, enemyHeight);
-        } 
-        // そうでなければ（通常時）、元のスプライトを描画（点滅処理もそのまま）
-        else if (typeof enemy_blinking !== "undefined" && enemy_blinking) {
-            enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);
-        }
+        // 1. まず「点滅」を描画の前提条件にする
+    // (enemy_blinking が false なら、この if ブロックは実行されず、何も描画されない = 点滅が成立)
+        if (typeof enemy_blinking === "undefined" || enemy_blinking) {
         
-        // 繰り返してアニメーションする
-        requestAnimationFrame(enemydraw);
+            // 2. 点滅OK（描画する）なら、次に「攻撃中か」を判定する
+            if (isEnemyAttacking && enemyAttackSprite) {
+                // 点滅中 ＆ 攻撃中のスプライトを描画
+                enemyctx.drawImage(enemyAttackSprite, enemyX, enemyY, enemyWidth, enemyHeight);
+            } 
+            else {
+                // 点滅中 ＆ 通常時のスプライトを描画
+                enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);
+            }
+        }
+                
+    // 繰り返してアニメーションする
+    requestAnimationFrame(enemydraw);
     }
 
     function update() {

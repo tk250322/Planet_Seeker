@@ -164,6 +164,22 @@
   background-color: #fff;
 }
 
+/* 2.5. スキップボタン (右上) */
+#skip_button {
+  position: absolute; /* game-areaを基準に配置 */
+  top: 0px;  /* メニューボタンと同じ高さ */
+  left: 100px;  
+  z-index: 100;   /* メニューボタンと同じ重なり順 */
+
+  /* (オプション) 見た目 (メニューボタンと統一) */
+  padding: 5px 5px;
+  font-size: 15px;
+  width: auto; 
+  height: 40px; 
+  border: 2px solid #00ffff;
+  background-color: #fff;
+}
+
 
 /* 3. メニュー画面 (中央) */
 #menu_screen {
