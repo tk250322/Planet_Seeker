@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 敵の攻撃サウンド
     const enemyAttackSound = new Audio('../assets/sounds/effects/enemy_attack.mp3'); 
     enemyAttackSound.preload = 'auto';
+    enemyAttackSound.volume = 0.5;
 
     //敵のidを取得
     const enemy = document.getElementById("enemy");

@@ -12,8 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
   //プレイヤー、エネミーの被弾効果音
   const playerDamageSound = new Audio('../assets/sounds/effects/player_damage.mp3');
   playerDamageSound.preload = 'auto';
+  playerDamageSound.volume = 1; 
   const enemyHitSound = new Audio('../assets/sounds/effects/enemy_damage.mp3');
   enemyHitSound.preload = 'auto';
+  enemyHitSound.volume = 0.9;
 
   //勝利効果音
   const bgmWin = new Audio('../assets/sounds/effects/victory.mp3'); 
