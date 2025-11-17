@@ -25,13 +25,13 @@ bgmGame.loop = true;
 /* --- メッセージ配列 --- */
 const messages = [
   { speaker: "null", name: null, text: "とうとう惑星の目の前に到着した。" },
-  { speaker: "boss", name: "エクゾクォア", text: "よく来たな。遠き星に住む生物よ。我はエクゾクォア、「外宇宙の審問官」である。" },
-  { speaker: "boss", name: "エクゾクォア", text: "名乗るがいい、ここがお前の墓場となる。" },
-  { speaker: "main",  name: "ルミナス・ノア", text: "俺の名は、ルミナス・ノア。星の命を、光で繋ぐ者、Planet Seekerだ。" },
-  { speaker: "boss", name: "エクゾクォア", text: "いい名だ。だが、お前たちの旅路はここで終わる。" },
-  { speaker: "main",  name: "ルミナス・ノア", text: "お前、もしかして俺たちの星を攻撃してきたやつじゃないのか？" },
-  { speaker: "boss2", name: "エクゾクォア", text: "よく気が付いたな。ここまで来ただけはある。だが、ここまでだ。" },
-  { speaker: "main2",  name: "ルミナス・ノア", text: "人類のかたき。絶対に倒す！！！" },
+//  { speaker: "boss", name: "エクゾクォア", text: "よく来たな。遠き星に住む生物よ。我はエクゾクォア、「外宇宙の審問官」である。" },
+//  { speaker: "boss", name: "エクゾクォア", text: "名乗るがいい、ここがお前の墓場となる。" },
+//  { speaker: "main",  name: "ルミナス・ノア", text: "俺の名は、ルミナス・ノア。星の命を、光で繋ぐ者、Planet Seekerだ。" },
+//  { speaker: "boss", name: "エクゾクォア", text: "いい名だ。だが、お前たちの旅路はここで終わる。" },
+//  { speaker: "main",  name: "ルミナス・ノア", text: "お前、もしかして俺たちの星を攻撃してきたやつじゃないのか？" },
+//  { speaker: "boss2", name: "エクゾクォア", text: "よく気が付いたな。ここまで来ただけはある。だが、ここまでだ。" },
+//  { speaker: "main2",  name: "ルミナス・ノア", text: "人類のかたき。絶対に倒す！！！" },
 ];
 
 /* --- 関数: アイコンを更新 --- */
