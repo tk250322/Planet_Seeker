@@ -121,3 +121,9 @@ canvas {
   border-radius: 5px;
   margin-bottom: 25px;
 }
+
+.debris{
+  position: absolute;
+  height: 100px;
+  width: 100px;
+}
