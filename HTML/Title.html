@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Planet Seeker</title>
-   <link rel="stylesheet" href="./../style/title.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planet Seeker</title>
+    <link rel="stylesheet" href="./../style/title.css">
 </head>
 <body>
     <!--　ゲームタイトル画面 -->
     <div class="text-box">
-      <h1>Planet Seeker</h1>
-      <p>次の移住先に移動せよ！！！！</p>
-      <label for="input_task">さあ、冒険の始まりだ！！！！</label><br>
-      <button id="debris_button" class="title_button">脱出編</button>
-      <button id="UFO_button" class="title_button">UFO編</button>
-      <button id="save_button" class="title_button">BOSS編</button>
-      <!-- スクリプト"title" -->
-      <script src="../str/title.js"></script>
-      <script src="../str/move.js"></script>
+        <h1>Planet Seeker</h1>
+        <p>次の移住先に移動せよ！！！！</p>
+        <label for="input_task">さあ、冒険の始まりだ！！！！</label><br>
+        <button id="explanation_button" class="explanation_button">遊び方</button>
+        <button id="debris_button" class="title_button">脱出編</button>
+        <button id="UFO_button" class="title_button">UFO編</button>
+        <button id="save_button" class="title_button">BOSS編</button>
+        <script src="../str/title.js"></script>
+        <script src="../str/move.js"></script>
     </div>
-</body>
+     <!--　説明画面 -->  
+    <div id="explanation" class="screen hidden">
+        <canvas id="explanationcanvas"></canvas> 
+        <h2>遊び方</h1>
+        <h3>敵を倒す</h1>
+        <button id="return_button" class="return_button">戻る</button>
+    </div>
+    <!-- スクリプト"title" -->
+    <script src="../str/title.js"></script>
+    <script src="../str/move.js"></script>
+    </body>
 </html>
-
-
-
