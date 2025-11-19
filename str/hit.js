@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   //ヒットポイント
   let enemy_hp = 2;
-  let player_hp = 5;
+  window.player_hp = 5;
 
   //プレイヤーのHPスタイル取得
   const hp_style = document.getElementById("HP");

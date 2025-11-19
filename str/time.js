@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
       window.seconds = 30;
       document.getElementById('timer').textContent = "00:00:30";
     }
-    else window.seconds = 30;
+    else window.seconds = 0;
     let timer;
   
   window.timer_start = function(){
