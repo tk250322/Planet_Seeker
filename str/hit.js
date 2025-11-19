@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log("hit.js読み込み済み");
   let first = true;
+  
   //ヒットポイント
   let enemy_hp = 2;
   let player_hp = 5;
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   // playerの無敵時間
-  let player_hit_pos = true;
+  window.player_hit_pos = true;
   // enemyの無敵時間
   let enemy_hit_pos = true;
 
@@ -79,6 +80,24 @@ document.addEventListener('DOMContentLoaded', function() {
       Array.from(enemy_bullets).forEach(e => {
         e.remove();
       });
+  }
+
+  //ダメージ
+  window.damage = function(){
+    console.log("ダメージ");
+    // プレイヤー被弾サウンドを再生
+    playerDamageSound.currentTime = 0;
+    playerDamageSound.play();
+    player_hit_pos = false;
+    if(typeof enemy_start === "function")e_b.remove();
+    player_hp--;
+    // hp_height -= 30;
+    // hp_style.style.height = `${hp_height}px`;
+    hp_child[player_hp].remove();
+    player_display_change();
+    setTimeout(()=>{
+      player_hit_pos = true;
+    }, 1300);
   }
 
   //重なり判定の取得と攻撃の消去
