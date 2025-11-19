@@ -120,8 +120,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     left + 32 < b_left + 22 && left + 68 > b_left;
                     if(hit){
                         p_b[i].remove();
-                        pos.remove();
+                        pos.src = "../assets/images/enemy_ex.png";
                         clearInterval(attack_move);
+                        setTimeout(()=>{
+                            pos.remove();
+                        }, 200);
                     }
                 }
 
