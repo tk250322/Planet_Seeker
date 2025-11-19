@@ -12,9 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //敵のidを取得
     const enemy = document.getElementById("enemy");
-    
+    const destroy = document.getElementById("Destroy");
     const enemyAttackSprite = document.getElementById("enemy_attack_sprite");
-    
     // 敵の幅と高さ
     const enemyWidth = 160;
     const enemyHeight = 160;
@@ -38,37 +37,42 @@ document.addEventListener('DOMContentLoaded', function() {
     enemy_hit.style.border = "2px dashed lime";
     enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
 
-    let isEnemyAttacking = false;
-
+    let isEnemyAttacking = true;
     function enemydraw() {
-    //メインループの停止
+        //メインループの停止
         if (window.isGamePaused) {
             requestAnimationFrame(enemydraw); // ループの再開に備えて要求だけは続ける
             return; // 描画も更新もせずに終了
         }
         // キャンバスをクリアにする
         enemyctx.clearRect(0, 0, enemycanvas.width, enemycanvas.height);
-        
+            
         // 描画位置を更新する
         update();
 
-        // 1. まず「点滅」を描画の前提条件にする
-    // (enemy_blinking が false なら、この if ブロックは実行されず、何も描画されない = 点滅が成立)
-        if (typeof enemy_blinking === "undefined" || enemy_blinking) {
-        
-            // 2. 点滅OK（描画する）なら、次に「攻撃中か」を判定する
-            if (isEnemyAttacking && enemyAttackSprite) {
-                // 点滅中 ＆ 攻撃中のスプライトを描画
-                enemyctx.drawImage(enemyAttackSprite, enemyX, enemyY, enemyWidth, enemyHeight);
-            } 
-            else {
-                // 点滅中 ＆ 通常時のスプライトを描画
+        if(typeof window.win_player !== "undefined" && window.win_player){
+            if(typeof enemy_blinking !== "undefined" && enemy_blinking){
+                // 描画する
+                // enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);            
+                // 2. 点滅OK（描画する）なら、次に「攻撃中か」を判定する
+                if (isEnemyAttacking && enemyAttackSprite) {
+                    // 点滅中 ＆ 攻撃中のスプライトを描画
+                    enemyctx.drawImage(enemyAttackSprite, enemyX, enemyY, enemyWidth, enemyHeight);
+                } 
+                else {
+                    // 点滅中 ＆ 通常時のスプライトを描画
+                    enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);
+                }                
                 enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);
             }
+
         }
-                
-    // 繰り返してアニメーションする
-    requestAnimationFrame(enemydraw);
+        else if(typeof window.win_player !== "undefined" && !window.win_player){
+            enemyctx.drawImage(destroy, enemyX, enemyY, enemyWidth, enemyHeight);
+        }
+
+        // 繰り返してアニメーションする
+        requestAnimationFrame(enemydraw);
     }
 
     function update() {
@@ -235,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
         randomMove();
         setInterval(randomMove, 200);
 
-        setTimeout(attack_schedule(), 3000);
+        setTimeout(attack_schedule, 3000);
 
         // document.addEventListener('keydown', keydownHandler);
         // document.addEventListener('keyup', keyupHandler);

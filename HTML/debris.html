@@ -54,8 +54,23 @@
     <button id="continue_button">続けるへ</button>
     </div></div>
     <!-- ヒットポイント -->
-    <div id="HP"></div>
+    <div id="HP">
+      <img class="HP_style"/>
+      <img class="HP_style"/>
+      <img class="HP_style"/>
+      <img class="HP_style"/>
+      <img class="HP_style"/>
     </div>
+    </div>
+    <!-- 負け -->
+    <div id ="gameover-screen" class="finish" style="display: none;">
+      <h1>あなたは敗北しました。お疲れ様です。</h1>
+      <button>タイトルへ戻る</button>
+    </div>
+    <!-- 勝ち -->
+    <div id="win-screen" class="finish" style="display: none;">
+      <h1>勝ちです</h1>
+      <button>リザルト</button>
     </div>
   <!-- スクリプト"playercanvas" -->
   <script src="../str/player.js"></script>

@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log("hit.js読み込み済み");
   let first = true;
+  
   //ヒットポイント
-  let enemy_hp = 1;
-  let player_hp = 5;
+  let enemy_hp = 2;
+  window.player_hp = 5;
 
   //プレイヤーのHPスタイル取得
   const hp_style = document.getElementById("HP");
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   // playerの無敵時間
-  let player_hit_pos = true;
+  window.player_hit_pos = true;
   // enemyの無敵時間
   let enemy_hit_pos = true;
 
@@ -38,6 +39,10 @@ document.addEventListener('DOMContentLoaded', function() {
   window.player_blinking = true;
   // enemyの点滅
   window.enemy_blinking = true;
+
+  // 勝利、敗北判定
+  window.win_player = true;
+  window.lose_player = true;
 
   // playerの点滅処理
   function player_display_change (){
@@ -75,6 +80,24 @@ document.addEventListener('DOMContentLoaded', function() {
       Array.from(enemy_bullets).forEach(e => {
         e.remove();
       });
+  }
+
+  //ダメージ
+  window.damage = function(){
+    console.log("ダメージ");
+    // プレイヤー被弾サウンドを再生
+    playerDamageSound.currentTime = 0;
+    playerDamageSound.play();
+    player_hit_pos = false;
+    if(typeof enemy_start === "function")e_b.remove();
+    player_hp--;
+    // hp_height -= 30;
+    // hp_style.style.height = `${hp_height}px`;
+    hp_child[player_hp].remove();
+    player_display_change();
+    setTimeout(()=>{
+      player_hit_pos = true;
+    }, 1300);
   }
 
   //重なり判定の取得と攻撃の消去
@@ -163,6 +186,9 @@ document.addEventListener('DOMContentLoaded', function() {
       //処理の重複防止
       first = false;
       attackloop = false;
+
+      // 撃破画像に変更
+      window.win_player = false;
       
       //攻撃削除
       bullet_remove();
@@ -176,16 +202,20 @@ document.addEventListener('DOMContentLoaded', function() {
       // 勝利BGMを再生
       bgmWin.play().catch(e => {});
 
-      //リザルトへ移動
-      requestAnimationFrame(()=>{
-            go_result();
-      });
+      setTimeout(() => {
+        //リザルトへ移動
+        requestAnimationFrame(()=>{
+          go_result();
+        });
+      }, 500);
+
     }
 
     //敗北
     if(player_hp == 0 && first){
       first = false;
-      attackloop = false;      
+      attackloop = false;  
+      window.lose_player = false;    
       bullet_remove();
 
       requestAnimationFrame(()=>{

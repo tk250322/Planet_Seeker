@@ -90,27 +90,32 @@ document.addEventListener('DOMContentLoaded', function() {
         player.style.top = `${Y + 205}px`;
     }
 
-    // canvasに描画してアニメーションする
-    function draw() {
-        // メインループの停止
-        if (window.isGamePaused) {
-            requestAnimationFrame(draw); // ループの再開に備えて要求だけは続ける
-            return; // 描画も更新もせずに終了
+        // canvasに描画してアニメーションする
+        function draw() {
+            // メインループの停止
+            if (window.isGamePaused) {
+                requestAnimationFrame(draw); // ループの再開に備えて要求だけは続ける
+                return; // 描画も更新もせずに終了
+            }
+            // キャンバスをクリアにする
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 描画位置を更新する
+            if(move)update();
+
+            if(typeof window.lose_player !== "undefined" && window.lose_player){
+                if(typeof player_blinking !== "undefined" && player_blinking){
+                    // 描画する
+                    ctx.drawImage(playerImage, X, Y, Width, Height);
+                }
+            }
+            else if(typeof window.win_player !== "undefined" && !window.lose_player){
+                ctx.drawImage(destroy, X, Y, Width, Height);
+            }
+
+            // 繰り返してアニメーションする
+            requestAnimationFrame(draw);
         }
-        // キャンバスをクリアにする
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // 描画位置を更新する
-        if(move)update();
-
-        if(typeof player_blinking !== "undefined")if(player_blinking){
-            // 描画する
-            ctx.drawImage(playerImage, X, Y, Width, Height);
-        }
-
-        // 繰り返してアニメーションする
-        requestAnimationFrame(draw);
-    }
 
     // playercanvasのid取得と描画ツールの取得
     const canvas = document.getElementById('playercanvas');
@@ -121,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //キャラのidを取得
     const playerImage = document.getElementById('player');
+    const destroy = document.getElementById('Destroy');
 
     // キャラの幅と高さ
     const Width = 100;
