@@ -25,12 +25,12 @@ bgmGame.loop = true;
 /* --- メッセージ配列 --- */
 const messages = [
   { speaker: "null", name: null, text: "西暦XXXX年、人類は宇宙人に襲われ、絶対絶命のピンチに追い込まれていた" },
-  // { speaker: "main", name: "ルミナス・ノア", text: "人類はここまでなのか…" },
-  // { speaker: "main", name: "ルミナス・ノア", text: "いや、まだだ…地球を脱出して新しい惑星に移り住むんだ生き延びて見せる！！！" },
-  // { speaker: "main", name: "ルミナス・ノア", text: "………" },
-  // { speaker: "main", name: "ルミナス・ノア", text: "よし、地球を脱出することができた。宇宙人が気づいてないうちに…" },
-  // { speaker: "enemy_soldier", name: "宇宙人", text: "ほう…まだ抗うか。そのちっぽけな船で、我々から逃げ切れるとでも？" },
-  // { speaker: "main2", name: "ルミナス・ノア", text: "くそっ！気づかれた！！！デブリで撃墜するつもりだ。こんなところで死ぬわけにはいかない！" },
+  { speaker: "main", name: "ルミナス・ノア", text: "人類はここまでなのか…" },
+  { speaker: "main", name: "ルミナス・ノア", text: "いや、まだだ…地球を脱出して新しい惑星に移り住むんだ生き延びて見せる！！！" },
+  { speaker: "main", name: "ルミナス・ノア", text: "………" },
+  { speaker: "main", name: "ルミナス・ノア", text: "よし、地球を脱出することができた。宇宙人が気づいてないうちに…" },
+  { speaker: "enemy_soldier", name: "宇宙人", text: "ほう…まだ抗うか。そのちっぽけな船で、我々から逃げ切れるとでも？" },
+  { speaker: "main2", name: "ルミナス・ノア", text: "くそっ！気づかれた！！！デブリで撃墜するつもりだ。こんなところで死ぬわけにはいかない！" },
 ];
 
 /* --- 関数: アイコンを更新 --- */

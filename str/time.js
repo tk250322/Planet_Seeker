@@ -2,7 +2,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ページ読み込み時にタイマー開始
   window.onload = () => {
-    window.seconds = 0;
+    if(typeof debris !== "undefined"){
+      window.seconds = 30;
+      document.getElementById('timer').textContent = "00:00:30";
+    }
+    else window.seconds = 30;
     let timer;
   
   window.timer_start = function(){
@@ -12,14 +16,15 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       if(move){
-        seconds++;
+        if(typeof debris !== "undefined")seconds--;
+        else seconds++;
+        if(typeof debris !== undefined && seconds === 30)go_result();
         updateTimerDisplay();
       }
     }, 1000);
 
     document.getElementById("timer").style.display = "block";
   }
-  // };
 
   function updateTimerDisplay() {
     const hours = Math.floor(seconds / 3600);

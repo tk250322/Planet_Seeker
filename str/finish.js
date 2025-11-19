@@ -23,6 +23,7 @@ window.go_result = function(){
     screen.addEventListener("click",()=>{
         // ★★★ ここのURLを修正 ★★★
         // 目印（clearStatus）を付けて result.html に遷移
+        console.log("crear");
         window.location.href = `result.html?status=${clearStatus}`;
     })
 }
