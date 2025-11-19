@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     enemy_hit.style.border = "2px dashed lime";
     enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
 
-    let isEnemyAttacking = true;
+    let isEnemyAttacking = false;
     function enemydraw() {
         //メインループの停止
         if (window.isGamePaused) {
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // 点滅中 ＆ 通常時のスプライトを描画
                     enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);
                 }                
-                enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);
+                //enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);
             }
 
         }
