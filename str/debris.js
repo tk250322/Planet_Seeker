@@ -6,15 +6,34 @@ document.addEventListener('DOMContentLoaded', function() {
     //攻撃
     class Debris{
         constructor(){
-            this.x = -30;
-            this.y = Math.floor(Math.random() * 530);
-            this.attack_type = Math.floor(Math.random()* 5);
+            this.pos_type = Math.floor(Math.random() * 3);
+            this.x;
+            this.y;
+            this.attack_type = Math.floor(Math.random() * 5);
             this.speed = 4;
             this.pos = this.create();
         }
 
+        vec(){
+            switch(this.pos_type){
+              case 0:
+                this.x = -30;
+                this.y = Math.floor(Math.random() * 530);
+                break;
+              case 1:
+                this.x = Math.floor(Math.random() * 250) - 30;
+                this.y = -30;
+                break;
+              case 2:
+                this.x = Math.floor(Math.random() * 250) - 30;
+                this.y = 530;
+                break;
+            }
+        }
+
         //生成
         create(){
+            this.vec();
             if(player_hp === 0 || isGamePaused || !move)return;
             console.log("デブリが落ちてくるよ！！気をつけて！！");
             const pos = document.createElement("img");
@@ -38,18 +57,37 @@ document.addEventListener('DOMContentLoaded', function() {
                     pos.style.top = `${top + speed}px`;
                     break;
                   case 1:
+                    if(this.pos_type === 2){
+                        pos.style.left = `${left - speed}px`;
+                        break;
+                    }
                     pos.style.top = `${top + speed/5*4}px`;
                     pos.style.left = `${left + speed/5*3}px`;
                     break;
                   case 2:
+                    if(this.pos_type === 2){
+                        pos.style.top = `${top + speed/2}px`;
+                        pos.style.left = `${left - speed/2*Math.sqrt(3)}px`;
+                        break;
+                    }
+
                     pos.style.top = `${top + speed/5*3}px`;
                     pos.style.left = `${left + speed/5*4}px`;
                     break;
                   case 3:
+                    if(this.pos_type === 1){
+                        pos.style.left = `${left + speed}px`;
+                        break;
+                    }
                     pos.style.top = `${top + speed/5*4}px`;
                     pos.style.left = `${left - speed/5*3}px`;
                     break;
                   case 4:
+                    if(this.pos_type === 1){
+                        pos.style.top = `${top + speed/2}px`;
+                        pos.style.left = `${left  + speed/2*Math.sqrt(3)}px`;
+                        break;
+                    }
                     pos.style.top = `${top + speed/5*3}px`;
                     pos.style.left = `${left - speed/5*4}px`;
                     break;
@@ -100,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
         timer(){setInterval(()=>{
             const newDebris = new Debris();
             newDebris.move(newDebris.pos);
-        }, 400)}
+        }, 200)}
     }
 
     window.debris_start = function(){
