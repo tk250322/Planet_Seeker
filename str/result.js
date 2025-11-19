@@ -51,6 +51,48 @@ function setupButton(id, url) {
 
 setupButton('Title_button', 'Title.html');
 
+document.addEventListener('DOMContentLoaded', () => {
+
+    // 1. 要素を取得
+    const h1Element = document.querySelector('.result-box h1');
+    const pElement = document.querySelector('.result-box p');
+    
+    // 2. URLをチェック
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status'); 
+
+    // 3. メッセージを書き換える
+    if (status === 'boss_clear') {
+        h1Element.textContent = 'Mission Complete!';
+        pElement.textContent = 'おめでとう！次の惑星に到達したぞ！！！';
+        
+    } else if (status === 'ufo_clear') {
+        h1Element.textContent = 'Stage Clear!';
+        pElement.textContent = 'UFOを撃破！見つけた惑星に向かおう！';
+
+    } else {
+        // デフォルト (h1 は HTMLのままでもOK)
+        // h1Element.textContent = 'Congratulations'; 
+        
+        // p は HTMLのままでもOK
+        // pElement.textContent = 'おめでとう！次の惑星に到達したぞ！！！';
+    }
+
+    // ★★★ ここを修正 ★★★
+    // 4. p タグの書き換えが完了したので、表示する
+    if (pElement) {
+        pElement.style.visibility = 'visible'; // p を表示
+    }
+    // (h1 は何もしない)
+    // ★★★ 修正ここまで ★★★
+
+    // (タイム表示やボタン処理...)
+    
+});
+
+
+
+
 /*
 <div id="clear-time">タイム: 読み込み中...</div>
 

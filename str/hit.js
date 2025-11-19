@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log("hit.js読み込み済み");
   let first = true;
   //ヒットポイント
-  let enemy_hp = 10;
+  let enemy_hp = 2;
   let player_hp = 5;
 
   //プレイヤーのHPスタイル取得
@@ -12,13 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
   //プレイヤー、エネミーの被弾効果音
   const playerDamageSound = new Audio('../assets/sounds/effects/player_damage.mp3');
   playerDamageSound.preload = 'auto';
+  playerDamageSound.volume = 1; 
   const enemyHitSound = new Audio('../assets/sounds/effects/enemy_damage.mp3');
   enemyHitSound.preload = 'auto';
+  enemyHitSound.volume = 0.9;
 
   //勝利効果音
   const bgmWin = new Audio('../assets/sounds/effects/victory.mp3'); 
   bgmWin.preload = 'auto';
-  bgmWin.loop = true; // ループ再生
+  bgmWin.loop = false; // ループ再生
 
   for(let i = 0; i < hp_child.length; i++){
     hp_child[i].src = "../assets/images/player_life.png"
@@ -165,9 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
       //処理の重複防止
       first = false;
       attackloop = false;
-
-      // id取得
-      // const destroy_image = document.getElementById("Destroy");
 
       // 撃破画像に変更
       window.win_player = false;
