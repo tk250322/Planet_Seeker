@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         constructor(){
             this.x = -30;
             this.y = Math.floor(Math.random() * 530);
-            this.type = Math.floor(Math.random()* 5);
+            this.attack_type = Math.floor(Math.random()* 5);
             this.speed = 4;
             this.pos = this.create();
         }
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const top = parseFloat(pos.style.top);
                 const left = parseFloat(pos.style.left);
                 const speed = this.speed;
-                if(!isGamePaused && move){switch(this.type){
+                if(!isGamePaused && move){switch(this.attack_type){
                   case 0:
                     pos.style.top = `${top + speed}px`;
                     break;
@@ -61,15 +61,30 @@ document.addEventListener('DOMContentLoaded', function() {
                     clearInterval(attack_move);
                 }
 
+                //ダメージ
                 const p_pos = document.getElementById("player-pos");
                 const p_top = parseInt(p_pos.style.top);
                 const p_left = parseInt(p_pos.style.left);
-                const hit = top + 32 < p_top + 30 && top + 68 > p_top &&
+                const bullet_damage = top + 32 < p_top + 30 && top + 68 > p_top &&
                     left + 32 < p_left + 30 && left + 68 > p_left;
-                if(hit && player_hit_pos){
+                if(bullet_damage && player_hit_pos){
                     damage();
                     pos.remove();
                     clearInterval(attack_move);
+                }
+
+                //破壊
+                const p_b = document.getElementsByClassName("player_bullet");
+                for(let i = 0; i < p_b.length; i++){
+                    const b_top = parseInt(p_b[i].style.top) + 4;
+                    const b_left = parseInt(p_b[i].style.left) + 4;
+                    const hit = top + 32 < b_top + 22 && top + 68 > b_top &&
+                    left + 32 < b_left + 22 && left + 68 > b_left;
+                    if(hit){
+                        p_b[i].remove();
+                        pos.remove();
+                        clearInterval(attack_move);
+                    }
                 }
 
                 if(player_hp === 0){
@@ -77,14 +92,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     clearInterval(attack_move);
                 }
             }, 16);
+            
+            
         }
-
+  
         //攻撃生成タイミング
         timer(){setInterval(()=>{
             const newDebris = new Debris();
             newDebris.move(newDebris.pos);
         }, 400)}
     }
+
     window.debris_start = function(){
         const d = new Debris();
         d.move(d.pos);

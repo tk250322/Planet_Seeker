@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
       player_hit_pos = true;
     }, 1300);
   }
-  
+
   //重なり判定の取得と攻撃の消去
   function overlap() {
     //攻撃の取得
