@@ -16,9 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       if(move){
-        if(typeof debris !== "undefined")seconds--;
+        if(typeof debris !== "undefined"){
+          seconds--;
+          if(seconds === 0)go_result();
+        }
         else seconds++;
-        if(typeof debris !== undefined && seconds === 30)go_result();
         updateTimerDisplay();
       }
     }, 1000);
