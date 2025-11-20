@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     class Debris{
         constructor(){
             this.pos_type = Math.floor(Math.random() * 3);
+            this.img_type = Math.floor(Math.random() * 10);
             this.x;
             this.y;
             this.attack_type = Math.floor(Math.random() * 5);
@@ -37,8 +38,24 @@ document.addEventListener('DOMContentLoaded', function() {
             if(player_hp === 0 || isGamePaused || !move)return;
             console.log("デブリが落ちてくるよ！！気をつけて！！");
             const pos = document.createElement("img");
-            pos.className = "debris";
-            pos.src = "../assets/images/big_debris.png";
+            switch(this.img_type){
+              case 1:
+              case 2:
+              case 3:
+                pos.className = "big_debris";
+                break;
+              default:
+                pos.className = "debris";
+                break;
+            }
+            switch(this.img_type){
+              case 0:
+                pos.src = "../assets/images/rare_debris_1.png";
+                break;
+              default:
+                pos.src = "../assets/images/big_debris.png";
+                break;
+            }
             pos.style.top = `${this.x}px`;
             pos.style.left = `${this.y}px`;
             document.getElementById("game_play_area").appendChild(pos);
