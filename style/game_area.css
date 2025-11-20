@@ -124,12 +124,12 @@ canvas {
 
 .debris{
   position: absolute;
-  height: 100px;
-  width: 100px;
+  height: 40px;
+  width: 40px;
 }
 
 .big_debris{
   position: absolute;
-  height: 200px;
-  width: 200px;
+  height: 80px;
+  width: 80px;
 }

@@ -17,52 +17,54 @@ document.addEventListener('DOMContentLoaded', function() {
             this.attack_type = Math.floor(Math.random() * 5);
             this.speed = 4;
             this.pos = this.create();
+            this.width;
+            this.height;
         }
 
         vec(){
             switch(this.pos_type){
               case 0:
-                this.x = -30;
-                this.y = Math.floor(Math.random() * 530);
+                this.x = 0;
+                this.y = Math.floor(Math.random() * 500) + 50;
                 break;
               case 1:
-                this.x = Math.floor(Math.random() * 250) - 30;
-                this.y = -30;
+                this.x = Math.floor(Math.random() * 250) + 20;
+                this.y = 0;
                 break;
               case 2:
-                this.x = Math.floor(Math.random() * 250) - 30;
-                this.y = 530;
+                this.x = Math.floor(Math.random() * 250) + 20;
+                this.y = 600;
                 break;
             }
         }
 
         //生成
         create(){
-            this.vec();
             if(player_hp === 0 || isGamePaused || !move)return;
             console.log("デブリが落ちてくるよ！！気をつけて！！");
             const pos = document.createElement("img");
             switch(this.img_type){
+              case 0:
+                pos.src = "../assets/images/rare_debris.png";
+                pos.className = "debris";                
+                break;
               case 1:
               case 2:
               case 3:
+                pos.src = "../assets/images/debris_fire.png";
                 pos.className = "big_debris";
                 break;
               default:
+                pos.src = "../assets/images/debris.png";
                 pos.className = "debris";
                 break;
             }
-            switch(this.img_type){
-              case 0:
-                pos.src = "../assets/images/rare_debris_1.png";
-                break;
-              default:
-                pos.src = "../assets/images/big_debris.png";
-                break;
-            }
+            this.vec();
             pos.style.top = `${this.x}px`;
             pos.style.left = `${this.y}px`;
             document.getElementById("game_play_area").appendChild(pos);
+            this.height = pos.offsetHeight;
+            this.width = pos.offsetWidth;
             return pos;
         }
 
@@ -115,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }}
 
                 //攻撃削除
-                if(top >= 600 || left < -30 || left > 530){
+                if(top >= 600 || left < - this.width || left > 600){
                     pos.remove();
                     clearInterval(attack_move);
                 }
@@ -124,8 +126,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const p_pos = document.getElementById("player-pos");
                 const p_top = parseInt(p_pos.style.top);
                 const p_left = parseInt(p_pos.style.left);
-                const bullet_damage = top + 32 < p_top + 30 && top + 68 > p_top &&
-                    left + 32 < p_left + 30 && left + 68 > p_left;
+                const bullet_damage = top < p_top + 30 && top + this.height > p_top &&
+                    left < p_left + 30 && left + this.width > p_left;
                 if(bullet_damage && player_hit_pos){
                     damage();
                     pos.remove();
@@ -137,10 +139,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 for(let i = 0; i < p_b.length; i++){
                     const b_top = parseInt(p_b[i].style.top) + 4;
                     const b_left = parseInt(p_b[i].style.left) + 4;
-                    const hit = top + 32 < b_top + 22 && top + 68 > b_top &&
-                    left + 32 < b_left + 22 && left + 68 > b_left;
+                    const hit = top < b_top + 22 && top + this.height > b_top &&
+                    left < b_left + 22 && left + this.width > b_left;
                     if(hit){
                         p_b[i].remove();
+                        pos.style.height = "100px";
+                        pos.style.width = "100px";
+                        switch(this.img_type){
+                          case 1:
+                          case 2:
+                          case 3:
+                            pos.style.top = `${top - 10}px`;
+                            pos.style.left = `${left - 10}px`;
+                            break;
+                          default:
+                            pos.style.top = `${top - 30}px`;
+                            pos.style.left = `${left - 30}px`;
+                            break;
+                        }
                         pos.src = "../assets/images/enemy_ex.png";
                         const newSoundInstance = enemydownSound.cloneNode(true); 
                         newSoundInstance.play();
