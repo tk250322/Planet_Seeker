@@ -8,6 +8,7 @@ window.go_result = function(){
 
     else if (typeof debris != "undefined") {
         clearStatus = "debris_clear"; // ★デブリクリアの目印
+        sessionStorage.setItem("debris_score", score);
     }
 
     // ボスステージの判定

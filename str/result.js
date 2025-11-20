@@ -30,6 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // p は HTMLのままでもOK
         // pElement.textContent = 'おめでとう！次の惑星に到達したぞ！！！';
+
+        //スコアを表示
+        const final_scole = sessionStorage.getItem("debris_score");
+        document.getElementById("small_title").textContent = "スコア";
+        document.getElementById("crear_time").textContent = final_scole;
     }
 
     // ★★★ ここを修正 ★★★
@@ -74,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //textboxを取得、上書き
     const time_text = document.getElementById("crear_time");
-    time_text.textContent = `${houres}:${minutes}:${secs}`;
+    if(!(status === "debris_clear"))time_text.textContent = `${houres}:${minutes}:${secs}`;
 
     // ボタンを取得
     function setupButton(id, url) {
