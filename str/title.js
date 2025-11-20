@@ -31,3 +31,32 @@ function setupButton(id, url) {
 setupButton('debris_button', 'debris.html');
 setupButton('UFO_button', 'UFO.html');
 setupButton('save_button', 'game_area.html');
+
+document.addEventListener("DOMContentLoaded", function() {
+  const textBox = document.querySelector(".text-box");
+  const explanation = document.getElementById("explanation");
+  const explanationButton = document.getElementById("explanation_button");
+  const returnButton = document.getElementById("return_button");
+
+  // 遊び方ボタンの処理 (タイトル -> 説明)
+  explanationButton.addEventListener("click", function() {
+      // タイトル画面を非表示にする
+      textBox.classList.add("hidden"); // hiddenクラスがあればCSSで非表示になるはず
+      textBox.style.display = "none";
+
+      // 説明画面を表示する
+      explanation.classList.remove("hidden");
+      explanation.style.display = "block"; 
+  });
+
+  // 戻るボタンの処理 (説明 -> タイトル)
+  returnButton.addEventListener("click", function() {
+      // 説明画面を非表示にする
+      explanation.classList.add("hidden");
+      explanation.style.display = "none";
+
+      // タイトル画面を表示する
+      textBox.classList.remove("hidden");
+      textBox.style.display = "block";
+  });
+})

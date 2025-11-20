@@ -44,6 +44,7 @@ function updateCharacterIcon(speaker) {
     activeIcon.classList.add("active");
   }
 }
+
 /* --- 関数: 話者名を更新 --- */
 function updateSpeakerName(name) {
   const nameBox = document.querySelector("#textbox #name-box");
@@ -57,6 +58,7 @@ function updateSpeakerName(name) {
     nameBox.style.display = "none";
   }
 }
+
 /* --- 関数: メッセージ表示を開始 --- */
 function initRevealTextMessage(message) { 
   updateCharacterIcon(message.speaker);
@@ -86,6 +88,7 @@ function initRevealTextMessage(message) {
     }
   });
 }
+
 /* --- 関数: 1文字ずつ表示 (再帰) --- */
 function revealTextMessage(list, onComplete) {
   const next = list.splice(0, 1)[0];
@@ -147,17 +150,16 @@ window.addEventListener('DOMContentLoaded', () => {
   // 4. 「タイトルへ」ボタンの処理
   if (returnButton) {
     returnButton.addEventListener('click', (event) => {
-      event.stopPropagation(); // window.clickへの伝播を停止
-      
-      
-      // 1. 効果音が鳴り終わったら画面遷移する、というイベントを登録
-      menuClick.addEventListener('ended', () => {
-        window.location.href = 'Title.html';
-      }, { once: true }); // 一回だけ実行する
+      event.stopPropagation(); 
 
-      // 2. 効果音を再生 (2回再生していたのを1回に修正)
+      // 効果音を再生
       menuClick.currentTime = 0;
       menuClick.play().catch(e => {});
+
+      // ★修正: 音の終了を待たず、0.4秒後に遷移させる(安定化)
+      setTimeout(() => {
+        window.location.href = 'Title.html';
+      }, 400); 
     }); 
   }
   
@@ -250,7 +252,7 @@ function proceedConversation() {
       textbox.style.display ="none";
     }
 
-        const skipButton = document.getElementById('skip_button');
+    const skipButton = document.getElementById('skip_button');
     if (skipButton) {
         skipButton.style.display = 'none';
     }
@@ -263,7 +265,7 @@ function proceedConversation() {
 
     // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
     setTimeout(() => {
-        start = true;
+        window.start = true; // ★修正: window. をつける
     }, 1500);  
   }
 }
@@ -350,10 +352,10 @@ function skipConversation() {
         startDisplay.classList.add("show");
     }
 
-    // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
+    // ★修正: スキップ時も1.5秒待機して開始
     setTimeout(() => {
-        start = true;
-    }, 1500);  
+        window.start = true; // ★修正: window. をつける
+    }, 1500);  
 }
 
 /* * ===============================================
