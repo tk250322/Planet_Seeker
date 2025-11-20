@@ -186,6 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
       //処理の重複防止
       first = false;
       attackloop = false;
+      move = false;
 
       // 撃破画像に変更
       window.win_player = false;

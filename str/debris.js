@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
     window.debris = "debris.js読み込み完了";
     console.log(debris);
 
+    //スコア
+    window.score = 0;
+
     //攻撃
     class Debris{
         constructor(){
@@ -53,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
               case 1:
               case 2:
               case 3:
-                pos.src = "../assets/images/debris_fire.png";
+                pos.src = "../assets/images/debris_fire_1.png";
                 pos.className = "big_debris";
                 this.hp = 2;
                 break;
@@ -148,21 +151,37 @@ document.addEventListener('DOMContentLoaded', function() {
                     if(hit){
                         p_b[i].remove();
                         this.hp--;
+                        switch(this.img_type){
+                          case 1:
+                          case 2:
+                          case 3:
+                            pos.src = "../assets/images/debris_fire.png";
+                        }
                     }
                 }
                 if(this.hp === 0){
                     //爆発
                     pos.src = "../assets/images/enemy_ex.png";
-                    pos.style.height = "100px";
-                    pos.style.width = "100px";
                     switch(this.img_type){
-                        case 1:
-                        case 2:
-                        case 3:
-                        pos.style.top = `${top - 10}px`;
-                        pos.style.left = `${left - 10}px`;
+                      case 0:
+                        score += 700;
+                        pos.style.height = "100px";
+                        pos.style.width = "100px";
+                        pos.style.top = `${top - 30}px`;
+                        pos.style.left = `${left - 30}px`;                        
+                      case 1:
+                      case 2:
+                      case 3:
+                        score += 300;
+                        pos.style.height = "140px";
+                        pos.style.width = "140px";
+                        pos.style.top = `${top - 30}px`;
+                        pos.style.left = `${left - 30}px`;
                         break;
-                        default:
+                      default:
+                        score += 100;
+                        pos.style.height = "100px";
+                        pos.style.width = "100px";
                         pos.style.top = `${top - 30}px`;
                         pos.style.left = `${left - 30}px`;
                         break;
