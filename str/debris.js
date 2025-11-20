@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.pos = this.create();
             this.width;
             this.height;
+            this.hp;
         }
 
         vec(){
@@ -46,17 +47,20 @@ document.addEventListener('DOMContentLoaded', function() {
             switch(this.img_type){
               case 0:
                 pos.src = "../assets/images/rare_debris.png";
-                pos.className = "debris";                
+                pos.className = "debris";
+                this.hp = 1;
                 break;
               case 1:
               case 2:
               case 3:
                 pos.src = "../assets/images/debris_fire.png";
                 pos.className = "big_debris";
+                this.hp = 2;
                 break;
               default:
                 pos.src = "../assets/images/debris.png";
                 pos.className = "debris";
+                this.hp = 1
                 break;
             }
             this.vec();
@@ -143,28 +147,35 @@ document.addEventListener('DOMContentLoaded', function() {
                     left < b_left + 22 && left + this.width > b_left;
                     if(hit){
                         p_b[i].remove();
-                        pos.style.height = "100px";
-                        pos.style.width = "100px";
-                        switch(this.img_type){
-                          case 1:
-                          case 2:
-                          case 3:
-                            pos.style.top = `${top - 10}px`;
-                            pos.style.left = `${left - 10}px`;
-                            break;
-                          default:
-                            pos.style.top = `${top - 30}px`;
-                            pos.style.left = `${left - 30}px`;
-                            break;
-                        }
-                        pos.src = "../assets/images/enemy_ex.png";
-                        const newSoundInstance = enemydownSound.cloneNode(true); 
-                        newSoundInstance.play();
-                        clearInterval(attack_move);
-                        setTimeout(()=>{
-                            pos.remove();
-                        }, 200);
+                        this.hp--;
                     }
+                }
+                if(this.hp === 0){
+                    //爆発
+                    pos.src = "../assets/images/enemy_ex.png";
+                    pos.style.height = "100px";
+                    pos.style.width = "100px";
+                    switch(this.img_type){
+                        case 1:
+                        case 2:
+                        case 3:
+                        pos.style.top = `${top - 10}px`;
+                        pos.style.left = `${left - 10}px`;
+                        break;
+                        default:
+                        pos.style.top = `${top - 30}px`;
+                        pos.style.left = `${left - 30}px`;
+                        break;
+                    }
+
+
+                    const newSoundInstance = enemydownSound.cloneNode(true); 
+                    newSoundInstance.play();
+                    clearInterval(attack_move);
+                    setTimeout(()=>{
+                        pos.remove();
+                    }, 200);
+
                 }
 
                 if(player_hp === 0){
