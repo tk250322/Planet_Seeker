@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let first = true;
   
   //ヒットポイント
-  let enemy_hp = 2;
+  window.enemy_hp = 4;
   window.player_hp = 5;
 
   //プレイヤーのHPスタイル取得
@@ -188,9 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
       attackloop = false;
       move = false;
 
-      // 撃破画像に変更
-      window.win_player = false;
-      
       //攻撃削除
       bullet_remove();
 
@@ -199,16 +196,27 @@ document.addEventListener('DOMContentLoaded', function() {
         window.bgmGame.pause();
         window.bgmGame.currentTime = 0;
       }
-
-      // 勝利BGMを再生
-      bgmWin.play().catch(e => {});
-
-      setTimeout(() => {
-        //リザルトへ移動
-        requestAnimationFrame(()=>{
-          go_result();
-        });
-      }, 500);
+      
+      if(typeof ufo !== "undefined" || typeof debris !== "undefined"){
+      // 撃破画像に変更
+        window.win_player = false;
+        setTimeout(() => {
+          //リザルトへ移動          
+            requestAnimationFrame(()=>{
+              go_result();
+              // 勝利BGMを再生
+              bgmWin.play().catch(e => {});
+            });
+          
+        }, 500);}
+      else{
+        currentMessageIndex = 0;
+        activeMessages = endMessages;
+        gameHasStarted = false;
+        document.getElementById("textbox").style.display = "block";
+        initRevealTextMessage(endMessages[currentMessageIndex]);
+      }
+  
 
     }
 

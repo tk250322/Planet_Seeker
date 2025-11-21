@@ -1,9 +1,8 @@
 /* --- グローバル変数 --- */
-window.attackloop = true; 
 window.isGamePaused = false; // ゲームが一時停止中か
-let currentMessageIndex = 0; // 現在のメッセージ番号
+window.currentMessageIndex = 0; // 現在のメッセージ番号
 let isRevealing = false; // テキスト表示中か
-let gameHasStarted = false; // ゲーム本編が開始したか
+window.gameHasStarted = false; // ゲーム本編が開始したか
 let isNovelBgmPlaying = false; // 会話BGMが再生中か
 let ismenuling = false; // (未使用のフラグ)
 
@@ -34,6 +33,14 @@ const messages = [
   { speaker: "main2",  name: "ルミナス・ノア", text: "人類のかたき。絶対に倒す！！！" },
 ];
 
+// 【追加】敵HP 0時用の終了シナリオメッセージ配列
+const endMessages = [
+  { speaker: "boss", name: "エクゾクォア", text: "まさか、この我を打ち破るとは..." },
+  { speaker: "boss", name: "エクゾクォア", text: "遠き星に住む生物よ、お前の力、認めよう。" },
+  { speaker: "main",  name: "ルミナス・ノア", text: "これで、人類は救われた！" },
+  { speaker: "null", name: null, text: "ボスを撃破した！宇宙に平和が戻った。" },
+];
+
 /* --- 関数: アイコンを更新 --- */
 function updateCharacterIcon(speaker) {
   const allIcons = document.querySelectorAll("#textbox .character_icon");
@@ -61,7 +68,8 @@ function updateSpeakerName(name) {
 }
 
 /* --- 関数: メッセージ表示を開始 --- */
-function initRevealTextMessage(message) { 
+window.initRevealTextMessage = function(message) { 
+  console.log("こんにちは、皆さんお元気ですか");
   updateCharacterIcon(message.speaker);
   updateSpeakerName(message.name);
   const text_message_p = document.querySelector("#textbox .text_message_p");
@@ -199,7 +207,11 @@ window.addEventListener('DOMContentLoaded', () => {
  * ※クリックとスペースキーで共通化するため関数として切り出し
  * ===============================================
  */
-function proceedConversation() {
+
+// 現在のメッセージ配列を管理する変数
+window.activeMessages = messages;
+
+window.proceedConversation = function() {
   
   // テキスト表示中、ゲーム本編中、メニュー表示中(Pause中)は処理しない
   if (isRevealing || gameHasStarted || isGamePaused) {
@@ -215,18 +227,19 @@ function proceedConversation() {
   currentMessageIndex++; // 次のメッセージへ
 
   // 1. 次のメッセージがある場合
-  if (currentMessageIndex < messages.length) {
+  if (currentMessageIndex < activeMessages.length) {
     // 会話送りSEを再生
     if (seClick) {
       seClick.currentTime = 0;
       seClick.play().catch(e => {});
     }
     // 次のメッセージを表示
-    initRevealTextMessage(messages[currentMessageIndex]);
+    initRevealTextMessage(activeMessages[currentMessageIndex]);
   }
 
   // 2. 最後のメッセージが終わった場合 (ゲーム本編の開始)
-  if (currentMessageIndex === messages.length && !gameHasStarted) {
+  if(currentMessageIndex === activeMessages.length){
+  if (activeMessages === messages && !gameHasStarted) {
     
     // (念のため) 会話送りSEを停止
     if (seClick) {
@@ -267,6 +280,31 @@ function proceedConversation() {
     setTimeout(() => {
         window.start = true; // ★修正: window. をつける
     }, 1500);  
+  }
+  if (activeMessages === endMessages) {
+    // 共通部分
+    if (seClick) {
+      seClick.pause();
+      seClick.currentTime = 0;
+    }
+    updateCharacterIcon(null);
+    updateSpeakerName(null);
+    const textbox = document.getElementById("textbox");
+    if (textbox) textbox.style.display = "none";
+
+    const skipButton = document.getElementById("skip_button");
+    if (skipButton) skipButton.style.display = "none";
+
+    //爆発させる
+    setTimeout(()=>{
+      win_player = false;
+    },1500);
+
+    // 勝利後専用部分
+    setTimeout(() => {
+      go_result();
+    }, 2000);
+  }
   }
 }
 
