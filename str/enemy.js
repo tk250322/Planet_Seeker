@@ -191,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return r;
     }
 
+    let join = true;
     //移動処理
     function randomMove(){
         if (window.isGamePaused) {
@@ -203,6 +204,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const r = randomNamber();
             enemyLeft = r === 1;
             enemyRigth = r === 2;
+        }
+        if(typeof ufo != "undefined" && enemy_hp == 2 && join){
+            console.log("応援");
+            join = false;
+            
         }
     }
 
@@ -217,32 +223,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }, delay);
     }
 
-    function keydownHandler(e) {
-        if (e.key == 'ArrowLeft'){
-            enemyLeft = true;
-        }
-        else if (e.key == 'ArrowRight'){
-            enemyRigth = true;
-        }
-    }
-
-    function keyupHandler(e) {
-        if (e.key == 'ArrowLeft'){
-            enemyLeft = false;
-        }
-        else if (e.key == 'ArrowRight'){
-            enemyRigth = false;
-        }
-    }
-
     window.enemy_start = function (){
         randomMove();
         setInterval(randomMove, 200);
 
         setTimeout(attack_schedule, 3000);
-
-        // document.addEventListener('keydown', keydownHandler);
-        // document.addEventListener('keyup', keyupHandler);
     }
     enemydraw();
 });
