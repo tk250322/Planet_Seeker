@@ -77,9 +77,8 @@ body {
   cursor: pointer;
 }
 
-/* .result-boxと.creditをまとめる親 (これが画面中央に来る) */
+/* .result-boxと.creditをまとめる親 */
 .container {
-  /* .creditを絶対配置するための「基準点」にする */
   position: relative; 
 
 }
@@ -91,17 +90,17 @@ body {
   color: #ffff00;
 }
 
-/* クレジットボックスのスタイル (★ここが重要★) */
+/* クレジットボックスのスタイル */
 .credit {
-  /* 1. 配置方法を「絶対配置」にする */
+  /* 1. 絶対配置 */
   position: absolute;
   
-  /* 2. 基準点(.container)からの位置を決める */
-  top: 0;       /* 上端を.containerの上端に合わせる */
-  left: 100%;   /* .containerの右端(100%)からスタートする */
+  /* 2. 基準点を決める */
+  top: 0;       
+  left: 100%;   
   
   /* 3. 隙間をあける */
-  margin-left: 40px; /* .result-boxから40px離す */
+  margin-left: 40px; 
 
   /* 4. 見た目のスタイル (前回と同じ) */
   background-color: #002244;
@@ -116,7 +115,7 @@ body {
   height: 505px;
   color: #ffffff;
   
-  /* 5. 文字揃え (bodyの text-align: center を上書き) */
+  /* 5. 文字揃え */
   text-align: left; 
 }
 
@@ -133,37 +132,6 @@ body {
   margin-bottom: 15px;
 }
 
-/* 1. 画像共通の配置 (左側に配置) */
-.character {
-  /* 1. 配置方法を「絶対配置」にする */
-  position: absolute;
-  
-  /* 2. 基準点(.container)からの位置を決める */
-  right: 100%;    /* .containerの左端(right 100%)からスタート */
-  
-  /* 3. 隙間をあける */
-  margin-right: 40px; /* .result-boxから40px離す */
-
-  width: 200px; 
-  height: auto; /* 縦横比は自動 */
-}
-
-/* 2. 画像を個別に縦に並べる (IDで指定) */
-/* #player {
-  right: 540px;
-  top: 300px; 
-}
-
-#enemy {
-  right: 450px;
-  top: 100px; 
-}
-
-#enemy_ufo {
-  right: 620px;
-  top: 100px; 
-} */
-
 /* ランキングボックス */
 .ranking-box {
   background-color: #002244;
@@ -173,7 +141,7 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   max-width: 500px;
   position: absolute;
-  top: 0;       /* 上端を.containerの上端に合わせる */
+  top: 0;       
   right: 100%; 
   margin-right: 40px; 
   width: 200px; 
