@@ -81,6 +81,69 @@ document.addEventListener('DOMContentLoaded', () => {
     const time_text = document.getElementById("crear_time");
     if(!(status === "debris_clear"))time_text.textContent = `${houres}:${minutes}:${secs}`;
 
+    // ランキング処理
+    // 1. どのランキングに保存するか、キーと値を決める
+    let rankKey = "ranking_score"; // デフォルト
+    let myRecord = 0;
+    let isTimeRank = false; // タイム(低い順)かスコア(高い順)か
+
+    if (status === 'boss_clear') {
+        rankKey = "ranking_boss";   // ★BOSS専用の保存場所
+        myRecord = window.boss_time; 
+        isTimeRank = true;
+    } else if (status === 'ufo_clear') {
+        rankKey = "ranking_ufo";    // ★UFO専用の保存場所
+        myRecord = window.ufo_time;
+        isTimeRank = true;
+    } else {
+        // デブリ(スコア)の場合
+        rankKey = "ranking_debris";
+        const ds = sessionStorage.getItem("debris_score");
+        myRecord = ds ? parseInt(ds) : 0;
+        isTimeRank = false;
+    }
+
+    // 2. 過去のランキングデータを取得 
+    let rankData = JSON.parse(localStorage.getItem(rankKey)) || [];
+
+    // 3. 【リロード対策】「このセッションで登録済み」フラグが立っていない時だけ追加する
+    if (!sessionStorage.getItem("has_ranked_flag")) {
+        rankData.push({ name: "YOU", val: myRecord });
+
+        // 並び替え
+        if (isTimeRank) {
+            rankData.sort((a, b) => a.val - b.val); // タイム：小さい順
+        } else {
+            rankData.sort((a, b) => b.val - a.val); // スコア：大きい順
+        }
+
+        // 3位まで保存
+        rankData = rankData.slice(0, 3);
+        localStorage.setItem(rankKey, JSON.stringify(rankData));
+        
+        //「登録フラグを立てる
+        sessionStorage.setItem("has_ranked_flag", "true");
+    }
+
+    // 4. 画面に表示 (毎回行う)
+    const rankUl = document.getElementById("ranking_list");
+    if (rankUl) {
+        rankUl.innerHTML = ""; // リセット
+        
+        // タイム表示用の変換関数
+        const fmt = (t) => {
+            let h = Math.floor(t/360); let m = Math.floor((t%360)/60); let s = t%60;
+            return `${h<10?'0'+h:h}:${m<10?'0'+m:m}:${s<10?'0'+s:s}`;
+        };
+
+        rankData.forEach((d, i) => {
+            const dispVal = isTimeRank ? fmt(d.val) : `${d.val} pt`;
+            const li = document.createElement("li");
+            li.innerHTML = `<h4 style="margin:5px 0;">${i+1}位</h4><h5 style="margin:0;">${d.name} : ${dispVal}</h5>`;
+            rankUl.appendChild(li);
+        });
+    }
+
     // ボタンを取得
     function setupButton(id, url) {
       const btn = document.getElementById(id);
@@ -89,6 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
         sound.volume = 1.0;
         sound.currentTime = 0;
         sound.play().catch(() => {});
+        // リロード対策のリセット
+        sessionStorage.removeItem("has_ranked_flag");
         setTimeout(() => {
           window.location.href = url;
         }, 700);

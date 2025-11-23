@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if(move){
         if(typeof debris !== "undefined"){
           seconds--;
-          if(seconds === 0)go_result();
+          if(seconds === 0)enemy_hp = 0;
         }
         else seconds++;
         updateTimerDisplay();

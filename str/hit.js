@@ -17,10 +17,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const enemyHitSound = new Audio('../assets/sounds/effects/enemy_damage.mp3');
   enemyHitSound.preload = 'auto';
   enemyHitSound.volume = 0.9;
+  window.enemydownSound = new Audio('../assets/sounds/effects/enemy_down.mp3'); 
+  enemydownSound.preload = 'auto';
+  enemydownSound.volume = 0.8;
 
   //勝利効果音
-  const bgmWin = new Audio('../assets/sounds/effects/victory.mp3'); 
+  window.bgmWin = new Audio('../assets/sounds/effects/victory.mp3'); 
   bgmWin.preload = 'auto';
+  bgmWin.volume = 0.8
   bgmWin.loop = false; // ループ再生
 
   for(let i = 0; i < hp_child.length; i++){
@@ -53,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
       clearInterval(player_system);
       window.player_blinking = true;
-      if(!move)player_blinking = false;
+      if(!move)player_blinking = true;
 
     }, 1000);
   }

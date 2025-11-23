@@ -1,7 +1,3 @@
-    const enemydownSound = new Audio('../assets/sounds/effects/enemy_down.mp3'); 
-    enemydownSound.preload = 'auto';
-    enemydownSound.volume = 0.5;
-
 document.addEventListener('DOMContentLoaded', function() {
     //debrisの準備
     window.debris = "debris.js読み込み完了";

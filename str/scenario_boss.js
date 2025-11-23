@@ -219,7 +219,7 @@ window.proceedConversation = function() {
   }
 
   // ブラウザの自動再生ポリシー対策 (最初のクリックでBGM開始)
-  if (!isNovelBgmPlaying && bgmNovel) {
+  if (!isNovelBgmPlaying && bgmNovel && activeMessages == messages) {
     bgmNovel.play().catch(e => {});
     isNovelBgmPlaying = true;
   }
@@ -298,12 +298,14 @@ window.proceedConversation = function() {
     //爆発させる
     setTimeout(()=>{
       win_player = false;
-    },1500);
+      enemydownSound.play();
+    },500);
 
     // 勝利後専用部分
     setTimeout(() => {
+      bgmWin.play();
       go_result();
-    }, 2000);
+    }, 800);
   }
   }
 }
