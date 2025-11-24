@@ -228,46 +228,6 @@ document.addEventListener('DOMContentLoaded', function() {
             setInterval(randomMove, 200);
 
             setTimeout(attack_schedule, 3000);
-
-    // ★ボス専用・HP半分以下でのレーザー定期実行ループ
-            setInterval(() => {
-                // ポーズ中は無視
-                if (window.isGamePaused) return;
-
-                // UFO（ボス以外）がいる場合は無視
-                if (typeof ufo !== "undefined") return;
-
-                // HPチェック (15以下の場合)
-                if (typeof window.enemy_hp !== "undefined" && window.enemy_hp <= 2) {
-                    // 敵が生存している場合のみ
-                    if(window.enemy_hp > 0){
-                        console.log("ボス発狂: レーザー関数呼び出し");
-                        
-
-                        // 位置調整
-                        const min_dist = 200; // 最低でも200px離す
-                        const padding = 30;   // 画面端から最低30pxは内側にする
-                        
-                        const width = enemycanvas.width; // 画面の幅を取得
-
-                        // 1本目の位置をランダムに決める
-                        let x1 = Math.random() * (width - padding * 2) + padding;
-                        
-                        // 2本目の位置を決める
-                        let x2;
-                        let safetyCount = 0; 
-
-                        do {
-                            x2 = Math.random() * (width - padding * 2) + padding;
-                            safetyCount++;
-                        } while (Math.abs(x1 - x2) < min_dist && safetyCount < 10); 
-
-                        // 計算した位置を渡して発射関数を実行
-                        shoot_laser(x1);
-                        shoot_laser(x2);
-                    }
-                }
-            }, 4000); // 4秒間隔で発射チェック
         }
     enemydraw();
 });

@@ -103,10 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
     playerDamageSound.currentTime = 0;
     playerDamageSound.play();
     player_hit_pos = false;
-<<<<<<< HEAD
     // if(typeof enemy_start === "function")e_b.remove();
-=======
->>>>>>> 4f45bc4c467465b67a60c2ed4d13ee1406ca53ac
     player_hp--;
     // hp_height -= 30;
     // hp_style.style.height = `${hp_height}px`;
@@ -119,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   //重なり判定の取得と攻撃の消去
   function overlap() {
-    console.log("いけてます");
     //攻撃の取得
     const enemy_bullets = document.getElementsByClassName("enemy_bullet");
     const player_bullets = document.getElementsByClassName("player_bullet");
