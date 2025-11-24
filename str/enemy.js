@@ -295,13 +295,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             setTimeout(attack_schedule, 3000);
 
-    // ★ボス専用・HP半分以下でのレーザー定期実行ループ
+    // ★UFO専用・HP半分以下でのレーザー定期実行ループ
             setInterval(() => {
                 // ポーズ中は無視
                 if (window.isGamePaused) return;
 
                 // UFO（ボス以外）がいる場合は無視
-                if (typeof ufo !== "undefined") return;
+                if (typeof ufo == "undefined") return;
 
                 // HPチェック (15以下の場合)
                 if (typeof window.enemy_hp !== "undefined" && window.enemy_hp <= 2) {
