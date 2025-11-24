@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
-     console.log("enemy.js読み込み済み");
+    console.log("enemy.js読み込み済み");
 
-    const game_area  =document.getElementById("game_play_area")
+    const game_area  = document.getElementById("game_play_area")
     const enemycanvas = document.getElementById('enemycanvas');
     const enemyctx = enemycanvas.getContext('2d');
 
@@ -9,6 +9,76 @@ document.addEventListener('DOMContentLoaded', function() {
     const enemyAttackSound = new Audio('../assets/sounds/effects/enemy_attack.mp3'); 
     enemyAttackSound.preload = 'auto';
     enemyAttackSound.volume = 0.5;
+    const enemypredictionSound = new Audio('../assets/sounds/effects/prediction.mp3'); 
+    enemypredictionSound.preload = 'auto';
+    const enemylaserSound = new Audio('../assets/sounds/effects/laser.mp3'); 
+    enemylaserSound.preload = 'auto';
+
+
+
+    // レーザー実装
+    // 引数 x を受け取る
+    function shoot_laser(x) {
+        if (window.isGamePaused) return;
+
+        console.log("レーザー準備開始");
+
+        enemypredictionSound.currentTime = 0; 
+        enemypredictionSound.play()
+
+        // 1. レーザーの入れ物を作る
+        const laser = document.createElement("div");
+        laser.className = "enemy_laser"; 
+        laser.style.position = "absolute";
+        
+        // 引数で受け取った x を使う
+        laser.style.left = `${x}px`;
+        
+        laser.style.top = "0px";
+        laser.style.height = "640px"; 
+        laser.style.transform = "translateX(-50%)"; 
+        laser.style.zIndex = "90"; 
+
+        // 3. 初期状態（チャージ中：細い赤線）
+        laser.style.width = "2px";
+        laser.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+
+        // 4. 画面に追加
+        game_area.appendChild(laser);
+
+        // 5. 時間差で状態を変化させる（setTimeoutを使用）
+        
+        // --- 2秒後に発射 ---
+        const fireTimer = setTimeout(() => {
+            if (window.isGamePaused || !laser.parentNode) return; 
+
+            enemylaserSound.currentTime = 0;
+            enemylaserSound.play();
+
+            // 画像があれば画像、なければ赤色
+            const beamSrc = "../assets/images/laser.png"; 
+            laser.style.backgroundImage = `url(${beamSrc})`;
+            laser.style.backgroundSize = "100% 100%";
+            
+            // 画像がロードできなかった時のための保険（赤色）
+            laser.style.backgroundColor = "rgba(255, 50, 50, 0.9)";
+            
+            // 太くする
+            laser.style.width = "50px"; 
+            
+            // --- さらに1秒後に消去 ---
+            const removeTimer = setTimeout(() => {
+                if (laser.parentNode) {
+                    laser.remove(); 
+                }
+            }, 1000); 
+
+            laser.dataset.removeTimerId = removeTimer;
+
+        }, 2000); 
+
+        laser.dataset.fireTimerId = fireTimer;
+    }
 
     //敵のidを取得
     const enemy = document.getElementById("enemy");
@@ -38,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
     enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
 
     let isEnemyAttacking = false;
+
     function enemydraw() {
         //メインループの停止
         if (window.isGamePaused) {
@@ -52,9 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if(typeof window.win_player !== "undefined" && window.win_player){
             if(typeof enemy_blinking !== "undefined" && enemy_blinking){
-                // 描画する
-                // enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);            
-                // 2. 点滅OK（描画する）なら、次に「攻撃中か」を判定する
+                // 点滅OK（描画する）なら、次に「攻撃中か」を判定する
                 if (isEnemyAttacking && enemyAttackSprite) {
                     // 点滅中 ＆ 攻撃中のスプライトを描画
                     enemyctx.drawImage(enemyAttackSprite, enemyX, enemyY, enemyWidth, enemyHeight);
@@ -63,7 +132,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     // 点滅中 ＆ 通常時のスプライトを描画
                     enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);
                 }                
-                //enemyctx.drawImage(enemy, enemyX, enemyY, enemyWidth, enemyHeight);
             }
 
         }
@@ -86,7 +154,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         enemy_hit.style.left = `${enemyX + 52}px`;
         enemy_hit.style.top = `${enemyY + 65}px`;
-
     }
 
     //攻撃の実装
@@ -121,8 +188,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const speed = 5;
 
-        //ufo独自の攻撃
-        if(typeof ufo != "undefined"){
+        // 常に拡散攻撃(3方向)を実行
+        {
             let check_attack1 = true;
             let check_attack2 = true;
 
@@ -131,9 +198,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             game_area.appendChild(attack1);
             game_area.appendChild(attack2);
-            console.log("ufo攻撃発射");
 
-            const  diagonal_move= setInterval(() => {
+            const diagonal_move= setInterval(() => {
             if (window.isGamePaused) {
                 return;
             }
@@ -143,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const left2 = parseInt(attack2.style.left);
             attack1.style.top = `${top1 + speed - 1}px`;
             attack2.style.top = `${top2 + speed -1}px`;
-                                    
+                                            
             if(check_attack1){
                 attack1.style.left = `${left1 - speed + 2}px`;
                 check_attack1 = left1 >= 0? true : false;
@@ -214,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //攻撃のランダム生成
     function attack_schedule(){
-        const delay = (randomNamber() + 1.5)*400;
+        const delay = (randomNamber() + 1.5)*700;
         setTimeout(()=>{
             if (!window.isGamePaused) {
             enemy_attack();
@@ -224,10 +290,50 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     window.enemy_start = function (){
-        randomMove();
-        setInterval(randomMove, 200);
+            randomMove();
+            setInterval(randomMove, 200);
 
-        setTimeout(attack_schedule, 3000);
-    }
+            setTimeout(attack_schedule, 3000);
+
+    // ★ボス専用・HP半分以下でのレーザー定期実行ループ
+            setInterval(() => {
+                // ポーズ中は無視
+                if (window.isGamePaused) return;
+
+                // UFO（ボス以外）がいる場合は無視
+                if (typeof ufo !== "undefined") return;
+
+                // HPチェック (15以下の場合)
+                if (typeof window.enemy_hp !== "undefined" && window.enemy_hp <= 2) {
+                    // 敵が生存している場合のみ
+                    if(window.enemy_hp > 0){
+                        console.log("ボス発狂: レーザー関数呼び出し");
+                        
+
+                        // 位置調整
+                        const min_dist = 200; // 最低でも200px離す
+                        const padding = 30;   // 画面端から最低30pxは内側にする
+                        
+                        const width = enemycanvas.width; // 画面の幅を取得
+
+                        // 1本目の位置をランダムに決める
+                        let x1 = Math.random() * (width - padding * 2) + padding;
+                        
+                        // 2本目の位置を決める
+                        let x2;
+                        let safetyCount = 0; 
+
+                        do {
+                            x2 = Math.random() * (width - padding * 2) + padding;
+                            safetyCount++;
+                        } while (Math.abs(x1 - x2) < min_dist && safetyCount < 10); 
+
+                        // 計算した位置を渡して発射関数を実行
+                        shoot_laser(x1);
+                        shoot_laser(x2);
+                    }
+                }
+            }, 4000); // 4秒間隔で発射チェック
+        }
     enemydraw();
 });
