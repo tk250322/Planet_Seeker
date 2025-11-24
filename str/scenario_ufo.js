@@ -156,7 +156,7 @@ window.addEventListener('DOMContentLoaded', () => {
       menuClick.currentTime = 0;
       menuClick.play().catch(e => {});
 
-      // ★修正: 音の終了を待たず、0.4秒後に遷移させる(安定化)
+      // 音の終了を待たず、0.4秒後に遷移させる(安定化)
       setTimeout(() => {
         window.location.href = 'Title.html';
       }, 400); 
@@ -195,7 +195,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 /* * ===============================================
- * 【変更】会話送り・ゲームスタート処理 (共通関数)
+ * 会話送り・ゲームスタート処理 (共通関数)
  * ※クリックとスペースキーで共通化するため関数として切り出し
  * ===============================================
  */
@@ -265,7 +265,7 @@ function proceedConversation() {
 
     // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
     setTimeout(() => {
-        window.start = true; // ★修正: window. をつける
+        window.start = true; 
     }, 1500);  
   }
 }
@@ -276,12 +276,12 @@ function proceedConversation() {
  * (window.clickイベントリスナー)
  * ===============================================
  */
-// 【変更】共通関数を呼び出すように修正
+//　共通関数を呼び出すように修正
 window.addEventListener("click", proceedConversation);
 
 
 /* * ===============================================
- * 【追加】スペースキーによる会話送り
+ *　スペースキーによる会話送り
  * (window.keydownイベントリスナー)
  * ===============================================
  */
@@ -340,7 +340,7 @@ function skipConversation() {
         textbox.style.display ="none";
     }
 
-    // ★ スキップボタン自体も非表示にする
+    // スキップボタン自体も非表示にする
     const skipButton = document.getElementById('skip_button');
     if (skipButton) {
         skipButton.style.display = 'none';
@@ -352,14 +352,14 @@ function skipConversation() {
         startDisplay.classList.add("show");
     }
 
-    // ★修正: スキップ時も1.5秒待機して開始
+    // スキップ時も1.5秒待機して開始
     setTimeout(() => {
-        window.start = true; // ★修正: window. をつける
+        window.start = true; 
     }, 1500);  
 }
 
 /* * ===============================================
- * 【追加】画面リサイズ対応
+ * 画面リサイズ対応
  * ゲームエリアをアスペクト比を維持して中央に配置
  * ===============================================
  */

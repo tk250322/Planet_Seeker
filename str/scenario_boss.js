@@ -1,4 +1,4 @@
-/* --- グローバル変数 --- */
+// --- グローバル変数 ---
 window.isGamePaused = false; // ゲームが一時停止中か
 window.currentMessageIndex = 0; // 現在のメッセージ番号
 let isRevealing = false; // テキスト表示中か
@@ -6,7 +6,7 @@ window.gameHasStarted = false; // ゲーム本編が開始したか
 let isNovelBgmPlaying = false; // 会話BGMが再生中か
 let ismenuling = false; // (未使用のフラグ)
 
-/* --- オーディオ要素 --- */
+// --- オーディオ要素 ---
 const bgmNovel = new Audio('../assets/sounds/BGM/boss_scenario.mp3');
 window.bgmGame = new Audio('../assets/sounds/BGM/boss_bgm.mp3');
 const seClick = new Audio('../assets/sounds/effects/text_se.mp3');
@@ -21,7 +21,7 @@ seClick.loop = true; // 会話中はループ再生
 bgmNovel.loop = true;
 bgmGame.loop = true;
 
-/* --- メッセージ配列 --- */
+// --- メッセージ配列 ---
 const messages = [
   { speaker: "null", name: null, text: "とうとう惑星の目の前に到着した。" },
   { speaker: "boss", name: "エクゾクォア", text: "よく来たな。遠き星に住む生物よ。我はエクゾクォア、「外宇宙の審問官」である。" },
@@ -41,7 +41,7 @@ const endMessages = [
   { speaker: "null", name: null, text: "ボスを撃破した！宇宙に平和が戻った。" },
 ];
 
-/* --- 関数: アイコンを更新 --- */
+// --- 関数: アイコンを更新 ---
 function updateCharacterIcon(speaker) {
   const allIcons = document.querySelectorAll("#textbox .character_icon");
   allIcons.forEach(icon => {
@@ -53,7 +53,7 @@ function updateCharacterIcon(speaker) {
   }
 }
 
-/* --- 関数: 話者名を更新 --- */
+// --- 関数: 話者名を更新 ---
 function updateSpeakerName(name) {
   const nameBox = document.querySelector("#textbox #name-box");
   const nameP = document.querySelector("#textbox #speaker-name-p");
@@ -67,7 +67,7 @@ function updateSpeakerName(name) {
   }
 }
 
-/* --- 関数: メッセージ表示を開始 --- */
+// --- 関数: メッセージ表示を開始 ---
 window.initRevealTextMessage = function(message) { 
   console.log("こんにちは、皆さんお元気ですか");
   updateCharacterIcon(message.speaker);
@@ -98,7 +98,7 @@ window.initRevealTextMessage = function(message) {
   });
 }
 
-/* --- 関数: 1文字ずつ表示 (再帰) --- */
+// --- 関数: 1文字ずつ表示 (再帰) ---
 function revealTextMessage(list, onComplete) {
   const next = list.splice(0, 1)[0];
   if (!next) { 
@@ -116,10 +116,9 @@ function revealTextMessage(list, onComplete) {
   }
 }
 
-/* * ===============================================
- * イベントリスナー (DOM読み込み完了時)
- * ===============================================
- */
+// ===============================================
+// イベントリスナー (DOM読み込み完了時)
+// ===============================================
 window.addEventListener('DOMContentLoaded', () => {
 
   // 1. メニュー関連のHTML要素を取得
@@ -202,11 +201,10 @@ window.addEventListener('DOMContentLoaded', () => {
 }); // DOMContentLoaded の閉じタグ
 
 
-/* * ===============================================
- * 【変更】会話送り・ゲームスタート処理 (共通関数)
- * ※クリックとスペースキーで共通化するため関数として切り出し
- * ===============================================
- */
+// ===============================================
+// 会話送り・ゲームスタート処理 (共通関数)
+// ※クリックとスペースキーで共通化するため関数として切り出し
+// ===============================================
 
 // 現在のメッセージ配列を管理する変数
 window.activeMessages = messages;
@@ -278,7 +276,7 @@ window.proceedConversation = function() {
 
     // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
     setTimeout(() => {
-        window.start = true; // ★修正: window. をつける
+        window.start = true; 
     }, 1500);  
   }
   if (activeMessages === endMessages) {
@@ -311,20 +309,18 @@ window.proceedConversation = function() {
 }
 
 
-/* * ===============================================
- * 会話送り・ゲームスタート用
- * (window.clickイベントリスナー)
- * ===============================================
- */
-// 【変更】共通関数を呼び出すように修正
+// ===============================================
+// 会話送り・ゲームスタート用
+// (window.clickイベントリスナー)
+// ===============================================
+// 共通関数を呼び出すように修正
 window.addEventListener("click", proceedConversation);
 
 
-/* * ===============================================
- * スペースキーによる会話送り
- * (window.keydownイベントリスナー)
- * ===============================================
- */
+// ===============================================
+// スペースキーによる会話送り
+// (window.keydownイベントリスナー)
+// ===============================================
 window.addEventListener("keydown", (event) => {
   // 押されたキーがスペースキーかどうかを判定
   if (event.key === " " || event.code === "Space") {
@@ -337,10 +333,9 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
-/* * ===============================================
- * スキップボタン専用の処理
- * ===============================================
- */
+// ===============================================
+// スキップボタン専用の処理
+// ===============================================
 function skipConversation() {
     // 既にゲームが始まっているか、メニュー表示中(Pause中)は処理しない
     if (gameHasStarted || window.isGamePaused) {
@@ -380,7 +375,7 @@ function skipConversation() {
         textbox.style.display ="none";
     }
 
-    // ★ スキップボタン自体も非表示にする
+    // スキップボタン自体も非表示にする
     const skipButton = document.getElementById('skip_button');
     if (skipButton) {
         skipButton.style.display = 'none';
@@ -392,18 +387,17 @@ function skipConversation() {
         startDisplay.classList.add("show");
     }
 
-    // ★修正: スキップ時も1.5秒待ってから開始
+    // スキップ時も1.5秒待ってから開始
     setTimeout(() => {
-        window.start = true; // ★修正: window. をつける
+        window.start = true;
     }, 1500);
 }
 
 
-/* * ===============================================
- * 【追加】画面リサイズ対応
- * ゲームエリアをアスペクト比を維持して中央に配置
- * ===============================================
- */
+// ===============================================
+// 画面リサイズ対応
+// ゲームエリアをアスペクト比を維持して中央に配置
+// ===============================================
 
 // 実行する関数
 function resizeGameArea() {
