@@ -27,6 +27,12 @@ document.addEventListener('DOMContentLoaded', function() {
   bgmWin.volume = 0.8
   bgmWin.loop = false; // ループ再生
 
+  //敗北効果音
+  window.bgmLose = new Audio('../assets/sounds/effects/lose.mp3'); 
+  bgmLose.preload = 'auto';
+  bgmLose.volume = 0.4
+  bgmLose.loop = false; // ループ再生
+
   for(let i = 0; i < hp_child.length; i++){
     hp_child[i].src = "../assets/images/player_life.png"
     hp_child[i].style.left = `${10 + 22 * i}px`
@@ -265,9 +271,15 @@ document.addEventListener('DOMContentLoaded', function() {
       window.lose_player = false;    
       bullet_remove();
 
+      if (window.bgmGame) {
+        window.bgmGame.pause();
+        window.bgmGame.currentTime = 0;
+      }
+
       requestAnimationFrame(()=>{
         setTimeout(()=>{
           gameover();
+          bgmLose.play().catch(e => {});
         }, 800);
       });
 
