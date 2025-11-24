@@ -78,10 +78,14 @@ document.addEventListener('DOMContentLoaded', function() {
   function bullet_remove(){
       const enemy_bullets = document.getElementsByClassName("enemy_bullet");
       const player_bullets = document.getElementsByClassName("player_bullet");
+      const enemy_lasers = document.getElementsByClassName("enemy_laser");
       Array.from(player_bullets).forEach(e => {
         e.remove();
       });
       Array.from(enemy_bullets).forEach(e => {
+        e.remove();
+      });
+      Array.from(enemy_lasers).forEach(e => {
         e.remove();
       });
   }
@@ -150,6 +154,38 @@ document.addEventListener('DOMContentLoaded', function() {
         // hp_height -= 30;
         // hp_style.style.height = `${hp_height}px`;
         hp_child[player_hp].remove();
+        player_display_change();
+        setTimeout(()=>{
+          player_hit_pos = true;
+        }, 1300);
+      }
+    }
+
+    //レーザーの当たり判定
+    const enemy_lasers = document.getElementsByClassName("enemy_laser");
+    for (let i = 0; i < enemy_lasers.length; i++) {
+      const laser = enemy_lasers[i];
+      const laserRect = laser.getBoundingClientRect();
+
+      // チャージ中（細い線）は無視する（幅10px未満なら判定しない）
+      if (laserRect.width < 10) continue;
+
+      const hit =
+        laserRect.left < playerRect.right &&
+        laserRect.right > playerRect.left &&
+        laserRect.top < playerRect.bottom &&
+        laserRect.bottom > playerRect.top;
+
+      if (hit && player_hit_pos) {
+        console.log("レーザー被弾");
+        playerDamageSound.currentTime = 0;
+        playerDamageSound.play();
+        player_hit_pos = false;
+        
+        // レーザーは貫通するので remove() はしない
+        
+        player_hp--;
+        if(hp_child[player_hp]) hp_child[player_hp].remove();
         player_display_change();
         setTimeout(()=>{
           player_hit_pos = true;
