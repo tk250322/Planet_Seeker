@@ -179,6 +179,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const bulletWidthHalf = 15; 
 
+        attack.style.zIndex = "100";
+
         // 3. 弾の位置を計算
         attack.style.left = `${enemyX + (enemyWidth / 2) - bulletWidthHalf}px`;
         attack.style.top = `${enemyY + (enemyHeight / 2)}px`;
