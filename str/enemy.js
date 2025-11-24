@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
             laser.style.backgroundSize = "100% 100%";
             
             // 画像がロードできなかった時のための保険（赤色）
-            laser.style.backgroundColor = "rgba(255, 50, 50, 0.9)";
+            laser.style.backgroundColor = "rgba(252, 252, 252, 0.9)";
             
             // 太くする
             laser.style.width = "50px"; 
@@ -176,6 +176,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         attack.className = "enemy_bullet";
         attack.style.position = "absolute";
+
+        attack.style.zIndex = "100";
 
         const bulletWidthHalf = 15; 
 
