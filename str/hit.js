@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
     playerDamageSound.currentTime = 0;
     playerDamageSound.play();
     player_hit_pos = false;
-    if(typeof enemy_start === "function")e_b.remove();
+    // if(typeof enemy_start === "function")e_b.remove();
     player_hp--;
     // hp_height -= 30;
     // hp_style.style.height = `${hp_height}px`;
