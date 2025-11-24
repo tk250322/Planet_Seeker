@@ -56,14 +56,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if(typeof window.win_player !== "undefined" && window.win_player){
             if(typeof window.enemy_blinking !== "undefined" && window.enemy_blinking){
-                ctx_enemy.drawImage(enemy, enemyX, enemyY, enemy_wide, enemy_high);
-            }
-            else{
-                ctx_enemy.drawImage(destroy, enemyX, enemyY, enemy_wide, enemy_high);
+                if(enemy_attacking && enemy_attack_sprite){
+                    ctx_enemy.drawImage(enemy_attack_sprite, enemyX, enemyY, enemy_wide, enemy_high);
+                }
+                else{
+                    ctx_enemy.drawImage(enemy, enemyX, enemyY, enemy_wide, enemy_high);                    
+                }
             }
         }
-        else{
-            ctx_enemy.drawImage(enemy, enemyX, enemyY, enemy_wide, enemy_high);
+        else if(typeof window.win_player !== "undefined" && !window.win_player){
+            ctx_enemy.drawImage(destroy, enemyX, enemyY, enemy_wide, enemy_high);            
         }
 
         // 繰り返して描画する
