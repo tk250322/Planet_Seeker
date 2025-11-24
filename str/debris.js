@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
-    //debrisの準備
-    window.debris = "debris.js読み込み完了";
-    console.log(debris);
+    // //debrisの準備
+    // window.debris = "debris.js読み込み完了";
+    // console.log(debris);
 
     //スコア
     window.score = 0;
