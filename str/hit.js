@@ -182,8 +182,6 @@ document.addEventListener('DOMContentLoaded', function() {
         playerDamageSound.play();
         player_hit_pos = false;
         
-        // レーザーは貫通するので remove() はしない
-        
         player_hp--;
         if(hp_child[player_hp]) hp_child[player_hp].remove();
         player_display_change();
