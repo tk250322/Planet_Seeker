@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log("レーザー準備開始");
 
+        if (typeof attackloop !== "undefined" && !attackloop) return;
+
         enemypredictionSound.currentTime = 0; 
         enemypredictionSound.play()
 
