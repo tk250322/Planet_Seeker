@@ -156,10 +156,10 @@ document.addEventListener('DOMContentLoaded', function() {
         playerDamageSound.play();
         player_hit_pos = false;
         e_b.remove();
-        player_hp--;
+        if(start)player_hp--;
         // hp_height -= 30;
         // hp_style.style.height = `${hp_height}px`;
-        hp_child[player_hp].remove();
+        if(start)hp_child[player_hp].remove();
         player_display_change();
         setTimeout(()=>{
           player_hit_pos = true;

@@ -28,10 +28,28 @@ const messages = [
   { speaker: "main", name: "ルミナス・ノア", text: "地球を離れて大分経ったな。ん、なに？？？住めそうな惑星を発見しただって！！！" },
   { speaker: "soldier", name: "仲間", text: "リーダー、あの惑星の近くにいるUFO見覚えがありまして…" },
   { speaker: "main", name: "ルミナス・ノア", text: "なに？" },
-  { speaker: "enemy_soldier", name: "宇宙人", text: "…" },
+  { speaker: "enemy_soldier", name: "宇宙人", text: "…", action: scenario_schedule },
   { speaker: "main", name: "全員", text: "うわっっ。" },
   { speaker: "main2", name: "ルミナス・ノア", text: "UFOの攻撃だ。迎撃しろ！" },
 ];
+
+function scenario_schedule(){
+    hit_start();
+    const a = document.createElement("img");
+    a.src = "../assets/images/enemy_attack.png";
+    a.className = "enemy_bullet";
+    a.style.position = "absolute";
+    a.style.left = `${220 /*(enemyX)*/ + 80 - 15}px`;
+    a.style.top = `${0 /*(enemyY)ß*/ + 80}px`;
+    document.getElementById("game_play_area").appendChild(a);
+    const aaaaa = setInterval(()=>{
+        a.style.top = `${parseInt(a.style.top) + 5}px`;
+        if(parseInt(a.style.top) > 600){
+            a.remove();
+            clearInterval(aaaaa);
+        }
+    }, 16);
+}
 
 // --- 関数: アイコンを更新 ---
 function updateCharacterIcon(speaker) {
@@ -63,6 +81,10 @@ function updateSpeakerName(name) {
 function initRevealTextMessage(message) { 
   updateCharacterIcon(message.speaker);
   updateSpeakerName(message.name);
+  if (message.action) {
+      console.log("アクション実行"); // 確認用ログ
+      message.action();
+  }
   const text_message_p = document.querySelector("#textbox .text_message_p");
   if (!text_message_p) return;
   text_message_p.innerHTML = ""; 

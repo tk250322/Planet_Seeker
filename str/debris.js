@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
         timer(){setInterval(()=>{
             const newDebris = new Debris();
             newDebris.move(newDebris.pos);
-        }, 200)}
+        }, 400)}
     }
 
     window.debris_start = function(){

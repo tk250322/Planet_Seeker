@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
             randomMove();
             setInterval(randomMove, 200);
 
-            setTimeout(attack_schedule, 3000);
+            setTimeout(attack_schedule, 0);
         }
     enemydraw();
 });
