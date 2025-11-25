@@ -92,7 +92,7 @@ h2 {
     cursor: pointer;
     z-index: 9999; 
     position: absolute;
-    top: 10%; 
+    top: 3%; 
     left: 50%;
     transform: translateX(-50%);
 }
@@ -104,7 +104,7 @@ h3 {
     cursor: pointer;
     z-index: 9999; 
     position: absolute;
-    top: 30%; 
+    top: 20%; 
     left: 50%;
     transform: translateX(-50%);
 }
@@ -116,19 +116,30 @@ h4 {
     cursor: pointer;
     z-index: 9999; 
     position: absolute;
-    top: 40%; 
+    top: 30%; 
     left: 50%;
     transform: translateX(-50%);
 }
 
 h5 {
-    font-size: 60px;
+    font-size: 30px;
     color: rgb(255, 255, 255);
     margin-bottom: 20px;
     cursor: pointer;
     z-index: 9999; 
     position: absolute;
     top: 40%; 
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+h6 {
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    z-index: 9999; 
+    position: absolute;
+    top: 50%; 
     left: 50%;
     transform: translateX(-50%);
 }
