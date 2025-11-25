@@ -72,6 +72,10 @@ function initRevealTextMessage(message) {
     if (gameArea) {
       gameArea.style.backgroundImage = `url('${message.bg}')`;
     }
+    if (typeof window.player_start === "function") {
+        window.player_start();
+        move = false;
+    }
   }
   const text_message_p = document.querySelector("#textbox .text_message_p");
   if (!text_message_p) return;
@@ -273,6 +277,7 @@ function proceedConversation() {
 
     // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
     setTimeout(() => {
+        move = true;
         window.start = true; 
     }, 1500);  
   }
@@ -340,6 +345,11 @@ function skipConversation() {
     }
   }
 
+  if (typeof window.player_start === "function") {
+      window.player_start();
+      move = false;
+  }
+
     // BGM切り替え
     if (isNovelBgmPlaying) {
         bgmNovel.pause();
@@ -376,6 +386,7 @@ function skipConversation() {
 
     // スキップ時も1.5秒待機して開始
     setTimeout(() => {
+        move = true;
         window.start = true; // ★修正: window. をつける
     }, 1500);  
 }

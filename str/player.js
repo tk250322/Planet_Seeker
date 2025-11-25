@@ -5,6 +5,7 @@ attackSound.preload = 'auto'; // 事前に読み込んでおく
 
 // 読みこまれたら実行
 document.addEventListener('DOMContentLoaded', function() {
+    isGameRunning = false;
     // 関数keydownHandlerの定義
     function keydownHandler(e) {
         // キー入力を停止
@@ -155,8 +156,8 @@ document.addEventListener('DOMContentLoaded', function() {
     player.style.width = "30px";
     player.style.left = `${X + 33}px`;
     player.style.top = `${Y + 205}px`;
-    player.style.border = "2px dashed lime";
-    player.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+    // player.style.border = "2px dashed lime";
+    // player.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
     player.style.pointerEvents = "none"; // クリックなどを無効化
 
     let attack_timing = false;
@@ -208,7 +209,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('keydown', keydownHandler);
         // キーを離したときにfalseにする
         document.addEventListener('keyup', keyupHandler);
+
+        // もし既に動いていなければ（!isGameRunning）、drawを実行する
+    if (!isGameRunning) {
+        isGameRunning = true;
+        draw(); // ここで初めて描画ループが回る
+        console.log("プレイヤーの描画と操作を開始しました");
+    }
     }
     // アニメーション開始
-        draw();
 });
