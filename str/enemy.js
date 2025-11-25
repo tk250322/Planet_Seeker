@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (typeof ufo == "undefined") return;
 
                 // HPチェック (15以下の場合)
-                if (typeof window.enemy_hp !== "undefined" && window.enemy_hp <= 2) {
+                if (typeof window.enemy_hp !== "undefined" && window.enemy_hp <= 5) {
                     // 敵が生存している場合のみ
                     if(window.enemy_hp > 0){
                         console.log("ボス発狂: レーザー関数呼び出し");

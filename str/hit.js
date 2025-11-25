@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let first = true;
   
   //ヒットポイント
-  window.enemy_hp = 4;
+  window.enemy_hp = 10;
   window.player_hp = 5;
 
   //プレイヤーのHPスタイル取得

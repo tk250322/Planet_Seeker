@@ -123,7 +123,7 @@ canvas {
   justify-content: center;
   cursor: pointer;
   border-radius: 5px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 /* デブリ */
@@ -156,8 +156,9 @@ h2 {
 }
 
 h3 {
+  margin-top: 50px;
   text-align: center;
-  font-size: 40px;
+  font-size: 60px;
   left: 10px;
   color: #ffff00;
 }
