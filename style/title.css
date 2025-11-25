@@ -1,64 +1,161 @@
 /* フォントの取得 */
 @font-face {
-  font-family: 'DotGothic16';
-  src: url('../assets/fonts/DotGothic16-Regular.ttf') format('truetype');
+    font-family: 'DotGothic16';
+    src: url('../assets/fonts/DotGothic16-Regular.ttf') format('truetype');
 }
 
 /* 背景、文字などのサイズと配置調整 */
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  text-align: center;
-  color: red;
-  background-image: url('../assets/images/Background.png');
-  background-size: cover;
-  background-position: center;
-  font-family: 'DotGothic16', sans-serif; /* フォント適応 */
-  overflow: hidden;
-}
-
-/* タイトルサイズと色 */
-h1 {
-  font-size: 60px;
-  color: crimson;
-  margin-bottom: 0px;
-}
-
-/* 文字サイズと色 */
-p {
-  font-size: 25px;
-  color: honeydew;
-  margin-bottom: 100px;
-}
-
-label {
-  font-size: 20px;
-  color: honeydew;
-  margin-bottom: 20px;
-}
-
-/* スタートボタンサイズ */
-.title_button {
-  margin-top: 20px;
-  font-size: 20px;
-  padding: 10px 20px;
-  border: 2px solid #00ffff;
-  background-color: #004466;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+    color: red;
+    background-image: url('../assets/images/Background.png');
+    background-size: cover;
+    background-position: center;
+    font-family: 'DotGothic16', sans-serif; /* フォント適応 */
+    overflow: hidden;
 }
 
 /* タイトル文字エリア */
 .text-box {
-  background-color: rgba(0, 0, 64, 0.6);
-  border: 4px solid #00ffff;
-  border-radius: 10px;
-  padding: 50px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  max-width: 500px;
+    background-color: rgba(0, 0, 64, 0.6);
+    border: 4px solid #00ffff;
+    border-radius: 10px;
+    padding: 50px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+}
+
+/* タイトルサイズと色 */
+h1 {
+    font-size: 60px;
+    color: crimson;
+    margin-bottom: 0px;
+}
+
+/* 文字サイズと色 */
+p {
+    font-size: 25px;
+    color: honeydew;
+    margin-bottom: 100px;
+}
+
+label {
+    font-size: 20px;
+    color: honeydew;
+    margin-bottom: 20px;
+}
+
+/* 共通ボタン（タイトル、スタート、遊び方）のスタイル */
+.title_button{ 
+    margin-top: 20px;
+    font-size: 20px;
+    padding: 10px 20px;
+    border: 2px solid #00ffff;
+    background-color: #004466;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative; 
+    z-index: 9999; 
+}
+
+/* 説明画面表示オフ */
+.hidden {
+    display: none !important;
+}
+
+/* 説明画面のCanvasレイアウト */
+#explanationcanvas {
+    position: absolute;
+    border: 4px solid white;    
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 90%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5); 
+    border: 2px solid #00ffff;
+    overflow: hidden;    
+    z-index: 1;
+}
+
+h2 {
+    font-size: 60px;
+    color: crimson;
+    margin-bottom: 0px;
+    cursor: pointer;
+    z-index: 9999; 
+    position: absolute;
+    top: 3%; 
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+h3 {
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    cursor: pointer;
+    z-index: 9999; 
+    position: absolute;
+    top: 20%; 
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+h4 {
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    cursor: pointer;
+    z-index: 9999; 
+    position: absolute;
+    top: 30%; 
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+h5 {
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    cursor: pointer;
+    z-index: 9999; 
+    position: absolute;
+    top: 40%; 
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+h6 {
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    z-index: 9999; 
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.return_button { 
+    margin-bottom: 20px;
+    font-size: 20px;
+    padding: 10px 20px;
+    border: 2px solid #00ffff;
+    background-color: #004466;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 9999; 
+    position: absolute;
+    bottom: 10%; 
+    left: 50%;
+    transform: translateX(-50%);
 }

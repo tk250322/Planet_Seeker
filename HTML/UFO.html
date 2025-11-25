@@ -23,6 +23,7 @@
     <img src="../assets/images/enemy_ufo.png" id="enemy_ufo" class="character" alt="UFO" style="display: none;"/>
     <img src="../assets/images/player_attack.png" id="ally_effect" class="effect ally" alt="プレイヤー攻撃エフェクト" style="display: none;"/>
     <img src="../assets/images/enemy_attack.png" id="enemy_effect" class="effect enemy" alt="エネミー攻撃エフェクト" style="display: none;"/>
+    <img src="../assets/images/enemy_ex.png" id="Destroy" style="display: none;"/>
     <!-- スタート -->
     <div id="start-display">スタート</div>
     <!-- タイム -->
@@ -44,6 +45,8 @@
     <p class="text_message_p"></p>
     </div>
     </div>
+    <!-- スキップボタン -->
+    <button id="skip_button" >スキップ</button> 
     <!-- メニュー -->
     <button id="menu_button" >メニュー</button>
     <div id="menu_screen" style="display: none;">
@@ -65,12 +68,13 @@
 
   <!-- 負け -->
   <div id ="gameover-screen" class="finish" style="display: none;">
-    <h1>あなたは敗北しました。お疲れ様です。</h1>
+    <h1>Tips</h1>
+    <h2>HPが半分以下になるとレーザー攻撃をしてくるぞ</h2>
     <button>タイトルへ戻る</button>
   </div>
   <!-- 勝ち -->
   <div id="win-screen" class="finish" style="display: none;">
-    <h1>勝ちです</h1>
+    <h3>CLEAR</h3>
     <button>リザルト</button>
   </div>
   <!-- スクリプト"enemycanvas" -->

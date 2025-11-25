@@ -1,24 +1,37 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log("hit.js読み込み済み");
   let first = true;
+  
   //ヒットポイント
-  let enemy_hp = 10;
-  let player_hp = 5;
+  window.enemy_hp = 10;
+  window.player_hp = 5;
 
   //プレイヤーのHPスタイル取得
   const hp_style = document.getElementById("HP");
   const hp_child = hp_style.children;
 
   //プレイヤー、エネミーの被弾効果音
-  const playerDamageSound = new Audio('../assets/sounds/effects/player_damage.mp3');
+  window.playerDamageSound = new Audio('../assets/sounds/effects/player_damage.mp3');
   playerDamageSound.preload = 'auto';
+  playerDamageSound.volume = 1; 
   const enemyHitSound = new Audio('../assets/sounds/effects/enemy_damage.mp3');
   enemyHitSound.preload = 'auto';
+  enemyHitSound.volume = 0.9;
+  window.enemydownSound = new Audio('../assets/sounds/effects/enemy_down.mp3'); 
+  enemydownSound.preload = 'auto';
+  enemydownSound.volume = 0.8;
 
   //勝利効果音
-  const bgmWin = new Audio('../assets/sounds/effects/victory.mp3'); 
+  window.bgmWin = new Audio('../assets/sounds/effects/victory.mp3'); 
   bgmWin.preload = 'auto';
-  bgmWin.loop = true; // ループ再生
+  bgmWin.volume = 0.8
+  bgmWin.loop = false; // ループ再生
+
+  //敗北効果音
+  window.bgmLose = new Audio('../assets/sounds/effects/lose.mp3'); 
+  bgmLose.preload = 'auto';
+  bgmLose.volume = 0.4
+  bgmLose.loop = false; // ループ再生
 
   for(let i = 0; i < hp_child.length; i++){
     hp_child[i].src = "../assets/images/player_life.png"
@@ -28,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   // playerの無敵時間
-  let player_hit_pos = true;
+  window.player_hit_pos = true;
   // enemyの無敵時間
   let enemy_hit_pos = true;
 
@@ -36,6 +49,10 @@ document.addEventListener('DOMContentLoaded', function() {
   window.player_blinking = true;
   // enemyの点滅
   window.enemy_blinking = true;
+
+  // 勝利、敗北判定
+  window.win_player = true;
+  window.lose_player = true;
 
   // playerの点滅処理
   function player_display_change (){
@@ -46,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
       clearInterval(player_system);
       window.player_blinking = true;
-      if(!move)player_blinking = false;
+      if(!move)player_blinking = true;
 
     }, 1000);
   }
@@ -67,12 +84,34 @@ document.addEventListener('DOMContentLoaded', function() {
   function bullet_remove(){
       const enemy_bullets = document.getElementsByClassName("enemy_bullet");
       const player_bullets = document.getElementsByClassName("player_bullet");
+      const enemy_lasers = document.getElementsByClassName("enemy_laser");
       Array.from(player_bullets).forEach(e => {
         e.remove();
       });
       Array.from(enemy_bullets).forEach(e => {
         e.remove();
       });
+      Array.from(enemy_lasers).forEach(e => {
+        e.remove();
+      });
+  }
+
+  //ダメージ
+  window.damage = function(){
+    console.log("ダメージ");
+    // プレイヤー被弾サウンドを再生
+    playerDamageSound.currentTime = 0;
+    playerDamageSound.play();
+    player_hit_pos = false;
+    // if(typeof enemy_start === "function")e_b.remove();
+    player_hp--;
+    // hp_height -= 30;
+    // hp_style.style.height = `${hp_height}px`;
+    hp_child[player_hp].remove();
+    player_display_change();
+    setTimeout(()=>{
+      player_hit_pos = true;
+    }, 1300);
   }
 
   //重なり判定の取得と攻撃の消去
@@ -117,10 +156,40 @@ document.addEventListener('DOMContentLoaded', function() {
         playerDamageSound.play();
         player_hit_pos = false;
         e_b.remove();
-        player_hp--;
+        if(start)player_hp--;
         // hp_height -= 30;
         // hp_style.style.height = `${hp_height}px`;
-        hp_child[player_hp].remove();
+        if(start)hp_child[player_hp].remove();
+        player_display_change();
+        setTimeout(()=>{
+          player_hit_pos = true;
+        }, 1300);
+      }
+    }
+
+    //レーザーの当たり判定
+    const enemy_lasers = document.getElementsByClassName("enemy_laser");
+    for (let i = 0; i < enemy_lasers.length; i++) {
+      const laser = enemy_lasers[i];
+      const laserRect = laser.getBoundingClientRect();
+
+      // チャージ中（細い線）は無視する（幅10px未満なら判定しない）
+      if (laserRect.width < 10) continue;
+
+      const hit =
+        laserRect.left < playerRect.right &&
+        laserRect.right > playerRect.left &&
+        laserRect.top < playerRect.bottom &&
+        laserRect.bottom > playerRect.top;
+
+      if (hit && player_hit_pos) {
+        console.log("レーザー被弾");
+        playerDamageSound.currentTime = 0;
+        playerDamageSound.play();
+        player_hit_pos = false;
+        
+        player_hp--;
+        if(hp_child[player_hp]) hp_child[player_hp].remove();
         player_display_change();
         setTimeout(()=>{
           player_hit_pos = true;
@@ -161,7 +230,8 @@ document.addEventListener('DOMContentLoaded', function() {
       //処理の重複防止
       first = false;
       attackloop = false;
-      
+      move = false;
+
       //攻撃削除
       bullet_remove();
 
@@ -170,25 +240,46 @@ document.addEventListener('DOMContentLoaded', function() {
         window.bgmGame.pause();
         window.bgmGame.currentTime = 0;
       }
+      
+      if(typeof ufo !== "undefined" || typeof debris !== "undefined"){
+      // 撃破画像に変更
+        window.win_player = false;
+        setTimeout(() => {
+          //リザルトへ移動          
+            requestAnimationFrame(()=>{
+              go_result();
+              // 勝利BGMを再生
+              bgmWin.play().catch(e => {});
+            });
+          
+        }, 500);}
+      else{
+        currentMessageIndex = 0;
+        activeMessages = endMessages;
+        gameHasStarted = false;
+        document.getElementById("textbox").style.display = "block";
+        initRevealTextMessage(endMessages[currentMessageIndex]);
+      }
+  
 
-      // 勝利BGMを再生
-      bgmWin.play().catch(e => {});
-
-      //リザルトへ移動
-      requestAnimationFrame(()=>{
-            go_result();
-      });
     }
 
     //敗北
     if(player_hp == 0 && first){
       first = false;
-      attackloop = false;      
+      attackloop = false;  
+      window.lose_player = false;    
       bullet_remove();
+
+      if (window.bgmGame) {
+        window.bgmGame.pause();
+        window.bgmGame.currentTime = 0;
+      }
 
       requestAnimationFrame(()=>{
         setTimeout(()=>{
           gameover();
+          bgmLose.play().catch(e => {});
         }, 800);
       });
 

@@ -1,7 +1,4 @@
-/*
- * メッセージボックス本体 (#textbox)
- * 画面下・中央に配置し、名前・アイコンの基準となります。
-*/
+/* メッセージボックス */
 #textbox {
     position: absolute;
     bottom: 0;
@@ -15,21 +12,15 @@
     box-sizing: border-box;
     border: 2px solid white; 
     border-radius: 8px;
+    z-index: 150;
 }
 
-/*
- * テキスト表示エリア
- * テキストが左上から始まるように調整
-*/
+/* テキスト表示エリア */
 .text_message_p {
     font-size: 20px;
     user-select: none;
     margin: 0;
     text-align: left;
-    
-    /* アイコンのスペースを確保します。
-     * (アイコンの left: 10px + width: 80px + 余白: 10px = 100px)
-    */
     padding-left: 100px;
 }
 
@@ -66,41 +57,32 @@
     font-weight: bold;
 }
 
-/*
- * アイコンコンテナ
- * #textbox の左下に配置されます。
-*/
+/* アイコンコンテナ */
 #icon-container {
     position: absolute; 
     left :0px;
     bottom: 0px;
 }
 
-/*
- * 各キャラクターアイコン
- * ▼▼▼ ここを調整します ▼▼▼
-*/
+/* 各キャラクターアイコン */
 .character_icon {
     display: none;
     
     /* 大きさの調整 */
     width: 90px; 
-    height: auto; /* 縦横比を維持 */
-    /* object-fit: cover; /* 画像を切り取って枠に合わせる場合 */
+    height: auto; 
 
     /* 枠線の追加 */
-    border: 4px solid #ffd700; /* 4pxの白い実線 */
-    border-radius: 8px;     /* 角を8px丸める */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.812); /* 軽い影 */
+    border: 4px solid #ffd700; 
+    border-radius: 8px;   
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.812); 
 }
 
 .character_icon.active {
     display: block;
 }
 
-/*
- * 「スタート」表示用のCSS (文字だけバージョン)
-*/
+/*「スタート」表示用のCSS */
 #start-display {
     /* (変更なし) */
     display: none;
@@ -115,9 +97,7 @@
     z-index: 9999;
 }
 
-/*
- * (4) アニメーションの設定
-*/
+/* アニメーションの設定 */
 #start-display.show {
     display: block;
     
@@ -136,7 +116,7 @@
     }
 }
 
-/* 1. ゲームエリア (これが基準点) */
+/* ゲームエリア */
 .game_play_area {
   width: 600px;
   height: 600px;
@@ -150,16 +130,32 @@
 }
 /* 2. メニューボタン (左上) */
 #menu_button {
-  position: absolute; /* game-areaを基準に配置 */
+  position: absolute; 
   top: 0px;
   left: 15px;
-  z-index: 100; /* メニュー画面より手前に表示 */
+  z-index: 100; 
   
   /* (オプション) 見た目 */
   padding: 5px 5px;
   font-size: 15px;
-  width: auto;  /* 中身の文字幅に合わせる */
-  height: 40px; /* 中身の文字高に合わせる */
+  width: auto;  
+  height: 40px; 
+  border: 2px solid #00ffff;
+  background-color: #fff;
+}
+
+/* 2.5. スキップボタン (右上) */
+#skip_button {
+  position: absolute; 
+  top: 0px;  
+  left: 100px;  
+  z-index: 100;   
+
+  /* (オプション) 見た目 (メニューボタンと統一) */
+  padding: 5px 5px;
+  font-size: 15px;
+  width: auto; 
+  height: 40px; 
   border: 2px solid #00ffff;
   background-color: #fff;
 }
@@ -179,13 +175,13 @@
   border: 3px solid #00ffff;
   
   /* (オプション) 見た目 */
-  background-color: rgba(0, 0, 50, 0.9); /* 少し透ける紺色 */
+  background-color: rgba(0, 0, 50, 0.9);
   border: 3px solid #00ffff;
   border-radius: 10px;
   padding: 30px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   
-  z-index: 9999; /* menu_button よりは奥 */
+  z-index: 9999; 
 }
 
 h1 {
