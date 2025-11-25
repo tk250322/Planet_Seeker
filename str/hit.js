@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const hp_child = hp_style.children;
 
   //プレイヤー、エネミーの被弾効果音
-  const playerDamageSound = new Audio('../assets/sounds/effects/player_damage.mp3');
+  window.playerDamageSound = new Audio('../assets/sounds/effects/player_damage.mp3');
   playerDamageSound.preload = 'auto';
   playerDamageSound.volume = 1; 
   const enemyHitSound = new Audio('../assets/sounds/effects/enemy_damage.mp3');

@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const enemyctx = enemycanvas.getContext('2d');
 
     // 敵の攻撃サウンド
-    const enemyAttackSound = new Audio('../assets/sounds/effects/enemy_attack.mp3'); 
+    window.enemyAttackSound = new Audio('../assets/sounds/effects/enemy_attack.mp3'); 
     enemyAttackSound.preload = 'auto';
-    enemyAttackSound.volume = 0.5;
+    enemyAttackSound.volume = 1;
     const enemypredictionSound = new Audio('../assets/sounds/effects/prediction.mp3'); 
     enemypredictionSound.preload = 'auto';
     const enemylaserSound = new Audio('../assets/sounds/effects/laser.mp3'); 

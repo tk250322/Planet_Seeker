@@ -14,7 +14,7 @@ const seClick = new Audio('../assets/sounds/effects/text_se.mp3');
 const menuClick = new Audio('../assets/sounds/effects/menu.mp3');
 
 // BGM/SEの初期設定
-bgmNovel.volume = 0.7;
+bgmNovel.volume = 0.5;
 bgmGame.volume = 0.7;
 seClick.volume = 0.3;
 menuClick.volume = 0.5; // 音量を0.5に設定
@@ -42,6 +42,10 @@ function scenario_schedule(){
     a.style.left = `${220 /*(enemyX)*/ + 80 - 15}px`;
     a.style.top = `${0 /*(enemyY)ß*/ + 80}px`;
     document.getElementById("game_play_area").appendChild(a);
+    if(enemyAttackSound){
+      enemyAttackSound.play();
+      console.log("サウンド実行"); 
+    }
     const aaaaa = setInterval(()=>{
         a.style.top = `${parseInt(a.style.top) + 5}px`;
         if(parseInt(a.style.top) > 600){
