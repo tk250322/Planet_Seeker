@@ -1,6 +1,7 @@
 // --- グローバル変数 ---
 window.attackloop = true; 
 window.isGamePaused = false; // ゲームが一時停止中か
+window.debris_scenario = "debris.js読み込み完了";
 let currentMessageIndex = 0; // 現在のメッセージ番号
 let isRevealing = false; // テキスト表示中か
 let gameHasStarted = false; // ゲーム本編が開始したか

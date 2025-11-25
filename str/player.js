@@ -211,11 +211,14 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('keyup', keyupHandler);
 
         // もし既に動いていなければ（!isGameRunning）、drawを実行する
-    if (!isGameRunning) {
-        isGameRunning = true;
-        draw(); // ここで初めて描画ループが回る
-        console.log("プレイヤーの描画と操作を開始しました");
+    if(typeof debris_scenario !=="undefined"){
+        if (!isGameRunning) {
+            isGameRunning = true;
+            draw(); // ここで初めて描画ループが回る
+            console.log("プレイヤーの描画と操作を開始しました");
+        }
     }
     }
     // アニメーション開始
+    if (typeof debris_scenario ==="undefined")draw();
 });

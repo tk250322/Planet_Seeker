@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    window.UFO = "UFO.js読み込み完了";
     console.log("enemy.js読み込み済み");
 
     const game_area  = document.getElementById("game_play_area")

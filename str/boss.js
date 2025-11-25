@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    window.boss = "boss.js読み込み完了";
     console.log("enemy.js読み込み済み");
 
     const game_area  = document.getElementById("game_play_area")
@@ -38,8 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
     enemy_hit.style.width = "50px";
     enemy_hit.style.left = `${enemyX + 55}px`;
     enemy_hit.style.top = `${enemyY + 55}px`;
-    enemy_hit.style.border = "2px dashed lime";
-    enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+    // enemy_hit.style.border = "2px dashed lime";
+    // enemy_hit.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
 
     let isEnemyAttacking = false;
 
