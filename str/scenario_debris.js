@@ -26,8 +26,8 @@ bgmGame.loop = true;
 const messages = [
   { speaker: "null", name: null, text: "西暦XXXX年、人類は宇宙人に襲われ、絶対絶命のピンチに追い込まれていた" },
   { speaker: "main", name: "ルミナス・ノア", text: "人類はここまでなのか…" },
-  { speaker: "main", name: "ルミナス・ノア", text: "いや、まだだ…地球を脱出して新しい惑星に移り住むんだ生き延びて見せる！！！" },
-  { speaker: "main", name: "ルミナス・ノア", text: "………" },
+  { speaker: "main", name: "ルミナス・ノア", text: "いや、まだだ…地球を脱出して新しい惑星に移り住むんだ生き延びて見せる！！！"},
+  { speaker: "main", name: "ルミナス・ノア", text: "………" , bg: "../assets/images/game_play_background.png"},
   { speaker: "main", name: "ルミナス・ノア", text: "よし、地球を脱出することができた。宇宙人が気づいてないうちに…" },
   { speaker: "enemy_soldier", name: "宇宙人", text: "ほう…まだ抗うか。そのちっぽけな船で、我々から逃げ切れるとでも？" },
   { speaker: "main2", name: "ルミナス・ノア", text: "くそっ！気づかれた！！！デブリで撃墜するつもりだ。こんなところで死ぬわけにはいかない！" },
@@ -63,6 +63,16 @@ function updateSpeakerName(name) {
 function initRevealTextMessage(message) { 
   updateCharacterIcon(message.speaker);
   updateSpeakerName(message.name);
+// もしメッセージデータに 'bg' が設定されていたら背景を変更する
+  if (message.bg) {
+    // IDが "game_play_area" の要素を取得する
+    const gameArea = document.getElementById('game_play_area');
+    
+    // 要素が正しく見つかった場合だけ背景を変える
+    if (gameArea) {
+      gameArea.style.backgroundImage = `url('${message.bg}')`;
+    }
+  }
   const text_message_p = document.querySelector("#textbox .text_message_p");
   if (!text_message_p) return;
   text_message_p.innerHTML = ""; 
@@ -312,6 +322,23 @@ function skipConversation() {
     isRevealing = false; 
 
     gameHasStarted = true; // ゲーム開始フラグを立てる
+
+    let finalBg = null;
+  
+  // メッセージを上から順に見て、背景指定があれば情報を上書きしていく
+  messages.forEach(msg => {
+    if (msg.bg) {
+      finalBg = msg.bg;
+    }
+  });
+
+  // もし背景指定が見つかったら適用する
+  if (finalBg) {
+    const gameArea = document.getElementById('game_play_area');
+    if (gameArea) {
+      gameArea.style.backgroundImage = `url('${finalBg}')`;
+    }
+  }
 
     // BGM切り替え
     if (isNovelBgmPlaying) {
