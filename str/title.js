@@ -11,6 +11,27 @@ bgm.volume = 0.5;
 window.addEventListener('load', () => {
   bgm.play().catch(err => {
     console.error("BGM再生エラー:", err);
+    // 1. 表示させたい要素を取得
+    const warningElement = document.getElementById("error_warning");
+
+    // タイトル画面を非表示にする
+    textBox.classList.add("hidden"); // hiddenクラスがあればCSSで非表示になるはず
+    textBox.style.display = "none";
+
+    // エラー画面を表示する
+    error_warning.classList.remove("hidden");
+    error_warning.style.display = "block"; 
+
+    // 戻るボタンの処理 ( エラー -> タイトル)
+    returnButton.addEventListener("click", function() {
+        // エラー画面を非表示にする
+        error_warning.classList.add("hidden");
+        error_warning.style.display = "none";
+
+        // タイトル画面を表示する
+        textBox.classList.remove("hidden");
+        textBox.style.display = "block";
+    });
   });
 });
 
