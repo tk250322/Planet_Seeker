@@ -2,6 +2,7 @@
 window.attackloop = true; 
 window.isGamePaused = false; // ゲームが一時停止中か
 window.debris_scenario = "debris.js読み込み完了";
+window.isScenarioActive = true; // ★追加：会話（シナリオ）が有効な状態か
 let currentMessageIndex = 0; // 現在のメッセージ番号
 let isRevealing = false; // テキスト表示中か
 let gameHasStarted = false; // ゲーム本編が開始したか
@@ -76,6 +77,7 @@ function initRevealTextMessage(message) {
     if (typeof window.player_start === "function") {
         window.player_start();
         move = false;
+        attackloop = false;
     }
   }
   const text_message_p = document.querySelector("#textbox .text_message_p");
@@ -278,6 +280,7 @@ function proceedConversation() {
 
     // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
     setTimeout(() => {
+        attackloop = true;
         move = true;
         window.start = true; 
     }, 1500);  
