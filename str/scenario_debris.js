@@ -35,6 +35,18 @@ const messages = [
   { speaker: "main2", name: "ルミナス・ノア", text: "くそっ！気づかれた！！！デブリで撃墜するつもりだ。こんなところで死ぬわけにはいかない！" },
 ];
 
+// スコア表示制御関数
+function updateScoreDisplay() {
+    const scoreElement = document.getElementById("current_score"); 
+    const scoreArea = document.getElementById("score_display_area");
+
+    if (scoreElement && scoreArea) {
+        scoreArea.style.display = 'block'; 
+
+        scoreElement.textContent = window.score.toLocaleString(); 
+    }
+}
+
 // --- 関数: アイコンを更新 ---
 function updateCharacterIcon(speaker) {
   const allIcons = document.querySelectorAll("#textbox .character_icon");
@@ -280,6 +292,7 @@ function proceedConversation() {
 
     // アニメーション時間 (1.5秒) 待ってからゲームロジックを開始
     setTimeout(() => {
+        updateScoreDisplay();
         attackloop = true;
         move = true;
         window.start = true; 
@@ -390,6 +403,7 @@ function skipConversation() {
 
     // スキップ時も1.5秒待機して開始
     setTimeout(() => {
+        updateScoreDisplay();
         move = true;
         window.start = true; // ★修正: window. をつける
     }, 1500);  

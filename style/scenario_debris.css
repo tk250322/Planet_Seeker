@@ -18,3 +18,19 @@
   justify-content: space-between;
   align-items: center;
 }
+
+/* スコア表示 */
+#score_display_area {
+  display:none;
+  position: absolute;
+  top: 10px;
+  right: 200px;
+  font-size: 24px;
+  font-family: 'DotGothic16', monospace;
+  color: #00ffff;
+  text-shadow: 0 0 5px #00ffff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 8px 16px;
+  border-radius: 8px;
+  z-index: 150;
+}

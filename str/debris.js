@@ -5,6 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(debris);
     }
 
+    //スコアカウント
+    function updateScoreDisplay() {
+        const scoreElement = document.getElementById("current_score"); 
+        if (scoreElement) {
+            scoreElement.textContent = window.score.toLocaleString(); 
+        }
+    }
+
     //スコア
     window.score = 0;
 
@@ -163,6 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     switch(this.img_type){
                       case 0:
                         score += 700;
+                        updateScoreDisplay();
                         pos.style.height = "100px";
                         pos.style.width = "100px";
                         pos.style.top = `${top - 30}px`;
@@ -171,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       case 2:
                       case 3:
                         score += 300;
+                        updateScoreDisplay();
                         pos.style.height = "140px";
                         pos.style.width = "140px";
                         pos.style.top = `${top - 30}px`;
@@ -178,6 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         break;
                       default:
                         score += 100;
+                        updateScoreDisplay();
                         pos.style.height = "100px";
                         pos.style.width = "100px";
                         pos.style.top = `${top - 30}px`;
