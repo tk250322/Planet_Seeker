@@ -138,8 +138,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let Y = canvas.height - 150;    
     
     // キャラの移動速度設定
-    let speedX = 4;
-    let speedY = 4;
+    let speedX = 1.5;
+    let speedY = 1.5;
     
     // キーが押されているか(trueかfalse)
     let player_up = false;
