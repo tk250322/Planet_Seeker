@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    setupButton('Title_button', 'Title.html');
+    setupButton('Title_button', '../index.html');
 
 });
 

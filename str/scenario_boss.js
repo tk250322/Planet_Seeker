@@ -165,7 +165,7 @@ window.addEventListener('DOMContentLoaded', () => {
       menuClick.play().catch(e => {});
 
       setTimeout(() => {
-        window.location.href = 'Title.html';
+        window.location.href = '../index.html';
       }, 400); 
     }); 
   }

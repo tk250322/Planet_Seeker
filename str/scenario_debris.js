@@ -172,7 +172,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       // 音の終了を待たず、0.4秒後に遷移させる(安定化)
       setTimeout(() => {
-        window.location.href = 'Title.html';
+        window.location.href = '../index.html';
       }, 400); 
     }); 
   }

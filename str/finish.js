@@ -35,6 +35,6 @@ window.gameover = function(){
     const screen = document.getElementById("gameover-screen");
     screen.style.display = "block";
     screen.addEventListener("click",()=>{
-        window.location.href = "Title.html";
+        window.location.href = "../index.html";
     });
 }

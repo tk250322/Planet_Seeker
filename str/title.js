@@ -1,5 +1,5 @@
 // BGMファイルを読み込む
-const bgm = new Audio('../assets/sounds/BGM/title.mp3');
+const bgm = new Audio('assets/sounds/BGM/title.mp3');
 
 // ループ再生を有効にする
 bgm.loop = true;
@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
 function setupButton(id, url) {
   const btn = document.getElementById(id);
   btn.addEventListener('click', () => {
-    const sound = new Audio('../assets/sounds/effects/button.mp3');
+    const sound = new Audio('assets/sounds/effects/button.mp3');
     sound.volume = 0.5;
     sound.currentTime = 0;
     sound.play().catch(() => {});
@@ -28,9 +28,9 @@ function setupButton(id, url) {
   });
 }
 
-setupButton('debris_button', 'debris.html');
-setupButton('UFO_button', 'UFO.html');
-setupButton('save_button', 'game_area.html');
+setupButton('debris_button', 'HTML/debris.html');
+setupButton('UFO_button', 'HTML/UFO.html');
+setupButton('save_button', 'HTML/game_area.html');
 
 document.addEventListener("DOMContentLoaded", function() {
   const textBox = document.querySelector(".text-box");
