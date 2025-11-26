@@ -1,3 +1,10 @@
+const textBox = document.querySelector(".text-box");
+const explanation = document.getElementById("explanation");
+const explanationButton = document.getElementById("explanation_button");
+const returnButton = document.getElementById("return_button"); // 説明画面用
+const error_warning = document.getElementById("error_warning");
+const errorCloseButton = document.getElementById("error_close_button");
+
 // BGMファイルを読み込む
 const bgm = new Audio('assets/sounds/BGM/title.mp3');
 
@@ -23,7 +30,7 @@ window.addEventListener('load', () => {
     error_warning.style.display = "block"; 
 
     // 戻るボタンの処理 ( エラー -> タイトル)
-    returnButton.addEventListener("click", function() {
+    errorCloseButton.addEventListener("click", function() {
         // エラー画面を非表示にする
         error_warning.classList.add("hidden");
         error_warning.style.display = "none";
@@ -57,10 +64,7 @@ setupButton('UFO_button', 'HTML/UFO.html');
 setupButton('save_button', 'HTML/game_area.html');
 
 document.addEventListener("DOMContentLoaded", function() {
-  const textBox = document.querySelector(".text-box");
-  const explanation = document.getElementById("explanation");
-  const explanationButton = document.getElementById("explanation_button");
-  const returnButton = document.getElementById("return_button");
+
 
   // 遊び方ボタンの処理 (タイトル -> 説明)
   explanationButton.addEventListener("click", function() {
