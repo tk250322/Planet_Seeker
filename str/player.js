@@ -14,22 +14,22 @@ document.addEventListener('DOMContentLoaded', function() {
        }
         // 押されたキーの値をチェック
         // ↑キーが押されたとき
-        if (e.key === 'ArrowUp'){
+        if (e.key === 'ArrowUp'|| e.key === 'w' || e.key === 'W'){
             player_up = true;
             console.log("player_upがtrueに設定されました");
         }
         // ↓キーが押されたとき
-        else if (e.key === 'ArrowDown'){
+        else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S'){
             player_down = true;
             console.log("player_downがtrueに設定されました");
         }
         // ←キーが押されたとき
-        else if (e.key === 'ArrowLeft'){
+        else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A'){
             player_left = true;
             console.log("player_leftがtrueに設定されました");
         }
         // →キーが押されたとき
-        else if (e.key == 'ArrowRight'){
+        else if (e.key == 'ArrowRight' || e.key === 'd' || e.key === 'D'){
             player_rigth = true;
             console.log("player_rightがtrueに設定されました");
         }
@@ -45,50 +45,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function keyupHandler(e) {
         // 離されたキーの値をチェック
         // ↑キーが離されたとき
-        if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W'){
+        if (e.key == 'ArrowUp' || e.key === 'w' || e.key === 'W'){
             player_up = false;
             console.log("player_upがfalseに設定されました");
         }
         // ↓キーが離されたとき
-        else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S'){
+        else if (e.key == 'ArrowDown' || e.key === 's' || e.key === 'S'){
             player_down = false;
             console.log("player_downがfalseに設定されました");
         }
         // ←キーが離されたとき
-        else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A'){
+        else if (e.key == 'ArrowLeft' || e.key === 'a' || e.key === 'A'){
             player_left = false;
             console.log("player_leftがfalseに設定されました");
         }
         // →キーが離されたとき
-        else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D'){
-            player_rigth = false;
-            console.log("player_rightがfalseに設定されました");
-        }
-        else if (e.code === "Space"){
-            attack_timing = false;
-        }
-    }
-
-    // 関数keyupHandlerの定義
-    function keyupHandler(e) {
-        // 離されたキーの値をチェック
-        // ↑キーが離されたとき
-        if (e.key == 'ArrowUp'){
-            player_up = false;
-            console.log("player_upがfalseに設定されました");
-        }
-        // ↓キーが離されたとき
-        else if (e.key == 'ArrowDown'){
-            player_down = false;
-            console.log("player_downがfalseに設定されました");
-        }
-        // ←キーが離されたとき
-        else if (e.key == 'ArrowLeft'){
-            player_left = false;
-            console.log("player_leftがfalseに設定されました");
-        }
-        // →キーが離されたとき
-        else if (e.key == 'ArrowRight'){
+        else if (e.key == 'ArrowRight' || e.key === 'd' || e.key === 'D'){
             player_rigth = false;
             console.log("player_rightがfalseに設定されました");
         }
@@ -166,8 +138,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let Y = canvas.height - 150;    
     
     // キャラの移動速度設定
-    let speedX = 2;
-    let speedY = 1;
+    let speedX = 4;
+    let speedY = 4;
     
     // キーが押されているか(trueかfalse)
     let player_up = false;
