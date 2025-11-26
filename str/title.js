@@ -1,23 +1,28 @@
 // BGMファイルを読み込む
 const bgm = new Audio('assets/sounds/BGM/title.mp3');
+
+// ループ再生を有効にする
 bgm.loop = true;
+
+// 音量を調整（0.0〜1.0）
 bgm.volume = 0.5;
 
-// === ファイルスコープで要素変数を定義 ===
+// === ファイルスコープで要素変数を宣言 ===
+// DOMContentLoadedでこれらの変数にHTML要素が代入されます。
 let textBox;
 let explanation;
 let explanationButton;
-let returnButton;
+let returnButton; // 説明画面とエラー画面で共有
 let error_warning;
 
-// BGM再生ロジック
+// BGM再生ロジック（自動再生ポリシーに対応するため関数化）
 function attemptPlayBGM() {
-    if (!bgm) return; // 定義チェック
+    if (!bgm) return;
 
     bgm.play().catch(err => {
         console.error("BGM再生エラー:", err);
         
-        // 要素が取得されていない場合は処理しない
+        // 要素が取得されているか確認
         if (!textBox || !error_warning || !returnButton) return; 
 
         // タイトル画面を非表示にする
@@ -41,11 +46,12 @@ function attemptPlayBGM() {
             // ユーザー操作後にBGM再生を再試行
             attemptPlayBGM();
             
-            // リスナーを解除 (returnButtonは他の処理でも使うため、重複を防ぐ)
+            // イベントリスナーを解除して重複を防ぐ
             returnButton.removeEventListener("click", handleCloseError);
         };
 
         // イベントが重複しないように一度だけ実行
+        // returnButtonが他のリスナーと競合しないよう、{ once: true } を使用
         returnButton.addEventListener("click", handleCloseError, { once: true });
     });
 }
@@ -53,10 +59,10 @@ function attemptPlayBGM() {
 // ページ読み込み後に再生を試みる
 window.addEventListener('load', attemptPlayBGM);
 
-// ボタンを取得
+// ボタンを取得し、画面遷移処理を設定する関数
 function setupButton(id, url) {
     const btn = document.getElementById(id);
-    if (!btn) return; // ボタンが存在しない場合は処理しない
+    if (!btn) return;
 
     btn.addEventListener('click', () => {
         const sound = new Audio('assets/sounds/effects/button.mp3');
@@ -74,6 +80,7 @@ setupButton('UFO_button', 'HTML/UFO.html');
 setupButton('save_button', 'HTML/game_area.html');
 
 document.addEventListener("DOMContentLoaded", function() {
+    // === DOMContentLoadedで要素を取得し、ファイルスコープの変数に代入 ===
     textBox = document.querySelector(".text-box");
     explanation = document.getElementById("explanation");
     explanationButton = document.getElementById("explanation_button");
@@ -101,6 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
         textBox.classList.remove("hidden");
         textBox.style.display = "block";
         
+        // 説明画面から戻った時にもBGM再生を試みる（ブロックされている場合に対応）
         attemptPlayBGM();
     });
 });
