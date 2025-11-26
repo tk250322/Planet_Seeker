@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="./../style/game_area.css" />
     <!-- css"シナリオ" -->
   <link rel="stylesheet" href="../style/scenario.css">
+  <link rel="stylesheet" href="../style/scenario_boss.css">
+  <link rel="icon" href="../favicon.ico" type="image/x-icon">
 </head>
 <body>
     <!-- ゲーム画面 -->
@@ -23,6 +25,8 @@
     <img src="../assets/images/enemy_ufo.png" id="enemy_ufo" class="character" alt="UFO" style="display: none;"/>
     <img src="../assets/images/player_attack.png" id="ally_effect" class="effect ally" alt="プレイヤー攻撃エフェクト" style="display: none;"/>
     <img src="../assets/images/enemy_attack.png" id="enemy_effect" class="effect enemy" alt="エネミー攻撃エフェクト" style="display: none;"/>
+    <img src="../assets/images/enemy_ex.png" id="Destroy" style="display: none;"/>
+    <img src="../assets/images/attack_enemy.png" id="enemy_attack_sprite" class="character" alt="敵（攻撃）" style="display: none;"/>
     <!-- スタート -->
     <div id="start-display">スタート</div>
     <!-- タイム -->
@@ -45,6 +49,7 @@
     <p class="text_message_p"></p>
     </div>
     </div>
+    <button id="skip_button" >スキップ</button>   
     <!-- メニュー -->
     <button id="menu_button" >メニュー</button>
     <div id="menu_screen" style="display: none;">
@@ -65,16 +70,17 @@
     </div>
   <!-- 負け -->
   <div id ="gameover-screen" class="finish" style="display: none;">
-    <h1>あなたは敗北しました。お疲れ様です。</h1>
+    <h1>Tips</h1>
+    <h2>デブリに攻撃が当たるとボスには届かないぞ</h2>
     <button>タイトルへ戻る</button>
   </div>
   <!-- 勝ち -->
   <div id="win-screen" class="finish" style="display: none;">
-    <h1>勝ちです</h1>
+    <h3>CLEAR</h3>
     <button>リザルト</button>
   </div>
   <!-- スクリプト"enemycanvas" -->
-  <script src="../str/enemy.js"></script>
+  <script src="../str/boss.js"></script>
   <!-- スクリプト"playercanvas" -->
   <script src="../str/player.js"></script>
   <!-- 当たり判定 -->
@@ -87,5 +93,8 @@
   <script src="../str/move.js"></script>
   <!-- Resultへ移動 -->
   <script src="../str/finish.js"></script>
+    <script src="../str/debris.js"></script>
+  
 </body>
 </html>
+<!-- ../str/enemy.js -->
