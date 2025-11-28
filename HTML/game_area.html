@@ -1,100 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Planet Seeker</title>
-  <link rel="stylesheet" href="./../style/game_area.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Planet Seeker</title>
+    <link rel="stylesheet" href="./../style/game_area.css" />
     <!-- css"シナリオ" -->
-  <link rel="stylesheet" href="../style/scenario.css">
-  <link rel="stylesheet" href="../style/scenario_boss.css">
-  <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../style/scenario.css">
+    <link rel="stylesheet" href="../style/scenario_debris.css">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
 </head>
 <body>
     <!-- ゲーム画面 -->
     <div id="game_play_screen" class="screen">
-    <!-- ゲームプレイエリア -->
-    <div id="game_play_area">
-    <!-- エネミーエリア -->
-    <canvas id="enemycanvas" width="600" height="160"></canvas>
-    <!-- プレイヤーエリア -->
-    <canvas id="playercanvas" width="600" height="400"></canvas>
-    <!-- キャラクター画像 -->
-    <img src="../assets/images/spaceship.png" id="player" class="character" alt="プレイヤー"/>
-    <img src="../assets/images/enemy_boss.png" id="enemy" class="character" alt="敵"/>
-    <img src="../assets/images/enemy_ufo.png" id="enemy_ufo" class="character" alt="UFO" style="display: none;"/>
-    <img src="../assets/images/player_attack.png" id="ally_effect" class="effect ally" alt="プレイヤー攻撃エフェクト" style="display: none;"/>
-    <img src="../assets/images/enemy_attack.png" id="enemy_effect" class="effect enemy" alt="エネミー攻撃エフェクト" style="display: none;"/>
-    <img src="../assets/images/enemy_ex.png" id="Destroy" style="display: none;"/>
-    <img src="../assets/images/attack_enemy.png" id="enemy_attack_sprite" class="character" alt="敵（攻撃）" style="display: none;"/>
-    <!-- スタート -->
-    <div id="start-display">スタート</div>
-    <!-- タイム -->
-    <div id="timer">00:00:00</div>
-    <!-- メッセージボックス -->
-    <div id="textbox">
-    <!-- アイコン -->
-    <div id="name-box">
-    <p id="speaker-name-p"></p>
+        <!-- ゲームプレイエリア -->
+        <div id="game_play_area">
+            <!-- エネミーエリア -->
+            <canvas id="enemycanvas" width="600" height="160"></canvas>
+
+            <!-- プレイヤーエリア -->
+            <canvas id="playercanvas" width="600" height="400"></canvas>
+
+            <!-- キャラクター画像 -->
+            <img src="../assets/images/spaceship.png" id="player" class="character" alt="プレイヤー"/>
+            <img src="../assets/images/enemy_boss.png" id="enemy" class="character" alt="敵"/>
+            <img src="../assets/images/enemy_ufo.png" id="enemy_ufo" class="character" alt="UFO" style="display: none;"/>
+            <img src="../assets/images/player_attack.png" id="ally_effect" class="effect ally" alt="プレイヤー攻撃エフェクト" style="display: none;"/>
+            <img src="../assets/images/enemy_attack.png" id="enemy_effect" class="effect enemy" alt="エネミー攻撃エフェクト" style="display: none;"/>
+            <img src="../assets/images/enemy_ex.png" id="Destroy" style="display: none;"/>
+
+            <!-- スタート -->
+            <div id="start-display">スタート</div>
+
+            <!-- タイム -->
+            <div id="timer">00:00:00</div>
+
+            <!-- スコアボックス -->
+            <div id="score_display_area">
+                SCORE: <span id="current_score">0</span>
+            </div>
+
+            <!-- メッセージボックス -->
+            <div id="textbox">
+                <!-- アイコン -->
+                <div id="name-box">
+                    <p id="speaker-name-p"></p>
+                </div>
+                <div id="icon-container">
+                    <img id="icon_main" class="character_icon" src="../assets/icons/main1.png" alt="ルミナス・ノア">
+                    <img id="icon_main2" class="character_icon" src="../assets/icons/main2.png" alt="ルミナス・ノア2">
+                    <img id="icon_enemy_soldier" class="character_icon" src="../assets/icons/enemy_soldier.png" alt="enemy_soldier">
+                </div>
+
+                <!-- シナリオテキスト -->
+                <div class="text_message">
+                    <p class="text_message_p"></p>
+                </div>
+            </div>
+
+            <!-- スキップボタン -->
+            <button id="skip_button">スキップ</button>
+
+            <!-- メニュー -->
+            <button id="menu_button">メニュー</button>
+            <div id="menu_screen" style="display: none;">
+                <h1>メニュー</h1>
+                <div class="menu_content">
+                    <button id="return_button">タイトルへ</button>
+                    <button id="continue_button">続けるへ</button>
+                </div>
+            </div>
+
+            <!-- ヒットポイント -->
+            <div id="HP">
+                <img class="HP_style"/>
+                <img class="HP_style"/>
+                <img class="HP_style"/>
+                <img class="HP_style"/>
+                <img class="HP_style"/>
+            </div>
+        </div>
+
+        <!-- 負け -->
+        <div id="gameover-screen" class="finish" style="display: none;">
+            <h1>Tips</h1>
+            <h2>大きいデブリは２回攻撃して壊そう</h2>
+            <button>タイトルへ戻る</button>
+        </div>
+
+        <!-- 勝ち -->
+        <div id="win-screen" class="finish" style="display: none;">
+            <h3>CLEAR</h3>
+            <button>リザルト</button>
+        </div>
     </div>
-    <div id="icon-container">
-    <img id="icon_boss" class="character_icon" src="../assets/icons/boss1.png" alt="エクゾクォア">
-    <img id="icon_boss2" class="character_icon" src="../assets/icons/boss2.png" alt="エクゾクォア2">
-    <img id="icon_main" class="character_icon" src="../assets/icons/main1.png" alt="ルミナス・ノア">
-    <img id="icon_main2" class="character_icon" src="../assets/icons/main2.png" alt="ルミナス・ノア2">
-    <img id="icon_main3" class="character_icon" src="../assets/icons/main3.png" alt="ルミナス・ノア3">
-    </div>
-    <!-- シナリオテキスト -->
-    <div class="text_message">
-    <p class="text_message_p"></p>
-    </div>
-    </div>
-    <button id="skip_button" >スキップ</button>   
-    <!-- メニュー -->
-    <button id="menu_button" >メニュー</button>
-    <div id="menu_screen" style="display: none;">
-    <h1>メニュー</h1>
-    <div class="menu_content">
-    <button id="return_button">タイトルへ</button>
-    <button id="continue_button">続けるへ</button>
-    </div></div>
-    <!-- ヒットポイント -->
-    <div id="HP">
-      <img class="HP_style"/>
-      <img class="HP_style"/>
-      <img class="HP_style"/>
-      <img class="HP_style"/>
-      <img class="HP_style"/>
-    </div>
-    </div>
-    </div>
-  <!-- 負け -->
-  <div id ="gameover-screen" class="finish" style="display: none;">
-    <h1>Tips</h1>
-    <h2>デブリに攻撃が当たるとボスには届かないぞ</h2>
-    <button>タイトルへ戻る</button>
-  </div>
-  <!-- 勝ち -->
-  <div id="win-screen" class="finish" style="display: none;">
-    <h3>CLEAR</h3>
-    <button>リザルト</button>
-  </div>
-  <!-- スクリプト"enemycanvas" -->
-  <script src="../str/boss.js"></script>
-  <!-- スクリプト"playercanvas" -->
-  <script src="../str/player.js"></script>
-  <!-- 当たり判定 -->
-  <script src="../str/hit.js"></script>
-  <!-- スクリプト"timer" -->
-  <script src="../str/time.js"></script>
-  <!-- スクリプトボスシナリオ -->
-  <script src="../str/scenario_boss.js"></script>
-  <!-- 描画処理 -->
-  <script src="../str/move.js"></script>
-  <!-- Resultへ移動 -->
-  <script src="../str/finish.js"></script>
+
+    <!-- スクリプト -->
+    <script src="../str/player.js"></script>
+    <!-- 当たり判定 -->
+    <script src="../str/hit.js"></script>
+    <!-- スクリプト"timer" -->
+    <script src="../str/time.js"></script>
+    <!-- スクリプトボスシナリオ -->
+    <script src="../str/scenario_debris.js"></script>
+    <!-- 描画処理 -->
+    <script src="../str/move.js"></script>
+    <!-- Resultへ移動 -->
+    <script src="../str/finish.js"></script>
+    <!-- debris専用処理 -->
     <script src="../str/debris.js"></script>
-  
 </body>
 </html>
-<!-- ../str/enemy.js -->
